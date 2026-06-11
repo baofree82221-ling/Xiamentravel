@@ -15,149 +15,154 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Noto Sans TC"', 'sans-serif'],
-                        serif: ['"Noto Serif TC"', 'serif']
+                        sans: ['"Noto Sans TC"', 'sans-serif']
                     },
                     colors: {
-                        bookBg: '#FAF7F0',       // 暖黃白日系手帳奶油底
+                        bookBg: '#F9FAFB',       // 極簡極亮灰白底
                         bookPaper: '#FFFFFF',    // 紙張白
-                        bookInk: '#2C302E',      // 深森炭灰黑
-                        bookGold: '#D9A05B',     // 暖陽麥黃
-                        bookGreen: '#5F7161',    // 文青草本深綠/苔綠
-                        bookBlue: '#6D8294',     // 霧霾暮藍
-                        bookRed: '#C05C5C',      // 暖陽赤磚紅
-                        bookShadow: '#E4DDD3'    // 輕柔沙灰陰影
+                        bookInk: '#111827',      // 超高對比炭灰黑（適合長輩閱讀）
+                        bookGold: '#B45309',     // 暖琥珀橘黃（高對比亮色）
+                        bookGreen: '#166534',    // 舒適常青深綠
+                        bookBlue: '#1E3A8A',     // 高飽和暮光深藍
+                        bookRed: '#991B1B',      // 深紅磚色
+                        bookBorder: '#E5E7EB'    // 輕量化邊框
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
         
         body {
-            background-color: #FAF7F0;
-            background-image: 
-                linear-gradient(to right, rgba(228, 221, 211, 0.4) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(228, 221, 211, 0.4) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #2C302E;
+            background-color: #F9FAFB;
+            color: #111827;
             -webkit-tap-highlight-color: transparent;
             font-family: "Noto Sans TC", sans-serif;
         }
-        
-        /* 日系手帳軟立體陰影 */
-        .shadow-vintage { box-shadow: 5px 5px 0px #E4DDD3; border: 2px solid #2C302E; }
-        .shadow-vintage-sm { box-shadow: 3px 3px 0px #E4DDD3; border: 2px solid #2C302E; }
-        .btn-vintage-active:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #E4DDD3; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* 日系膠帶與拍立得框 */
-        .washi-tape {
-            background: rgba(95, 113, 97, 0.25);
-            background-image: radial-gradient(rgba(44, 48, 46, 0.1) 15%, transparent 16%);
-            background-size: 8px 8px;
-        }
+        /* 極簡精緻微陰影 */
+        .shadow-flat { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+        .shadow-flat-active { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02); }
+        .btn-active:active { transform: scale(0.98); }
     </style>
 </head>
 <body class="antialiased flex justify-center min-h-screen pb-28">
 
-    <div id="app" class="w-full max-w-md px-4 pt-4 flex flex-col space-y-4">
+    <div id="app" class="w-full max-w-md px-4 pt-4 flex flex-col space-y-4" :class="isLargeFont ? 'text-lg' : 'text-base'">
         
         <!-- 載入中動畫 -->
-        <div v-if="!isMounted" class="bg-white p-8 rounded-[16px] shadow-vintage text-center my-auto space-y-4">
-            <p class="text-xl font-bold font-serif">🌿 正在翻開日系森系手帳...</p>
-            <p class="text-xs text-stone-400 leading-relaxed">
-                正在為您調整思源字體、草本配色與海況動態看板，請稍候...
+        <div v-if="!isMounted" class="bg-white p-8 rounded-2xl shadow-flat text-center my-auto space-y-4 border border-bookBorder">
+            <p class="text-xl font-bold">🌿 正在開啟極簡手帳...</p>
+            <p class="text-xs text-stone-500 leading-relaxed">
+                正在為您加載高對比度、適老字體放大設定，請稍候...
             </p>
         </div>
 
         <!-- 正式掛載結構 -->
         <template v-if="isMounted">
             
-            <!-- 日系手帳封面頭部 -->
-            <div class="relative bg-white border-2 border-bookInk rounded-[20px] shadow-vintage overflow-hidden p-4 flex flex-col space-y-3">
+            <!-- 貼心字體大小快速切換器 (專為長輩設計) -->
+            <div class="flex justify-between items-center bg-white border border-bookBorder px-4 py-2.5 rounded-xl shadow-flat">
+                <span class="font-bold text-stone-700 text-sm flex items-center">
+                    <i class="fa-solid fa-circle-info text-bookGreen mr-1.5 text-base"></i>
+                    閱讀字體大小：
+                </span>
+                <div class="flex space-x-1.5">
+                    <button @click="isLargeFont = false" 
+                            :class="!isLargeFont ? 'bg-bookInk text-white' : 'bg-stone-100 text-stone-700'"
+                            class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all btn-active shadow-sm">
+                        標準 ⚖️
+                    </button>
+                    <button @click="isLargeFont = true" 
+                            :class="isLargeFont ? 'bg-bookGreen text-white' : 'bg-stone-100 text-stone-700'"
+                            class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all btn-active shadow-sm">
+                        放大 🔎
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 極簡手帳封面頭部 -->
+            <div class="relative bg-white border border-bookBorder rounded-[20px] shadow-flat overflow-hidden p-4 flex flex-col space-y-3">
                 
-                <!-- 日系文青膠帶裝飾 -->
-                <div class="absolute -top-1 left-12 w-24 h-6 washi-tape rotate-6 z-20 opacity-90 border-b border-stone-200"></div>
-
                 <!-- 相片管理面板齒輪按鈕 -->
-                <button @click="showPhotoConfig = !showPhotoConfig" class="absolute top-3 right-3 z-30 bg-bookInk text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-bookGreen transition-colors shadow-md border border-bookBg/40">
+                <button @click="showPhotoConfig = !showPhotoConfig" class="absolute top-3 right-3 z-30 bg-bookInk text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-bookGreen transition-colors shadow-md">
                     <i class="fa-solid fa-gear" :class="{'fa-spin': showPhotoConfig}"></i>
                 </button>
 
-                <!-- 封面拍立得相框 -->
-                <div class="relative w-full h-[160px] bg-stone-50 rounded-[12px] overflow-hidden border-2 border-bookInk shadow-inner">
-                    <img :src="photoUrls.banner || 'banner.jpg'" alt="金廈大冒險" class="w-full h-full object-cover" @error="handleBannerError">
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-bookInk via-bookInk/65 to-transparent p-3 text-white">
-                        <p class="text-[9px] uppercase tracking-widest text-bookGold font-bold">⏱️ Jun 18 - Jun 22 / 輕裝小三通慢旅</p>
-                        <h2 class="text-base font-bold font-serif">金門 × 廈門 秘境悠遊小手帳</h2>
+                <!-- 封面精緻大圖區 -->
+                <div class="relative w-full h-[150px] bg-stone-50 rounded-[12px] overflow-hidden border border-bookBorder">
+                    <img :src="photoUrls.banner || 'banner.jpg'" alt="金廈漫旅" class="w-full h-full object-cover" @error="handleBannerError">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/50 to-transparent p-3 text-white">
+                        <p class="text-[9px] md:text-[10px] uppercase tracking-wider text-yellow-400 font-bold">⏱️ Jun 18 - Jun 22 ‧ 小三通輕便慢旅</p>
+                        <h2 class="text-base md:text-lg font-black tracking-wide">金門 × 廈門 秘境悠遊小手帳</h2>
                     </div>
                 </div>
 
-                <!-- 出發狀態 -->
-                <div class="flex justify-between items-center bg-bookBg/80 p-2.5 rounded-[12px] border border-bookInk/10 text-xs font-bold">
-                    <span class="text-stone-600"><i class="fa-solid fa-seedling mr-1 text-bookGreen"></i> 出發起點：岡山捷運 ➔</span>
-                    <span class="text-bookGreen font-serif font-bold text-xs bg-white px-3 py-0.5 rounded border border-bookInk/20 shadow-sm"> READY 🌿</span>
+                <!-- 出發起點 -->
+                <div class="flex justify-between items-center bg-stone-50 p-3 rounded-[12px] border border-stone-200" :class="isLargeFont ? 'text-sm' : 'text-xs'">
+                    <span class="text-stone-700 font-bold"><i class="fa-solid fa-flag mr-1.5 text-bookGreen"></i> 旅程起點：岡山捷運 ➔</span>
+                    <span class="text-bookGreen font-bold bg-white border border-bookGreen/20 px-2.5 py-0.5 rounded shadow-sm"> 準備就緒 🌿</span>
                 </div>
             </div>
 
             <!-- ==================== 一鍵相片管理面板 ⚙️ ==================== -->
-            <div v-if="showPhotoConfig" class="bg-stone-800 text-stone-200 p-4 rounded-[20px] shadow-vintage border-2 border-bookInk space-y-3 text-xs">
-                <div class="flex justify-between items-center border-b border-stone-600 pb-1.5">
-                    <span class="font-bold text-bookGold text-sm font-serif"><i class="fa-solid fa-sliders mr-1"></i> 專屬相片網址自訂面板</span>
+            <div v-if="showPhotoConfig" class="bg-stone-900 text-stone-100 p-4 rounded-[20px] shadow-flat border border-stone-700 space-y-3 text-xs">
+                <div class="flex justify-between items-center border-b border-stone-700 pb-1.5">
+                    <span class="font-bold text-yellow-400 text-sm"><i class="fa-solid fa-sliders mr-1"></i> 專屬相片網址自訂面板</span>
                     <button @click="showPhotoConfig = false" class="text-stone-400 hover:text-white">✕</button>
                 </div>
                 <div class="space-y-2">
                     <div>
-                        <label class="block text-[11px] text-stone-400 mb-0.5">首頁 Banner 相片網址：</label>
-                        <input v-model="photoUrls.banner" type="text" placeholder="輸入圖片網址..." class="w-full bg-stone-700 border border-stone-600 rounded px-2 py-1 text-white text-[11px]">
+                        <label class="block text-[11px] text-stone-300 mb-0.5">首頁 Banner 相片網址：</label>
+                        <input v-model="photoUrls.banner" type="text" placeholder="輸入圖片網址..." class="w-full bg-stone-800 border border-stone-700 rounded px-2 py-1 text-white text-[11px] outline-none focus:border-bookGreen">
                     </div>
                     <div v-for="n in 5" :key="n">
-                        <label class="block text-[11px] text-stone-400 mb-0.5">Day {{ n }} 行程卡片首圖：</label>
-                        <input v-model="photoUrls['day'+n]" type="text" placeholder="輸入圖片網址..." class="w-full bg-stone-700 border border-stone-600 rounded px-2 py-1 text-white text-[11px]">
+                        <label class="block text-[11px] text-stone-300 mb-0.5">Day {{ n }} 行程卡片首圖：</label>
+                        <input v-model="photoUrls['day'+n]" type="text" placeholder="輸入圖片網址..." class="w-full bg-stone-800 border border-stone-700 rounded px-2 py-1 text-white text-[11px] outline-none focus:border-bookGreen">
                     </div>
                 </div>
                 <div class="pt-1 flex justify-end space-x-2">
-                    <button @click="resetPhotos" class="bg-stone-600 text-stone-300 px-3 py-1 rounded hover:bg-stone-500 font-bold">還原預設</button>
-                    <button @click="savePhotos" class="bg-bookGold text-bookInk px-4 py-1 rounded font-bold hover:bg-yellow-500">儲存變更</button>
+                    <button @click="resetPhotos" class="bg-stone-700 text-stone-300 px-3 py-1 rounded hover:bg-stone-600 font-bold">還原預設</button>
+                    <button @click="savePhotos" class="bg-yellow-500 text-black px-4 py-1 rounded font-bold hover:bg-yellow-400">儲存變更</button>
                 </div>
             </div>
 
             <!-- ==================== TAB 1: 每日行程表 (Schedule) ==================== -->
             <div v-if="currentTab === 'schedule'" class="space-y-4">
                 
-                <!-- 日系滑動日期標籤 -->
-                <div class="flex space-x-2 overflow-x-auto pb-1 no-scrollbar">
+                <!-- 日系大點擊區域 ‧ 滑動日期選擇 -->
+                <div class="flex space-x-2.5 overflow-x-auto pb-1.5 no-scrollbar">
                     <button v-for="(d, idx) in dates" :key="idx" @click="activeDateIdx = idx"
-                            :class="activeDateIdx === idx ? 'bg-bookGreen text-white border-bookGreen' : 'bg-white text-bookInk border-stone-200'"
-                            class="flex flex-col items-center justify-center min-w-[68px] h-[72px] rounded-[14px] border-2 shadow-vintage-sm btn-vintage-active transition-all shrink-0">
-                        <span class="text-[10px] font-bold tracking-tight" :class="activeDateIdx === idx ? 'text-white/80' : 'text-stone-400'">{{ d.week }}</span>
-                        <span class="text-base font-bold font-serif mt-0.5">{{ d.day }}</span>
+                            :class="activeDateIdx === idx ? 'bg-bookGreen text-white border-bookGreen shadow-md' : 'bg-white text-bookInk border-stone-200'"
+                            class="flex flex-col items-center justify-center min-w-[72px] h-[78px] rounded-[14px] border-2 btn-active transition-all shrink-0">
+                        <span class="text-[10px] font-bold tracking-wider" :class="activeDateIdx === idx ? 'text-white/80' : 'text-stone-500'">{{ d.week }}</span>
+                        <span class="text-base md:text-lg font-black mt-0.5">{{ d.day }}</span>
                     </button>
                 </div>
 
                 <!-- 智能天氣與船班海況動態看板 -->
-                <div class="bg-white p-3.5 rounded-[16px] border-2 border-bookInk flex justify-between items-center text-xs shadow-vintage-sm">
-                    <div class="flex items-start space-x-2.5">
-                        <span class="text-2xl mt-0.5">{{ currentWeather.icon }}</span>
+                <div class="bg-white p-4 rounded-[16px] border border-stone-200 flex justify-between items-center shadow-flat">
+                    <div class="flex items-start space-x-3">
+                        <span class="text-3xl mt-0.5">{{ currentWeather.icon }}</span>
                         <div class="space-y-1">
-                            <span class="font-bold text-bookInk text-xs font-serif"><i class="fa-solid fa-feather-pointed text-bookGreen mr-1"></i>今日氣象與海象手記：</span>
-                            <p class="text-stone-600 text-[11px] font-medium leading-tight">{{ currentWeather.desc }}</p>
-                            <p class="text-bookBlue text-[10px] font-bold bg-stone-50 border border-bookBlue/20 px-2 py-0.5 rounded inline-block">
-                                <i class="fa-solid fa-ship mr-1"></i>{{ currentWeather.seaState }}
+                            <span class="font-bold text-stone-900" :class="isLargeFont ? 'text-sm' : 'text-xs'">今日氣象與海象狀態：</span>
+                            <p class="text-stone-700 leading-snug" :class="isLargeFont ? 'text-sm font-semibold' : 'text-xs font-medium'">{{ currentWeather.desc }}</p>
+                            <p class="text-bookBlue font-bold bg-blue-50 border border-blue-200 px-2 py-0.5 rounded inline-block" :class="isLargeFont ? 'text-xs' : 'text-[10px]'">
+                                <i class="fa-solid fa-ship mr-1.5"></i>{{ currentWeather.seaState }}
                             </p>
                         </div>
                     </div>
-                    <div class="font-mono font-bold text-bookInk text-xs bg-bookBg border border-bookInk/20 px-2 py-1 rounded-md text-center shrink-0 shadow-sm">
-                        體感<br><span class="text-bookRed font-bold text-sm">{{ currentWeather.temp }}</span>
+                    <div class="font-mono font-bold text-bookInk bg-stone-50 border border-stone-200 px-2.5 py-1.5 rounded-md text-center shrink-0 shadow-sm" :class="isLargeFont ? 'text-sm' : 'text-xs'">
+                        體感溫度<br><span class="text-bookRed font-black text-base">{{ currentWeather.temp }}</span>
                     </div>
                 </div>
 
                 <!-- 分類篩選 -->
-                <div class="flex items-center space-x-2 bg-white p-2.5 rounded-[12px] border-2 border-bookInk">
-                    <span class="text-[11px] font-bold text-stone-400 shrink-0"><i class="fa-solid fa-filter mr-1"></i>篩選手記：</span>
-                    <select v-model="filterCategory" class="w-full bg-transparent text-xs font-bold text-bookInk outline-none cursor-pointer">
+                <div class="flex items-center space-x-2 bg-white p-2.5 rounded-[12px] border border-stone-200 shadow-sm">
+                    <span class="text-stone-600 shrink-0 font-bold" :class="isLargeFont ? 'text-sm' : 'text-xs'"><i class="fa-solid fa-filter mr-1.5 text-bookGreen"></i>篩選手記項目：</span>
+                    <select v-model="filterCategory" class="w-full bg-transparent font-bold text-bookInk outline-none cursor-pointer" :class="isLargeFont ? 'text-sm' : 'text-xs'">
                         <option value="全部">顯示全部旅程項目</option>
                         <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
                     </select>
@@ -167,56 +172,58 @@
                 <div class="space-y-4">
                     <div v-for="(item, idx) in filteredSchedule" :key="item.id" class="relative">
                         
-                        <!-- 預估交通耗時引導 -->
-                        <div v-if="idx > 0" class="flex justify-center items-center py-2 text-[11px] font-bold text-stone-500 space-x-1.5">
+                        <!-- 預估交通耗時引導 (對長輩極為貼心的防迷路說明) -->
+                        <div v-if="idx > 0" class="flex justify-center items-center py-2 text-stone-600 space-x-1.5 font-bold" :class="isLargeFont ? 'text-xs' : 'text-[10px]'">
                             <span>{{ item.transitIcon || '⏱️' }}</span>
-                            <span class="bg-stone-200/40 px-2.5 py-0.5 rounded-full border border-stone-200 text-[10px]">預估移動大約需時 {{ item.transitTime || '15' }} 分鐘</span>
+                            <span class="bg-stone-200/50 px-3 py-1 rounded-full border border-stone-300">預估移動大約需時 {{ item.transitTime || '15' }} 分鐘</span>
                         </div>
 
                         <!-- 每日出發起點說明 -->
-                        <div v-if="idx === 0 && activeDateIdx > 0" class="mb-3 flex justify-center items-center py-2 bg-white border-2 border-dashed border-bookGreen/30 rounded-xl text-[11px] font-bold text-bookGreen shadow-sm">
-                            <span>🏨 全日落腳：中山路步行街 ‧ 宜度・潮宿家庭房</span>
+                        <div v-if="idx === 0 && activeDateIdx > 0" class="mb-3 flex justify-center items-center py-2.5 bg-green-50 border border-bookGreen/30 rounded-xl text-bookGreen font-bold" :class="isLargeFont ? 'text-sm' : 'text-xs'">
+                            <span>🏨 全日出發起點：中山路步行街 ‧ 宜度・潮宿家庭房</span>
                         </div>
 
-                        <!-- 古典探險手札卡片 -->
-                        <div class="bg-white rounded-[16px] shadow-vintage overflow-hidden border-2 border-bookInk flex flex-col relative">
+                        <!-- 極簡手記卡片 -->
+                        <div class="bg-white rounded-[16px] shadow-flat overflow-hidden border border-stone-200 flex flex-col relative">
                             
-                            <!-- 第一個景點照片區 -->
-                            <div v-if="idx === 0" class="w-full h-44 relative bg-stone-100 overflow-hidden border-b-2 border-bookInk">
+                            <!-- 第一個景點大圖 -->
+                            <div v-if="idx === 0" class="w-full h-44 relative bg-stone-100 overflow-hidden border-b border-stone-200">
                                 <img :src="photoUrls['day' + (activeDateIdx + 1)] || 'image_1ee31d.png'" 
                                      class="w-full h-full object-cover" 
                                      @error="handleDayImageError($event, activeDateIdx + 1)">
-                                <span class="absolute top-3 left-3 bg-bookGreen text-white border border-white/20 text-[10px] font-bold px-2.5 py-0.5 rounded-md shadow-md font-serif">
-                                    🗺️ FIELD PHOTO
+                                <span class="absolute top-3 left-3 bg-bookGreen text-white border border-white/20 text-[10px] font-bold px-3 py-1 rounded shadow-md">
+                                    🗺️ 實景參考圖
                                 </span>
                             </div>
 
-                            <div class="p-4 space-y-2">
+                            <div class="p-4 space-y-3">
                                 <div class="flex justify-between items-center">
-                                    <span :class="getBadgeColor(item.category)" class="text-[10px] font-bold px-2.5 py-0.5 rounded border border-bookInk shadow-sm">
+                                    <span :class="getBadgeColor(item.category)" class="text-[10px] font-bold px-3 py-1 rounded shadow-sm">
                                         {{ item.category }}
                                     </span>
-                                    <span class="font-mono text-xs font-bold text-stone-500"><i class="fa-regular fa-clock mr-1"></i>{{ item.time }}</span>
+                                    <span class="font-mono font-bold text-stone-600" :class="isLargeFont ? 'text-sm' : 'text-xs'"><i class="fa-regular fa-clock mr-1 text-bookGreen"></i>時間：{{ item.time }}</span>
                                 </div>
                                 
-                                <h3 class="text-sm md:text-base font-bold font-serif text-bookInk leading-tight border-b border-stone-100 pb-1">{{ item.title }}</h3>
+                                <h3 class="font-black text-stone-950 leading-tight border-b border-stone-100 pb-1.5" :class="isLargeFont ? 'text-lg' : 'text-base'">
+                                    {{ item.title }}
+                                </h3>
                                 
-                                <div class="text-[11px] text-stone-600 space-y-1 font-medium leading-relaxed">
+                                <div class="text-stone-800 space-y-1 font-bold leading-relaxed">
                                     <!-- 手冊文字一模一樣呈現 -->
-                                    <div class="text-stone-800 bg-bookBg/50 p-3 rounded-lg border border-dashed border-stone-300 whitespace-pre-line text-[11px] leading-relaxed">
+                                    <div class="bg-stone-50 p-3.5 rounded-lg border border-stone-200 whitespace-pre-line leading-relaxed" :class="isLargeFont ? 'text-sm md:text-base' : 'text-xs'">
                                         {{ item.notes }}
                                     </div>
                                 </div>
 
-                                <div class="pt-2 flex justify-between items-center">
-                                    <button @click="openGoogleMap(item.title)" class="text-[10px] bg-bookBg border border-bookInk text-bookInk font-bold px-3 py-1.5 rounded-md btn-vintage-active flex items-center space-x-1 shadow-sm">
-                                        <i class="fa-solid fa-location-dot text-bookRed"></i><span>地圖定位</span>
+                                <div class="pt-1.5 flex justify-between items-center border-t border-stone-100">
+                                    <button @click="openGoogleMap(item.title)" class="bg-stone-100 hover:bg-stone-200 border border-stone-300 text-stone-900 font-bold px-4 py-2 rounded-lg btn-active flex items-center space-x-1.5 shadow-sm" :class="isLargeFont ? 'text-xs' : 'text-[10px]'">
+                                        <i class="fa-solid fa-location-dot text-bookRed"></i><span>開啟地圖導航</span>
                                     </button>
-                                    <div class="flex items-center space-x-1 text-stone-400">
-                                        <button @click="moveItem(idx, -1)" class="p-1 text-[11px] hover:text-bookInk font-bold">▲</button>
-                                        <button @click="moveItem(idx, 1)" class="p-1 text-[11px] hover:text-bookInk font-bold">▼</button>
-                                        <span class="text-stone-200 mx-1">|</span>
-                                        <button @click="openEditModal(item)" class="text-[10px] font-bold text-stone-400 hover:text-bookGold">修訂</button>
+                                    <div class="flex items-center space-x-1.5 text-stone-400">
+                                        <button @click="moveItem(idx, -1)" class="p-1 font-black hover:text-bookInk" :class="isLargeFont ? 'text-base' : 'text-xs'">▲</button>
+                                        <button @click="moveItem(idx, 1)" class="p-1 font-black hover:text-bookInk" :class="isLargeFont ? 'text-base' : 'text-xs'">▼</button>
+                                        <span class="text-stone-200">|</span>
+                                        <button @click="openEditModal(item)" class="font-bold text-stone-500 hover:text-bookGold" :class="isLargeFont ? 'text-xs' : 'text-[10px]'">修訂</button>
                                     </div>
                                 </div>
                             </div>
@@ -225,116 +232,116 @@
                     </div>
                 </div>
 
-                <!-- 訂房備忘簡化速覽 -->
-                <div v-if="activeDateIdx === 1 || activeDateIdx === 2" class="p-3 bg-white border-2 border-bookInk rounded-[14px] text-xs font-bold shadow-vintage-sm">
-                    <p class="text-bookGreen font-serif"><i class="fa-solid fa-mug-hot mr-1"></i> 今日提醒：宜度・潮宿早餐供應 (07:00-10:00)</p>
-                    <p class="text-[10px] text-stone-500 mt-1 pl-4 font-normal">免費早餐 2 份：陳儀芳、陳怡靜。建議今日使用最划算！</p>
+                <!-- 訂房與免費早餐貼心提醒 -->
+                <div v-if="activeDateIdx === 1 || activeDateIdx === 2" class="p-4 bg-white border border-stone-200 rounded-[14px] shadow-flat space-y-1" :class="isLargeFont ? 'text-sm' : 'text-xs'">
+                    <p class="text-bookGreen font-bold"><i class="fa-solid fa-mug-hot mr-1.5 text-base"></i> 今日提醒：宜度・潮宿早餐供應 (07:00-10:00)</p>
+                    <p class="text-stone-600 pl-5 font-bold leading-relaxed">免費早餐 2 份登記人：陳儀芳、陳怡靜。手冊極力推薦今天使用最划算！</p>
                 </div>
 
                 <!-- 浮動新增按鈕 -->
-                <button @click="openAddModal" class="fixed bottom-20 right-[calc(50%-200px)] max-md:right-6 z-30 bg-bookGreen text-white p-3.5 rounded-full shadow-vintage hover:bg-bookInk transition-colors">
-                    <i class="fa-solid fa-feather-pointed text-lg"></i>
+                <button @click="openAddModal" class="fixed bottom-20 right-[calc(50%-200px)] max-md:right-6 z-30 bg-bookGreen text-white p-4 rounded-full shadow-flat hover:bg-bookInk transition-colors">
+                    <i class="fa-solid fa-plus text-lg"></i>
                 </button>
             </div>
 
             <!-- ==================== TAB 2: 預訂憑證 (Bookings) ==================== -->
             <div v-if="currentTab === 'bookings'" class="space-y-4">
-                <div class="bg-white p-3 rounded-[12px] shadow-vintage-sm text-xs font-bold flex justify-between items-center border-2 border-bookInk">
-                    <span>🔒 輸入憑證密碼解鎖：</span>
-                    <input v-model="pinCode" type="password" placeholder="密碼" class="w-20 border border-bookInk rounded px-2 py-0.5 text-center font-bold text-sm bg-stone-50 focus:bg-white outline-none">
+                <div class="bg-white p-3 rounded-[12px] shadow-flat text-xs font-bold flex justify-between items-center border border-stone-200">
+                    <span :class="isLargeFont ? 'text-sm' : 'text-xs'">🔓 輸入憑證安全密碼：</span>
+                    <input v-model="pinCode" type="password" placeholder="請輸入密碼" class="w-24 border border-stone-300 rounded px-2 py-1 text-center font-bold text-sm bg-stone-50 focus:bg-white outline-none">
                 </div>
 
                 <div v-if="pinCode === '007'" class="space-y-4">
                     <!-- 去程航空 -->
-                    <div class="bg-white rounded-[14px] shadow-vintage overflow-hidden border-2 border-bookInk">
-                        <div class="bg-bookGold text-bookInk p-3 border-b-2 border-bookInk flex justify-between items-center font-bold text-[11px] tracking-wider font-serif">
+                    <div class="bg-white rounded-[14px] shadow-flat overflow-hidden border border-stone-200">
+                        <div class="bg-stone-100 text-stone-900 p-3.5 border-b border-stone-200 flex justify-between items-center font-bold" :class="isLargeFont ? 'text-sm' : 'text-xs'">
                             <span>✈️ OUTBOUND FLIGHT BOARDING PASS</span>
                             <span class="font-mono">6/18 (四)</span>
                         </div>
-                        <div class="p-4 grid grid-cols-1 gap-2 text-xs font-bold text-stone-800 leading-relaxed font-serif">
-                            <div>去程航線：高雄小港 ➔ 金門 (約1小時)</div>
+                        <div class="p-4 grid grid-cols-1 gap-2.5 text-stone-900 font-bold leading-relaxed" :class="isLargeFont ? 'text-sm md:text-base' : 'text-xs'">
+                            <div>去程航線：高雄小港 ➔ 金門 (航程約1小時)</div>
                             <div>班次班號：<span class="text-bookRed">立榮航空 B78920</span></div>
-                            <div>報到時間：<span class="text-bookGreen font-mono">11:10-12:00 (最晚 11:30 到)</span></div>
-                            <div>起飛時點：<span>13:30 正式起飛 (14:35抵達金門)</span></div>
+                            <div>報到時間：<span class="text-bookGreen">11:10-12:00 (最晚 11:30 抵達)</span></div>
+                            <div>起飛時點：<span>13:30 正式起飛 (14:35 抵達金門)</span></div>
                         </div>
                     </div>
 
                     <!-- 回程航空 -->
-                    <div class="bg-white rounded-[14px] shadow-vintage overflow-hidden border-2 border-bookInk">
-                        <div class="bg-bookRed text-white p-3 border-b-2 border-bookInk flex justify-between items-center font-bold text-[11px] tracking-wider font-serif">
+                    <div class="bg-white rounded-[14px] shadow-flat overflow-hidden border border-stone-200">
+                        <div class="bg-stone-100 text-stone-900 p-3.5 border-b border-stone-200 flex justify-between items-center font-bold" :class="isLargeFont ? 'text-sm' : 'text-xs'">
                             <span>✈️ RETURN FLIGHT CONFIRMATION</span>
                             <span class="font-mono">6/22 (一)</span>
                         </div>
-                        <div class="p-4 grid grid-cols-1 gap-2 text-xs font-bold text-stone-800 leading-relaxed font-serif">
+                        <div class="p-4 grid grid-cols-1 gap-2.5 text-stone-900 font-bold leading-relaxed" :class="isLargeFont ? 'text-sm md:text-base' : 'text-xs'">
                             <div>回程航線：金門機場 ➔ 高雄小港</div>
-                            <div>返台還車：<span class="text-bookGreen">15:20 抵達機場辦理還車與託運</span></div>
+                            <div>返台還車：<span class="text-bookGreen">15:20 抵達機場還機車與託運</span></div>
                             <div>返港航班：<span>17:15 起飛返高</span></div>
                         </div>
                     </div>
 
                     <!-- 小三通船班憑證 -->
-                    <div class="bg-white rounded-[14px] shadow-vintage overflow-hidden border-2 border-bookInk">
-                        <div class="bg-bookBlue text-white p-3 border-b-2 border-bookInk flex justify-between items-center font-bold text-[11px] tracking-wider font-serif">
+                    <div class="bg-white rounded-[14px] shadow-flat overflow-hidden border border-stone-200">
+                        <div class="bg-stone-100 text-stone-900 p-3.5 border-b border-stone-200 flex justify-between items-center font-bold" :class="isLargeFont ? 'text-sm' : 'text-xs'">
                             <span>🚢 CROSS-STRAIT FERRY TICKET</span>
                             <span class="font-mono">6/18 (四)</span>
                         </div>
-                        <div class="p-4 text-xs font-bold space-y-2 text-stone-800 font-serif">
-                            <p>船班名稱：<span class="font-black text-bookInk">新五緣輪</span></p>
+                        <div class="p-4 space-y-3 text-stone-900 font-bold" :class="isLargeFont ? 'text-sm md:text-base' : 'text-xs'">
+                            <p>船班名稱：<span class="font-black text-bookGreen">新五緣輪</span></p>
                             <p>海港航線：金門水頭碼頭 ➔ 廈門五通碼頭</p>
-                            <p>時間節點：<span class="text-bookRed">17:30 開船</span> (16:00前最晚抵達完成出境通關安檢)</p>
-                            <div class="bg-stone-100 p-2.5 rounded-lg border border-bookInk/20 font-mono text-xs font-bold text-bookInk flex justify-between items-center">
-                                <span>🎟️ 船班官方電子定位碼：</span>
-                                <span class="bg-bookInk text-bookGold px-2.5 py-1 rounded font-bold border border-bookGold">NZAX7E</span>
+                            <p>時間節點：<span class="text-bookRed font-black">17:30 開船</span> (16:00前最晚抵達通關安檢)</p>
+                            <div class="bg-stone-50 p-3 rounded-lg border border-stone-200 font-mono text-stone-900 flex justify-between items-center" :class="isLargeFont ? 'text-xs' : 'text-[10px]'">
+                                <span>🎟️ 船票電子定位碼：</span>
+                                <span class="bg-stone-900 text-white px-3 py-1 rounded font-bold">NZAX7E</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 飯店入住詳細 -->
-                    <div class="bg-white rounded-[14px] shadow-vintage p-4 text-xs font-bold space-y-2.5 border-2 border-bookInk font-serif">
-                        <div class="flex justify-between items-center border-b-2 border-dashed border-stone-200 pb-2">
-                            <h3 class="text-sm font-bold text-bookGreen">🏨 住所：宜度・潮宿家庭房</h3>
-                            <span class="bg-stone-100 text-[10px] px-2 py-0.5 rounded border border-bookInk">中山路步行街</span>
+                    <div class="bg-white rounded-[14px] shadow-flat p-4 space-y-3 border border-stone-200 font-bold" :class="isLargeFont ? 'text-sm' : 'text-xs'">
+                        <div class="flex justify-between items-center border-b border-stone-200 pb-2">
+                            <h3 class="font-black text-bookGreen">🏨 住所：宜度・潮宿家庭房</h3>
+                            <span class="bg-stone-100 text-[10px] px-2 py-0.5 rounded border border-stone-300">中山路步行街</span>
                         </div>
                         <p class="text-stone-800">🍳 團隊免費早餐：提供 2 份 (登記人：陳儀芳、陳怡靜)</p>
-                        <p class="text-stone-500 font-normal bg-bookBg/50 p-2.5 rounded-lg leading-relaxed text-[11px]">
+                        <p class="text-stone-600 bg-stone-50 p-2.5 rounded-lg leading-relaxed border border-dashed border-stone-200 font-medium">
                             ⏱️ 早餐供應時段 07:00 - 10:00。<br>
                             💡 建議在 Day 2 / Day 3 使用最為划算！
                         </p>
                     </div>
                 </div>
-                <div v-else class="text-center py-16 text-stone-400 text-xs font-bold leading-relaxed space-y-2">
-                    <p>⚠️ 此欄位儲存重要憑證、訂房早餐姓名及船班定位碼。</p>
-                    <p>請在上方輸入正確的解鎖密碼即可解鎖 (提示：007)。</p>
+                <div v-else class="text-center py-16 text-stone-500 text-xs font-bold leading-relaxed space-y-2">
+                    <p class="text-base">⚠️ 此欄位含有小三通船班與航空憑證</p>
+                    <p class="text-stone-400">請在上方輸入正確的解鎖密碼。(探險隊提示：007)</p>
                 </div>
             </div>
 
             <!-- ==================== TAB 3: 旅遊記帳 (Expense) ==================== -->
             <div v-if="currentTab === 'expense'" class="space-y-4">
                 <!-- 記帳看板 -->
-                <div class="bg-bookGreen text-bookBg p-5 rounded-[20px] shadow-vintage text-center border-2 border-bookInk">
-                    <span class="text-[10px] font-bold block tracking-widest uppercase opacity-80">總體經費累計支出 (新台幣估算)</span>
-                    <h2 class="text-3xl font-bold mt-1 font-serif">NT$ {{ totalExpenseTWD }} <span class="text-sm font-normal">元</span></h2>
-                    <div class="mt-2 text-[10px] bg-black/20 py-1 px-3 rounded-full inline-block font-mono">
+                <div class="bg-bookGreen text-white p-5 rounded-[20px] shadow-flat text-center border border-bookGreen">
+                    <span class="text-[10px] font-bold block tracking-widest uppercase opacity-80" :class="isLargeFont ? 'text-xs' : 'text-[10px]'">總體經費累計支出 (新台幣估算)</span>
+                    <h2 class="font-bold mt-1 font-mono" :class="isLargeFont ? 'text-4xl' : 'text-3xl'">NT$ {{ totalExpenseTWD }} <span class="text-sm font-normal">元</span></h2>
+                    <div class="mt-2 text-[10px] bg-black/20 py-1.5 px-3.5 rounded-full inline-block font-mono">
                         外幣記帳：¥ {{ totalExpenseRMB }} (匯率基準 4.5 換算)
                     </div>
                 </div>
 
                 <!-- 記帳表單 -->
-                <div class="bg-white p-4 rounded-[16px] shadow-vintage text-xs font-bold space-y-3 border-2 border-bookInk">
+                <div class="bg-white p-4 rounded-[16px] shadow-flat text-xs font-bold space-y-3 border border-stone-200">
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="block text-[10px] text-stone-500 mb-1">外幣金額 (RMB)</label>
-                            <input v-model.number="newExpense.amount" type="number" placeholder="¥ 金額" class="w-full border-2 border-bookInk rounded-md p-2 font-mono text-xs outline-none bg-stone-50 focus:bg-white">
+                            <input v-model.number="newExpense.amount" type="number" placeholder="¥ 金額" class="w-full border border-stone-300 rounded p-2.5 font-mono text-sm outline-none bg-stone-50 focus:bg-white focus:border-bookGreen">
                         </div>
                         <div>
                             <label class="block text-[10px] text-stone-500 mb-1">消費項目</label>
-                            <input v-model="newExpense.title" type="text" placeholder="例：海大富自助海鮮" class="w-full border-2 border-bookInk rounded-md p-2 text-xs outline-none bg-stone-50 focus:bg-white">
+                            <input v-model="newExpense.title" type="text" placeholder="例：海大富自助海鮮" class="w-full border border-stone-300 rounded p-2.5 text-xs outline-none bg-stone-50 focus:bg-white focus:border-bookGreen">
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="block text-[10px] text-stone-500 mb-1">款項類別</label>
-                            <select v-model="newExpense.category" class="w-full border-2 border-bookInk bg-transparent rounded-md p-2 cursor-pointer text-xs">
+                            <select v-model="newExpense.category" class="w-full border border-stone-300 bg-transparent rounded p-2.5 cursor-pointer text-xs focus:bg-white">
                                 <option value="美食">🍱 美食饗宴</option>
                                 <option value="交通">🚗 移防交通</option>
                                 <option value="購物">🛍️ 特產伴手</option>
@@ -344,24 +351,24 @@
                             </select>
                         </div>
                         <div class="flex items-end">
-                            <button @click="addExpense" class="w-full h-[38px] bg-bookGold border-2 border-bookInk text-bookInk font-bold rounded-md btn-vintage-active text-xs">入帳登記</button>
+                            <button @click="addExpense" class="w-full h-[40px] bg-bookGreen text-white font-bold rounded btn-active text-xs">登記入帳</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- 記帳清單 -->
-                <div class="bg-white rounded-[16px] shadow-vintage overflow-hidden divide-y-2 divide-stone-100 border-2 border-bookInk">
-                    <div v-for="exp in expenses" :key="exp.id" class="p-3 flex justify-between items-center text-xs font-bold">
+                <div class="bg-white rounded-[16px] shadow-flat overflow-hidden divide-y divide-stone-200 border border-stone-200">
+                    <div v-for="exp in expenses" :key="exp.id" class="p-3.5 flex justify-between items-center text-xs font-bold">
                         <div class="flex items-center space-x-3">
-                            <span class="text-base bg-stone-100 w-8 h-8 rounded border border-bookInk flex items-center justify-center shadow-sm">{{ getExpenseIcon(exp.category) }}</span>
+                            <span class="text-base bg-stone-100 w-9 h-9 rounded border border-stone-200 flex items-center justify-center shadow-sm">{{ getExpenseIcon(exp.category) }}</span>
                             <div>
-                                <h4 class="text-bookInk font-bold">{{ exp.title }}</h4>
+                                <h4 class="text-stone-900 font-bold" :class="isLargeFont ? 'text-sm' : 'text-xs'">{{ exp.title }}</h4>
                                 <span class="text-[9px] text-stone-400 font-normal">分類：{{ exp.category }}</span>
                             </div>
                         </div>
                         <div class="text-right flex items-center space-x-3">
                             <div>
-                                <p class="font-bold font-mono text-bookInk">¥ {{ exp.amount }}</p>
+                                <p class="font-bold font-mono text-stone-900">¥ {{ exp.amount }}</p>
                                 <p class="text-[10px] text-stone-400 font-mono">≈ NT$ {{ Math.round(exp.amount * 4.5) }}</p>
                             </div>
                             <button @click="deleteExpense(exp.id)" class="text-stone-300 hover:text-bookRed pl-1 font-bold text-sm">✕</button>
@@ -372,24 +379,24 @@
 
             <!-- ==================== TAB 4: 旅行日誌相簿 (Journal) ==================== -->
             <div v-if="currentTab === 'journal'" class="space-y-4">
-                <div class="bg-white p-4 rounded-[16px] shadow-vintage text-xs font-bold space-y-3 border-2 border-bookInk">
-                    <textarea v-model="newPost.text" rows="2" placeholder="在此寫下今天的航海見聞、南靖土樓或青草地鮮奶的美味回憶..." class="w-full border-2 border-bookInk bg-stone-50 p-2 rounded-md outline-none leading-relaxed text-xs"></textarea>
+                <div class="bg-white p-4 rounded-[16px] shadow-flat text-xs font-bold space-y-3 border border-stone-200">
+                    <textarea v-model="newPost.text" rows="2" placeholder="在此寫下今天的航海見聞、南靖土樓或青草地鮮奶的美味回憶..." class="w-full border border-stone-300 bg-stone-50 p-2.5 rounded outline-none leading-relaxed text-xs focus:bg-white"></textarea>
                     <div class="flex justify-between items-center">
-                        <input @change="handleImage" type="file" accept="image/*" class="text-[10px] text-stone-400 cursor-pointer">
-                        <button @click="addPost" class="bg-bookRed text-white border-2 border-bookInk px-4 py-2 rounded-md font-bold btn-vintage-active text-xs">發佈手記頁</button>
+                        <input @change="handleImage" type="file" accept="image/*" class="text-[10px] text-stone-500 cursor-pointer">
+                        <button @click="addPost" class="bg-bookGreen text-white border border-stone-200 px-4 py-2 rounded font-bold btn-active text-xs">發佈手記頁</button>
                     </div>
                 </div>
 
-                <!-- 復古明信片照片牆 -->
-                <div v-for="post in posts" :key="post.id" class="bg-white rounded-[16px] shadow-vintage p-4 space-y-3 border-2 border-bookInk">
-                    <div v-if="post.img" class="w-full h-48 bg-stone-50 border border-bookInk rounded-lg overflow-hidden shadow-inner">
+                <!-- 極簡明信片照片牆 -->
+                <div v-for="post in posts" :key="post.id" class="bg-white rounded-[16px] shadow-flat p-4 space-y-3 border border-stone-200">
+                    <div v-if="post.img" class="w-full h-48 bg-stone-50 border border-stone-200 rounded-lg overflow-hidden shadow-inner">
                         <img :src="post.img" class="w-full h-full object-cover">
                     </div>
-                    <div class="text-xs font-bold font-serif leading-relaxed text-bookInk whitespace-pre-line">
+                    <div class="text-xs font-bold leading-relaxed text-stone-900 whitespace-pre-line" :class="isLargeFont ? 'text-sm font-semibold' : 'text-xs'">
                         {{ post.text }}
                     </div>
                     <div class="pt-2 border-t border-dashed border-stone-200 flex justify-between text-[10px] text-stone-400">
-                        <span>✍️ 簽署：大冒險考察隊全體</span>
+                        <span>✍️ 簽署：大冒險全體成員</span>
                         <span>⏱️ 時間：{{ post.date }}</span>
                     </div>
                 </div>
@@ -398,142 +405,140 @@
             <!-- ==================== TAB 5: 準備清單 & 購物 (Planning) ==================== -->
             <div v-if="currentTab === 'planning'" class="space-y-4">
                 <!-- 證件檢查 -->
-                <div class="bg-white p-4 rounded-[16px] shadow-vintage border-2 border-bookInk">
-                    <h3 class="font-bold font-serif text-sm border-b-2 border-bookInk pb-2 text-bookRed flex items-center justify-between">
+                <div class="bg-white p-4 rounded-[16px] shadow-vintage border border-stone-200">
+                    <h3 class="font-bold text-sm border-b border-stone-200 pb-2 text-bookRed flex items-center justify-between" :class="isLargeFont ? 'text-base' : 'text-sm'">
                         <span>📋 行前物品與隨身證件檢核</span>
-                        <span class="text-[10px] bg-bookRed/10 border border-bookRed text-bookRed px-2 py-0.5 rounded font-bold">必備指南</span>
+                        <span class="text-[10px] bg-red-50 border border-bookRed text-bookRed px-2.5 py-0.5 rounded font-bold">出發前必對</span>
                     </h3>
-                    <div class="mt-3 space-y-3 text-xs font-bold font-serif">
-                        <label v-for="todo in todos" :key="todo.id" class="flex items-center space-x-2.5 cursor-pointer select-none">
-                            <input type="checkbox" v-model="todo.done" class="w-4 h-4 border-2 border-bookInk rounded text-bookGreen focus:ring-0">
+                    <div class="mt-3.5 space-y-4 text-xs font-bold text-stone-800" :class="isLargeFont ? 'text-sm' : 'text-xs'">
+                        <label v-for="todo in todos" :key="todo.id" class="flex items-center space-x-3 cursor-pointer select-none">
+                            <!-- 加大核取按鈕，方便長輩選取 -->
+                            <input type="checkbox" v-model="todo.done" class="w-5 h-5 border-stone-300 rounded text-bookGreen focus:ring-0">
                             <span :class="{'line-through text-stone-400 font-normal italic': todo.done}">{{ todo.text }}</span>
                         </label>
                     </div>
                 </div>
 
                 <!-- 伴手禮指南一模一樣精確分類 -->
-                <div class="bg-white p-4 rounded-[16px] shadow-vintage border-2 border-bookInk">
-                    <h3 class="font-bold font-serif text-sm border-b-2 border-bookInk pb-2 text-bookGold flex items-center justify-between">
+                <div class="bg-white p-4 rounded-[16px] shadow-vintage border border-stone-200">
+                    <h3 class="font-bold text-sm border-b border-stone-200 pb-2 text-bookGold flex items-center justify-between" :class="isLargeFont ? 'text-base' : 'text-sm'">
                         <span>🛍️ 官方核定伴手禮採買名錄</span>
-                        <span class="text-[10px] bg-bookGold/10 border border-bookGold text-bookInk px-2 py-0.5 rounded font-bold">精確對齊</span>
+                        <span class="text-[10px] bg-amber-50 border border-bookGold text-bookGold px-2.5 py-0.5 rounded font-bold">精確對齊</span>
                     </h3>
-                    <div class="mt-3.5 space-y-3 text-xs font-bold leading-relaxed text-stone-700 font-serif">
-                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
-                            <p class="text-bookInk font-bold"><i class="fa-solid fa-store text-bookRed mr-1"></i>江頭市場採買：</p>
-                            <p class="text-stone-500 pl-4 font-normal">干貝、蝦米、海苔、魷魚乾</p>
+                    <div class="mt-3.5 space-y-3 font-bold text-stone-900" :class="isLargeFont ? 'text-sm' : 'text-xs'">
+                        <div class="p-2.5 bg-stone-50 rounded border border-stone-200">
+                            <p class="font-bold"><i class="fa-solid fa-store text-bookRed mr-1.5"></i>江頭市場：</p>
+                            <p class="text-stone-700 pl-5 font-medium">干貝、蝦米、海苔、魷魚乾</p>
                         </div>
-                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
-                            <p class="text-bookInk font-bold"><i class="fa-solid fa-leaf text-bookGreen mr-1"></i>南普陀寺採買：</p>
-                            <p class="text-stone-500 pl-4 font-normal">南普陀素餅</p>
+                        <div class="p-2.5 bg-stone-50 rounded border border-stone-200">
+                            <p class="font-bold"><i class="fa-solid fa-leaf text-bookGreen mr-1.5"></i>南普陀寺：</p>
+                            <p class="text-stone-700 pl-5 font-medium">南普陀素餅</p>
                         </div>
-                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
-                            <p class="text-bookInk font-bold"><i class="fa-solid fa-gift text-bookBlue mr-1"></i>鼓浪嶼採買：</p>
-                            <p class="text-stone-500 pl-4 font-normal">花磚杯墊、冰箱貼、帆布袋</p>
+                        <div class="p-2.5 bg-stone-50 rounded border border-stone-200">
+                            <p class="font-bold"><i class="fa-solid fa-gift text-bookBlue mr-1.5"></i>鼓浪嶼：</p>
+                            <p class="text-stone-700 pl-5 font-medium">花磚杯墊、冰箱貼、帆布袋</p>
                         </div>
-                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
-                            <p class="text-bookInk font-bold"><i class="fa-solid fa-cart-shopping text-bookGold mr-1"></i>SM城市廣場採買：</p>
-                            <p class="text-stone-500 pl-4 font-normal">茶葉、綠皮火車伴手禮</p>
+                        <div class="p-2.5 bg-stone-50 rounded border border-stone-200">
+                            <p class="font-bold"><i class="fa-solid fa-cart-shopping text-yellow-700 mr-1.5"></i>SM城市廣場：</p>
+                            <p class="text-stone-700 pl-5 font-medium">茶葉、綠皮火車伴手禮</p>
                         </div>
-                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
-                            <p class="text-bookInk font-bold"><i class="fa-solid fa-bag-shopping text-purple-800 mr-1"></i>中山路步行街採買：</p>
-                            <p class="text-stone-500 pl-4 font-normal">萬得福牛扎餅、阿吉仔餡餅、欲蓮茶樓禮盒、綠皮火車伴手禮</p>
+                        <div class="p-2.5 bg-stone-50 rounded border border-stone-200">
+                            <p class="font-bold"><i class="fa-solid fa-bag-shopping text-purple-800 mr-1.5"></i>中山路步行街：</p>
+                            <p class="text-stone-700 pl-5 font-medium">萬得福牛扎餅、阿吉仔餡餅、欲蓮茶樓禮盒、綠皮火車伴手禮</p>
                         </div>
-                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
-                            <p class="text-bookInk font-bold"><i class="fa-solid fa-pen-nib text-stone-600 mr-1"></i>沙坡尾採買：</p>
-                            <p class="text-stone-500 pl-4 font-normal">文創商品、明信片、插畫周邊</p>
+                        <div class="p-2.5 bg-stone-50 rounded border border-stone-200">
+                            <p class="font-bold"><i class="fa-solid fa-pen-nib text-stone-600 mr-1.5"></i>沙坡尾：</p>
+                            <p class="text-stone-700 pl-5 font-medium">文創商品、明信片、插畫周邊</p>
                         </div>
-                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
-                            <p class="text-bookInk font-bold"><i class="fa-solid fa-box text-orange-700 mr-1"></i>金門在地採買：</p>
-                            <p class="text-stone-500 pl-4 font-normal">貢糖、牛肉乾、麵線</p>
+                        <div class="p-2.5 bg-stone-50 rounded border border-stone-200">
+                            <p class="font-bold"><i class="fa-solid fa-box text-orange-800 mr-1.5"></i>金門在地：</p>
+                            <p class="text-stone-700 pl-5 font-medium">貢糖、牛肉乾、麵線</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ==================== TAB 6: 旅伴成員 (Members - 升級日系拍立得) ==================== -->
+            <!-- ==================== TAB 6: 旅伴成員 (Members) ==================== -->
             <div v-if="currentTab === 'members'" class="space-y-4">
                 
                 <div class="bg-white p-3 rounded-[12px] border border-stone-200 shadow-sm text-center">
-                    <p class="text-xs text-stone-500 font-medium">✨ 點擊每張成員卡片上的 <span class="text-bookGreen font-bold">「編輯 ✏️」</span> 按鈕，自訂旅伴的角色與照片網址！</p>
+                    <p class="text-xs text-stone-500 font-bold">✨ 點擊卡片下方的 <span class="text-bookGreen">「編輯」</span> 按鈕，可自由設定旅伴的照片、職責與期待！</p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div v-for="m in members" :key="m.id" 
-                         class="bg-white p-3 rounded-[16px] shadow-vintage flex flex-col justify-between border-2 border-bookInk relative overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                         class="bg-white p-3.5 rounded-[16px] shadow-flat flex flex-col justify-between border border-stone-200 relative overflow-hidden">
                         
-                        <!-- 頂部日系可愛膠帶 -->
-                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-16 h-4 washi-tape rotate-2 z-10"></div>
-                        
-                        <!-- 拍立得大頭照區域 -->
-                        <div class="mt-2 w-full aspect-square bg-stone-50 rounded-[8px] border-2 border-bookInk overflow-hidden shadow-inner relative flex items-center justify-center">
+                        <!-- 頭像照片區域 -->
+                        <div class="w-full aspect-square bg-stone-100 rounded-[8px] border border-stone-200 overflow-hidden shadow-inner relative flex items-center justify-center">
                             <img v-if="m.photo" :src="m.photo" :alt="m.name" class="w-full h-full object-cover" @error="handleMemberImageError($event, m)">
                             <div v-else class="w-full h-full bg-gradient-to-tr from-stone-100 to-stone-200 flex flex-col items-center justify-center space-y-1">
-                                <span class="text-3xl">{{ m.defaultIcon }}</span>
-                                <span class="text-[9px] text-stone-400">尚未設定相片</span>
+                                <span class="text-4xl">{{ m.defaultIcon }}</span>
+                                <span class="text-[9px] text-stone-400">點擊編輯設定</span>
                             </div>
                         </div>
 
-                        <!-- 隊員詳細資訊 -->
+                        <!-- 隊員資訊 -->
                         <div class="mt-3 text-center space-y-1.5 flex-grow flex flex-col justify-between">
                             <div>
-                                <h4 class="text-sm font-bold text-bookInk font-serif border-b border-stone-100 pb-1">{{ m.name }}</h4>
+                                <h4 class="font-black text-stone-900 border-b border-stone-100 pb-1" :class="isLargeFont ? 'text-base' : 'text-sm'">{{ m.name }}</h4>
                                 <p class="text-[10px] font-bold text-bookGreen tracking-wide mt-1">{{ m.role }}</p>
                             </div>
                             
                             <!-- 心情與期待點 -->
-                            <div class="bg-bookBg/50 p-1.5 rounded-md border border-dashed border-stone-200 text-left space-y-1 text-[10px] leading-relaxed">
-                                <p class="text-stone-600 font-medium"><span class="text-bookGold font-bold">💬：</span>{{ m.mood || '準備出發！✈️' }}</p>
-                                <p class="text-stone-400 text-[9px]"><span class="text-bookBlue">⭐ 期待：</span>{{ m.fav || '小三通漫步' }}</p>
+                            <div class="bg-stone-50 p-2 rounded-md border border-stone-200 text-left space-y-1 text-[10px] leading-relaxed">
+                                <p class="text-stone-800 font-semibold"><span class="text-bookGold">💬：</span>{{ m.mood || '開心出發！✈️' }}</p>
+                                <p class="text-stone-500 font-bold"><span class="text-bookBlue">⭐：</span>{{ m.fav || '金廈悠遊' }}</p>
                             </div>
 
                             <!-- 編輯旅伴按鈕 -->
                             <button @click="openMemberEditModal(m)" 
-                                    class="w-full py-1 text-[9px] font-bold text-bookGreen hover:text-white hover:bg-bookGreen rounded border border-bookGreen/30 transition-all flex items-center justify-center space-x-1 btn-vintage-active">
+                                    class="w-full py-1.5 text-[10px] font-bold text-stone-700 bg-stone-100 hover:bg-stone-200 rounded border border-stone-300 transition-all flex items-center justify-center space-x-1.5 btn-active shadow-sm">
                                 <i class="fa-solid fa-pen-to-square"></i>
-                                <span>編輯成員資訊 ✏️</span>
+                                <span>編輯 ✏️</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ==================== 底部古典導航列 ==================== -->
-            <nav class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-bookInk shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-40 safe-bottom">
+            <!-- ==================== 底部適老放大導航列 ==================== -->
+            <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-40 safe-bottom">
                 <div class="max-w-md mx-auto grid grid-cols-5 h-16 text-[10px] font-bold">
-                    <button @click="currentTab = 'schedule'" :class="currentTab === 'schedule' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
-                        <i class="fa-solid fa-calendar-days text-base mb-0.5"></i><span>行程手記</span>
+                    <button @click="currentTab = 'schedule'" :class="currentTab === 'schedule' ? 'text-bookGreen scale-105' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-active">
+                        <i class="fa-solid fa-calendar-days text-lg mb-0.5"></i><span :class="isLargeFont ? 'text-xs' : 'text-[10px]'">行程手記</span>
                     </button>
-                    <button @click="currentTab = 'bookings'" :class="currentTab === 'bookings' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
-                        <i class="fa-solid fa-passport text-base mb-0.5"></i><span>極密憑證</span>
+                    <button @click="currentTab = 'bookings'" :class="currentTab === 'bookings' ? 'text-bookGreen scale-105' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-active">
+                        <i class="fa-solid fa-passport text-lg mb-0.5"></i><span :class="isLargeFont ? 'text-xs' : 'text-[10px]'">極密憑證</span>
                     </button>
-                    <button @click="currentTab = 'expense'" :class="currentTab === 'expense' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
-                        <i class="fa-solid fa-coins text-base mb-0.5"></i><span>旅程記帳</span>
+                    <button @click="currentTab = 'expense'" :class="currentTab === 'expense' ? 'text-bookGreen scale-105' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-active">
+                        <i class="fa-solid fa-coins text-lg mb-0.5"></i><span :class="isLargeFont ? 'text-xs' : 'text-[10px]'">旅程記帳</span>
                     </button>
-                    <button @click="currentTab = 'planning'" :class="currentTab === 'planning' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
-                        <i class="fa-solid fa-clipboard-list text-base mb-0.5"></i><span>備忘採買</span>
+                    <button @click="currentTab = 'planning'" :class="currentTab === 'planning' ? 'text-bookGreen scale-105' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-active">
+                        <i class="fa-solid fa-clipboard-list text-lg mb-0.5"></i><span :class="isLargeFont ? 'text-xs' : 'text-[10px]'">備忘採買</span>
                     </button>
-                    <button @click="currentTab = 'members'" :class="currentTab === 'members' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
-                        <i class="fa-solid fa-users-gear text-base mb-0.5"></i><span>旅伴成員</span>
+                    <button @click="currentTab = 'members'" :class="currentTab === 'members' ? 'text-bookGreen scale-105' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-active">
+                        <i class="fa-solid fa-users-gear text-lg mb-0.5"></i><span :class="isLargeFont ? 'text-xs' : 'text-[10px]'">旅伴成員</span>
                     </button>
                 </div>
             </nav>
 
             <!-- ==================== 行程修訂彈窗 ==================== -->
             <div v-if="showModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-                <div class="bg-white rounded-[20px] shadow-vintage border-2 border-bookInk p-5 w-full max-w-sm space-y-3 text-xs font-bold">
-                    <h3 class="text-sm font-serif text-bookInk border-b-2 border-bookInk pb-2">{{ isEditing ? '📝 修訂手札條目' : '➕ 簽發新旅程項目' }}</h3>
+                <div class="bg-white rounded-[20px] shadow-flat border border-stone-200 p-5 w-full max-w-sm space-y-3 text-xs font-bold">
+                    <h3 class="text-sm font-bold text-stone-950 border-b border-stone-100 pb-2">{{ isEditing ? '📝 修訂手札條目' : '➕ 簽發新旅程項目' }}</h3>
                     <div class="space-y-2">
                         <div>
                             <label class="block text-[10px] text-stone-400 mb-0.5">推薦時段</label>
-                            <input v-model="formItem.time" type="text" class="w-full border border-bookInk p-2 rounded text-xs bg-white">
+                            <input v-model="formItem.time" type="text" class="w-full border border-stone-300 p-2.5 rounded text-xs bg-white">
                         </div>
                         <div>
                             <label class="block text-[10px] text-stone-400 mb-0.5">項目主題/景點名稱</label>
-                            <input v-model="formItem.title" type="text" class="w-full border border-bookInk p-2 rounded text-xs bg-white">
+                            <input v-model="formItem.title" type="text" class="w-full border border-stone-300 p-2.5 rounded text-xs bg-white">
                         </div>
                         <div>
                             <label class="block text-[10px] text-stone-400 mb-0.5">分類標籤</label>
-                            <select v-model="formItem.category" class="w-full border border-bookInk p-2 rounded bg-white text-xs">
+                            <select v-model="formItem.category" class="w-full border border-stone-300 p-2.5 rounded bg-white text-xs">
                                 <option value="航班">航班</option>
                                 <option value="交通">交通</option>
                                 <option value="住宿">住宿</option>
@@ -544,56 +549,56 @@
                         </div>
                         <div>
                             <label class="block text-[10px] text-stone-400 mb-0.5">行程備忘說明</label>
-                            <textarea v-model="formItem.notes" rows="3" class="w-full border border-bookInk p-2 rounded text-xs bg-white"></textarea>
+                            <textarea v-model="formItem.notes" rows="3" class="w-full border border-stone-300 p-2.5 rounded text-xs bg-white"></textarea>
                         </div>
                     </div>
                     <div class="pt-2 flex justify-end space-x-2">
                         <button @click="showModal = false" class="bg-stone-100 text-stone-500 px-4 py-2 rounded text-xs font-bold">取消</button>
                         <button @click="confirmDelete" v-if="isEditing" class="bg-bookRed text-white px-3 py-2 rounded text-xs font-bold">刪除</button>
-                        <button @click="saveItem" class="bg-bookGreen text-white px-4 py-2 rounded border border-bookInk text-xs font-bold">核准</button>
+                        <button @click="saveItem" class="bg-bookGreen text-white px-4 py-2 rounded border border-bookGreen text-xs font-bold">儲存</button>
                     </div>
                 </div>
             </div>
 
             <!-- ==================== 旅伴編輯彈窗 ==================== -->
             <div v-if="showMemberModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-                <div class="bg-white rounded-[20px] shadow-vintage border-2 border-bookInk p-5 w-full max-w-sm space-y-4 text-xs font-bold">
-                    <div class="border-b-2 border-bookInk pb-2 flex justify-between items-center">
-                        <h3 class="text-sm font-serif text-bookInk">✏️ 編輯旅伴成員：{{ editingMember.name }}</h3>
+                <div class="bg-white rounded-[20px] shadow-flat border border-stone-200 p-5 w-full max-w-sm space-y-4 text-xs font-bold">
+                    <div class="border-b border-stone-200 pb-2 flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-stone-950">✏️ 編輯旅伴成員資訊</h3>
                         <button @click="showMemberModal = false" class="text-stone-400 hover:text-stone-600">✕</button>
                     </div>
                     
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-[10px] text-stone-400 mb-1">大頭貼相片網址 (可填貼上自訂連結，或留空使用手繪頭像)</label>
-                            <input v-model="editingMember.photo" type="text" placeholder="https://images.unsplash.com/..." class="w-full border-2 border-bookInk p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
+                            <label class="block text-[10px] text-stone-400 mb-1">大頭貼相片網址 (請填入圖片連結，或留空使用預設頭像)</label>
+                            <input v-model="editingMember.photo" type="text" placeholder="https://images.unsplash.com/..." class="w-full border-2 border-stone-200 p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
                         </div>
                         <div>
                             <label class="block text-[10px] text-stone-400 mb-1">角色/隊內稱號</label>
-                            <input v-model="editingMember.role" type="text" placeholder="例如：財務大總管 💸" class="w-full border-2 border-bookInk p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
+                            <input v-model="editingMember.role" type="text" placeholder="例如：財務大總管 💸" class="w-full border-2 border-stone-200 p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
                         </div>
                         <div>
-                            <label class="block text-[10px] text-stone-400 mb-1">今日小碎念/旅行心情</label>
-                            <input v-model="editingMember.mood" type="text" placeholder="例如：好期待喝到青草地鮮奶！" class="w-full border-2 border-bookInk p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
+                            <label class="block text-[10px] text-stone-400 mb-1">旅行小碎念/當天心情</label>
+                            <input v-model="editingMember.mood" type="text" placeholder="例如：好期待喝到青草地鮮奶！" class="w-full border-2 border-stone-200 p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
                         </div>
                         <div>
                             <label class="block text-[10px] text-stone-400 mb-1">最期待的景點體驗</label>
-                            <input v-model="editingMember.fav" type="text" placeholder="例如：日光岩眺望海景" class="w-full border-2 border-bookInk p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
+                            <input v-model="editingMember.fav" type="text" placeholder="例如：日光岩眺望海景" class="w-full border-2 border-stone-200 p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
                         </div>
                     </div>
 
                     <div class="pt-2 flex justify-end space-x-2">
-                        <button @click="showMemberModal = false" class="bg-stone-100 text-stone-500 px-4 py-2 rounded text-xs font-bold btn-vintage-active">取消</button>
-                        <button @click="saveMember" class="bg-bookGreen text-white px-5 py-2 rounded border border-bookInk text-xs font-bold btn-vintage-active">核准儲存 🌿</button>
+                        <button @click="showMemberModal = false" class="bg-stone-100 text-stone-500 px-4 py-2 rounded text-xs font-bold btn-active">取消</button>
+                        <button @click="saveMember" class="bg-bookGreen text-white px-5 py-2 rounded border border-bookGreen text-xs font-bold btn-active">核准儲存 🌿</button>
                     </div>
                 </div>
             </div>
 
             <!-- ==================== 自訂警告視窗 (替代原生 alert) ==================== -->
             <div v-if="customAlert.show" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-[99]">
-                <div class="bg-white rounded-[16px] shadow-vintage border-2 border-bookInk p-5 w-full max-w-xs text-center space-y-3">
-                    <p class="text-sm font-serif font-bold text-bookInk whitespace-pre-line">{{ customAlert.message }}</p>
-                    <button @click="customAlert.show = false" class="bg-bookInk text-bookGold px-5 py-1.5 rounded border border-bookGold/40 text-xs font-bold btn-vintage-active">確認</button>
+                <div class="bg-white rounded-[16px] shadow-flat border border-stone-200 p-5 w-full max-w-xs text-center space-y-3">
+                    <p class="text-sm font-bold text-stone-900 whitespace-pre-line">{{ customAlert.message }}</p>
+                    <button @click="customAlert.show = false" class="bg-stone-950 text-white px-5 py-1.5 rounded text-xs font-bold btn-active">確認</button>
                 </div>
             </div>
 
@@ -613,6 +618,9 @@
                 const showModal = ref(false);
                 const isEditing = ref(false);
                 const showPhotoConfig = ref(false);
+
+                // 專為長輩設計的字體大小開關 (預設標準：false, 放大：true)
+                const isLargeFont = ref(false);
 
                 // 旅伴成員編輯狀態
                 const showMemberModal = ref(false);
@@ -659,7 +667,7 @@
                 // 升級版成員資料庫 (預留自訂彈性，持久化本地記憶)
                 const members = ref([
                     { id: 1, name: '姿綾', role: '探險總策劃 🧭', mood: '最期待鼓浪嶼海岸線與老洋房！⛪', photo: '', defaultIcon: '🎒', fav: '鼓浪嶼漫步' },
-                    { id: 2, name: '琬棋', role: '財務小總管 💰', mood: '要把錢錢變成海大富跟八市的海鮮！🦀', photo: '', defaultIcon: '🕶️', fav: '八市海鮮大排檔' },
+                    { id: 2, name: '琬棋', role: '財務小總管 💰', mood: '要把錢錢變成海大富跟八市的海鮮！🦀', photo: '', defaultIcon: '鏡', fav: '八市海鮮大排檔' },
                     { id: 3, name: '媽媽', role: '元氣女主角 🌸', mood: '田螺坑土樓群「四菜一湯」一定很壯觀！', photo: '', defaultIcon: '👑', fav: '福建南靖土樓' },
                     { id: 4, name: '小阿姨', role: '首席美食家 🍱', mood: '聽說青草地鮮奶跟南普陀素餅超厲害！🥛', photo: '', defaultIcon: '⭐', fav: '青草地鮮奶' }
                 ]);
@@ -707,7 +715,7 @@
                     { id: 504, dIdx: 4, category: '美食', time: '12:00-13:30', title: '金城老街午餐與在地特產採買', notes: '享用廣東粥、牛肉麵、炒泡麵。\n順便採買伴手禮：貢糖、牛肉乾、麵線', transitTime: '10', transitIcon: '🎖️' },
                     { id: 505, dIdx: 4, category: '景點', time: '13:40-14:20', title: '莒光樓拍照登頂', notes: '金門代表性核心地標，預留充足拍照時間約 40 分鐘', transitTime: '10', transitIcon: '🥛' },
                     { id: 506, dIdx: 4, category: '美食', time: '14:30-15:00', title: '青草地鮮奶純淨品嚐', notes: '在地推薦品項：鮮奶、鮮奶冰淇淋、鮮奶茶', transitTime: '20', transitIcon: '✈️' },
-                    { id: 507, dIdx: 4, category: '航班', time: '15:20-17:15', title: '機場還車託運 ➔ 返港飛高雄', notes: '15:20 回機場還車+領行李+辦理登機\n15:30-15:45 最晚抵達機場，17:15 金門飛高雄', transitTime: '0', transitIcon: '🏁' }
+                    { id: 507, dIdx: 4, category: '航班', time: '15:20-17:15', title: '機場還車託運 ➔ 返港飛高雄', notes: '15:20 回機場還車+領行李+辦理登機\n15:30-15:45 最晚抵時到達機場，17:15 金門飛高雄', transitTime: '0', transitIcon: '🏁' }
                 ]);
 
                 const expenses = ref([
@@ -751,7 +759,16 @@
                         members.value = JSON.parse(savedMembers);
                     }
                     
+                    const fontState = localStorage.getItem('vint_large_font');
+                    if (fontState) {
+                        isLargeFont.value = JSON.parse(fontState);
+                    }
+                    
                     isMounted.value = true;
+                });
+
+                watch(isLargeFont, (nv) => {
+                    localStorage.setItem('vint_large_font', JSON.stringify(nv));
                 });
 
                 const savePhotos = () => {
@@ -763,7 +780,7 @@
                 const resetPhotos = () => {
                     photoUrls.value = { banner: '', day1: '', day2: '', day3: '', day4: '', day5: '' };
                     localStorage.removeItem('vint_photo_urls');
-                    triggerAlert('已重設為森林風預設照片路徑。');
+                    triggerAlert('已重設為預設照片路徑。');
                 };
 
                 // 開啟旅伴編輯
@@ -785,7 +802,6 @@
 
                 // 旅伴防破圖處理
                 const handleMemberImageError = (e, member) => {
-                    // 若設定的圖片失效，回到森系漸層和 Emoji
                     member.photo = '';
                 };
 
@@ -882,11 +898,11 @@
 
                 const getBadgeColor = (cat) => {
                     switch(cat) {
-                        case '航班': return 'bg-bookGold text-bookInk border-bookInk';
-                        case '交通': return 'bg-bookBlue text-white border-bookInk';
-                        case '住宿': return 'bg-bookGreen text-white border-bookInk';
-                        case '美食': return 'bg-bookRed text-white border-bookInk';
-                        default: return 'bg-stone-100 text-bookInk border-stone-300';
+                        case '航班': return 'bg-amber-100 text-amber-900 border border-amber-300';
+                        case '交通': return 'bg-blue-100 text-blue-900 border border-blue-300';
+                        case '住宿': return 'bg-green-100 text-green-900 border border-green-300';
+                        case '美食': return 'bg-red-100 text-red-900 border border-red-300';
+                        default: return 'bg-stone-100 text-stone-900 border border-stone-300';
                     }
                 };
 
@@ -904,7 +920,7 @@
                 return {
                     isMounted, currentTab, activeDateIdx, filterCategory, pinCode, dates, categories, members, todos, expenses, newExpense, posts, newPost,
                     filteredSchedule, totalExpenseRMB, totalExpenseTWD, showModal, isEditing, formItem, showPhotoConfig, photoUrls, currentWeather, customAlert,
-                    showMemberModal, editingMember,
+                    showMemberModal, editingMember, isLargeFont,
                     openAddModal, openEditModal, saveItem, confirmDelete, moveItem, addExpense, deleteExpense, handleImage, addPost, openGoogleMap, getBadgeColor, getExpenseIcon,
                     handleBannerError, handleDayImageError, savePhotos, resetPhotos, triggerAlert,
                     openMemberEditModal, saveMember, handleMemberImageError
