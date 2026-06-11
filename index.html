@@ -75,20 +75,15 @@
             border-radius: 14px;
         }
 
-        /* 👑 專屬長輩特大字體模式 - 強化版 */
-        .senior-mode, .senior-mode * {
-        font-size: 1.25rem !important; /* 基本文字放大 */
-        line-height: 1.6 !important;
-        }
-        .senior-mode h2, .senior-mode .text-xl { font-size: 1.75rem !important; }
-        .senior-mode h3, .senior-mode .text-lg { font-size: 1.5rem !important; }
-        .senior-mode .text-base { font-size: 1.3rem !important; }
-        .senior-mode .text-xs, .senior-mode .text-[10px], .senior-mode .text-[9px] { font-size: 1.1rem !important; }
-
-        /* 確保按鈕與輸入框在放大模式下不會跑版 */
-        .senior-mode button, .senior-mode input, .senior-mode select {
-        padding: 0.75rem 1rem !important;
-        }
+        /* 👑 專屬長輩特大字體模式 class */
+        .senior-mode .text-[9px] { font-size: 13px !important; line-height: 1.4 !important; }
+        .senior-mode .text-[10px], .senior-mode .text-xs { font-size: 15px !important; line-height: 1.5 !important; }
+        .senior-mode .text-sm { font-size: 17px !important; line-height: 1.6 !important; }
+        .senior-mode .text-base { font-size: 19px !important; line-height: 1.6 !important; }
+        .senior-mode .text-lg, .senior-mode h3 { font-size: 21px !important; line-height: 1.4 !important; font-weight: 800 !important; }
+        .senior-mode .text-xl, .senior-mode h2 { font-size: 24px !important; line-height: 1.4 !important; font-weight: 900 !important; }
+        .senior-mode .p-4 { padding: 1.25rem !important; }
+        .senior-mode select, .senior-mode input, .senior-mode textarea { font-size: 16px !important; }
     </style>
 </head>
 <body class="antialiased flex justify-center min-h-screen pb-24 bg-twilightBg">
@@ -121,7 +116,7 @@
                     <!-- 沉浸式漸層文案 -->
                     <div class="absolute inset-0 bg-gradient-to-t from-twilightBg via-black/10 to-transparent p-4 flex flex-col justify-end">
                         <p class="text-[9px] font-bold tracking-widest text-twilightSand uppercase">COASTAL DISCOVERY BOOK</p>
-                        <h2 class="text-xl font-black mt-0.5 tracking-wide font-title text-white">廈門回憶製造所：一路同行，一路珍藏</h2>
+                        <h2 class="text-xl font-black mt-0.5 tracking-wide font-title text-white">{{ bannerTitle }}</h2>
                         <p class="text-[10px] text-twilightPaper/80 mt-1 font-light tracking-wider">{{ bannerSub }}</p>
                     </div>
                 </div>
@@ -144,11 +139,11 @@
                         </div>
                     </div>
 
-                    <!-- 成員名單與狀態 -->
+                    <!-- 廈門回憶製造所：一路同行，一路珍藏 -->
                     <div class="flex justify-between items-center bg-twilightSlate/60 p-2.5 rounded-[12px] border border-twilightSand/15 text-[10px] text-twilightPaper font-medium">
                         <div class="flex items-center space-x-2">
                             <span class="w-2 h-2 bg-twilightSand rounded-full animate-ping"></span>
-                            <span class="opacity-80">成員：</span>
+                            <span class="opacity-80">廈門回憶製造所：一路同行，一路珍藏</span>
                             <span class="font-bold text-twilightSand">{{ travelers.join('、') }}</span>
                         </div>
                         <span class="text-[9px] bg-twilightSand/20 text-twilightSand border border-twilightSand/30 px-2.5 py-0.5 rounded-full font-bold">行程準備就緒 🚢</span>
