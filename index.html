@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>🎒 金廈大冒險特製手帳 App</title>
+    <title>🧭 金門・廈門 輕裝小三通漫旅 ｜ 秘境悠遊小手帳</title>
     
-    <!-- 引入高鐵速 CDN 樣式與引擎 -->
+    <!-- Tailwind CSS, Vue 3, FontAwesome CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,122 +14,151 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        serif: ['"Noto Serif TC"', 'serif']
+                    },
                     colors: {
-                        toyBg: '#F7F4EB',       // 暖米色手帳網格底
-                        toyPaper: '#FFFFFF',    // 紙張白
-                        toyInk: '#2C2A29',      // 深褐色墨水
-                        toyYellow: '#F4B251',   // 胡迪黃
-                        toyGreen: '#6BBF7C',    // 草原綠
-                        toyBlue: '#5AA9E6',     // 蛋頭藍
-                        toyRed: '#E45757',      // 草莓熊亮紅
-                        toyPurple: '#9B5DE5',   // 巴斯光年紫
-                        toyClay: '#E0E5D5'      // 軟立體陰影
+                        bookBg: '#FAF7F0',       // 暖黃白日系手帳奶油底
+                        bookPaper: '#FFFFFF',    // 紙張白
+                        bookInk: '#2C302E',      // 深森炭灰黑
+                        bookGold: '#D9A05B',     // 暖陽麥黃
+                        bookGreen: '#5F7161',    // 文青草本深綠/苔綠
+                        bookBlue: '#6D8294',     // 霧霾暮藍
+                        bookRed: '#C05C5C',      // 暖陽赤磚紅
+                        bookShadow: '#E4DDD3'    // 輕柔沙灰陰影
                     }
                 }
             }
         }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700;900&display=swap');
+        
         body {
-            background-color: #F7F4EB;
+            background-color: #FAF7F0;
             background-image: 
-                linear-gradient(to right, rgba(224, 229, 213, 0.3) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(224, 229, 213, 0.3) 1px, transparent 1px);
+                linear-gradient(to right, rgba(228, 221, 211, 0.4) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(228, 221, 211, 0.4) 1px, transparent 1px);
             background-size: 20px 20px;
-            color: #2C2A29;
+            color: #2C302E;
             -webkit-tap-highlight-color: transparent;
+            font-family: "Noto Sans TC", sans-serif;
         }
-        /* 立體玩具黏土陰影 */
-        .shadow-toy { box-shadow: 4px 4px 0px #E0E5D5; border: 2px solid #2C2A29; }
-        .shadow-toy-sm { box-shadow: 2px 2px 0px #E0E5D5; border: 2px solid #2C2A29; }
-        .btn-toy-active:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #E0E5D5; }
+        
+        /* 日系手帳軟立體陰影 */
+        .shadow-vintage { box-shadow: 5px 5px 0px #E4DDD3; border: 2px solid #2C302E; }
+        .shadow-vintage-sm { box-shadow: 3px 3px 0px #E4DDD3; border: 2px solid #2C302E; }
+        .btn-vintage-active:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #E4DDD3; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem); }
         
-        /* 拍立得手帳貼紙特效 */
-        .polaroid-rotate-left { transform: rotate(-1.5deg); }
-        .polaroid-rotate-right { transform: rotate(1.5deg); }
-        
-        /* 紙膠帶紋理 */
-        .washi-tape-red {
-            background: rgba(228, 87, 87, 0.75);
-            background-image: radial-gradient(rgba(255,255,255,0.3) 15%, transparent 16%);
+        /* 日系膠帶與拍立得框 */
+        .washi-tape {
+            background: rgba(95, 113, 97, 0.25);
+            background-image: radial-gradient(rgba(44, 48, 46, 0.1) 15%, transparent 16%);
             background-size: 8px 8px;
-        }
-        .washi-tape-blue {
-            background: rgba(90, 169, 230, 0.75);
-            background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%);
-            background-size: 10px 10px;
         }
     </style>
 </head>
 <body class="antialiased flex justify-center min-h-screen pb-28">
 
     <div id="app" class="w-full max-w-md px-4 pt-4 flex flex-col space-y-4">
-        <!-- 備用安全救磚畫面：載入中顯示 -->
-        <div v-if="!isMounted" class="bg-white p-8 rounded-[24px] shadow-toy text-center my-auto space-y-4">
-            <p class="text-xl font-bold">🎨 正在繪製精美旅行手帳...</p>
-            <p class="text-xs text-zinc-400 leading-relaxed">
-                正在載入玩具總動員配色與金廈手冊實景插圖！<br>
-                請確保您的手機/電腦已連上網路唷！
+        
+        <!-- 載入中動畫 -->
+        <div v-if="!isMounted" class="bg-white p-8 rounded-[16px] shadow-vintage text-center my-auto space-y-4">
+            <p class="text-xl font-bold font-serif">🌿 正在翻開日系森系手帳...</p>
+            <p class="text-xs text-stone-400 leading-relaxed">
+                正在為您調整思源字體、草本配色與海況動態看板，請稍候...
             </p>
         </div>
 
-        <!-- Vue 正式挂載結構 -->
+        <!-- 正式掛載結構 -->
         <template v-if="isMounted">
             
-            <div class="relative bg-white border-2 border-toyInk rounded-[28px] shadow-toy overflow-hidden p-4 flex flex-col space-y-3">
-                <!-- 裝飾紙膠帶 -->
-                <div class="absolute -top-1 left-1/4 -translate-x-1/2 w-20 h-5 washi-tape-red -rotate-3 z-20 border border-white/20"></div>
-                <div class="absolute -top-1 right-1/4 translate-x-1/2 w-20 h-5 washi-tape-blue rotate-6 z-20 border border-white/20"></div>
+            <!-- 日系手帳封面頭部 -->
+            <div class="relative bg-white border-2 border-bookInk rounded-[20px] shadow-vintage overflow-hidden p-4 flex flex-col space-y-3">
                 
-                <!-- 視覺拍立得圖片區 -->
-                <div class="relative w-full h-[150px] bg-zinc-100 rounded-[16px] overflow-hidden border-2 border-toyInk shadow-inner">
-                    <img src="banner.jpg" alt="金廈大冒險" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=800&q=80'">
-                    <!-- 浮動漸層與文字 -->
-                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-white">
-                        <p class="text-xs font-bold opacity-80">✈️ 6/18 - 6/22 乘風破浪</p>
-                        <h2 class="text-base font-black">姿綾、琬棋、媽媽、小阿姨 專屬手帳</h2>
+                <!-- 日系文青膠帶裝飾 -->
+                <div class="absolute -top-1 left-12 w-24 h-6 washi-tape rotate-6 z-20 opacity-90 border-b border-stone-200"></div>
+
+                <!-- 相片管理面板齒輪按鈕 -->
+                <button @click="showPhotoConfig = !showPhotoConfig" class="absolute top-3 right-3 z-30 bg-bookInk text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-bookGreen transition-colors shadow-md border border-bookBg/40">
+                    <i class="fa-solid fa-gear" :class="{'fa-spin': showPhotoConfig}"></i>
+                </button>
+
+                <!-- 封面拍立得相框 -->
+                <div class="relative w-full h-[160px] bg-stone-50 rounded-[12px] overflow-hidden border-2 border-bookInk shadow-inner">
+                    <img :src="photoUrls.banner || 'banner.jpg'" alt="金廈大冒險" class="w-full h-full object-cover" @error="handleBannerError">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-bookInk via-bookInk/65 to-transparent p-3 text-white">
+                        <p class="text-[9px] uppercase tracking-widest text-bookGold font-bold">⏱️ Jun 18 - Jun 22 / 輕裝小三通慢旅</p>
+                        <h2 class="text-base font-bold font-serif">金門 × 廈門 秘境悠遊小手帳</h2>
                     </div>
                 </div>
 
-                <!-- 倒數計時與狀態 -->
-                <div class="flex justify-between items-center bg-toyBg/80 p-2.5 rounded-[16px] border border-toyInk/10 text-xs font-bold">
-                    <span class="text-zinc-500">🌟 距離出發還有：</span>
-                    <span class="text-toyRed font-mono font-black text-sm bg-white px-2.5 py-0.5 rounded-full border border-toyInk/15 shadow-sm">Ready 🚀</span>
+                <!-- 出發狀態 -->
+                <div class="flex justify-between items-center bg-bookBg/80 p-2.5 rounded-[12px] border border-bookInk/10 text-xs font-bold">
+                    <span class="text-stone-600"><i class="fa-solid fa-seedling mr-1 text-bookGreen"></i> 出發起點：岡山捷運 ➔</span>
+                    <span class="text-bookGreen font-serif font-bold text-xs bg-white px-3 py-0.5 rounded border border-bookInk/20 shadow-sm"> READY 🌿</span>
+                </div>
+            </div>
+
+            <!-- ==================== 一鍵相片管理面板 ⚙️ ==================== -->
+            <div v-if="showPhotoConfig" class="bg-stone-800 text-stone-200 p-4 rounded-[20px] shadow-vintage border-2 border-bookInk space-y-3 text-xs">
+                <div class="flex justify-between items-center border-b border-stone-600 pb-1.5">
+                    <span class="font-bold text-bookGold text-sm font-serif"><i class="fa-solid fa-sliders mr-1"></i> 專屬相片網址自訂面板</span>
+                    <button @click="showPhotoConfig = false" class="text-stone-400 hover:text-white">✕</button>
+                </div>
+                <div class="space-y-2">
+                    <div>
+                        <label class="block text-[11px] text-stone-400 mb-0.5">首頁 Banner 相片網址：</label>
+                        <input v-model="photoUrls.banner" type="text" placeholder="輸入圖片網址..." class="w-full bg-stone-700 border border-stone-600 rounded px-2 py-1 text-white text-[11px]">
+                    </div>
+                    <div v-for="n in 5" :key="n">
+                        <label class="block text-[11px] text-stone-400 mb-0.5">Day {{ n }} 行程卡片首圖：</label>
+                        <input v-model="photoUrls['day'+n]" type="text" placeholder="輸入圖片網址..." class="w-full bg-stone-700 border border-stone-600 rounded px-2 py-1 text-white text-[11px]">
+                    </div>
+                </div>
+                <div class="pt-1 flex justify-end space-x-2">
+                    <button @click="resetPhotos" class="bg-stone-600 text-stone-300 px-3 py-1 rounded hover:bg-stone-500 font-bold">還原預設</button>
+                    <button @click="savePhotos" class="bg-bookGold text-bookInk px-4 py-1 rounded font-bold hover:bg-yellow-500">儲存變更</button>
                 </div>
             </div>
 
             <!-- ==================== TAB 1: 每日行程表 (Schedule) ==================== -->
             <div v-if="currentTab === 'schedule'" class="space-y-4">
                 
-                <!-- 橫向滑動日期選擇 -->
+                <!-- 日系滑動日期標籤 -->
                 <div class="flex space-x-2 overflow-x-auto pb-1 no-scrollbar">
                     <button v-for="(d, idx) in dates" :key="idx" @click="activeDateIdx = idx"
-                            :class="activeDateIdx === idx ? 'bg-toyInk text-white' : 'bg-white text-toyInk'"
-                            class="flex flex-col items-center justify-center min-w-[64px] h-[75px] rounded-[18px] shadow-toy-sm btn-toy-active transition-all shrink-0">
-                        <span class="text-[11px] font-black uppercase" :class="activeDateIdx === idx ? 'text-white/60' : 'text-zinc-400'">{{ d.week }}</span>
-                        <span class="text-lg font-black mt-0.5">{{ d.day }}</span>
+                            :class="activeDateIdx === idx ? 'bg-bookGreen text-white border-bookGreen' : 'bg-white text-bookInk border-stone-200'"
+                            class="flex flex-col items-center justify-center min-w-[68px] h-[72px] rounded-[14px] border-2 shadow-vintage-sm btn-vintage-active transition-all shrink-0">
+                        <span class="text-[10px] font-bold tracking-tight" :class="activeDateIdx === idx ? 'text-white/80' : 'text-stone-400'">{{ d.week }}</span>
+                        <span class="text-base font-bold font-serif mt-0.5">{{ d.day }}</span>
                     </button>
                 </div>
 
-                <!-- 天氣資訊卡片 -->
-                <div class="bg-sky-100 p-3 rounded-[18px] border-2 border-dashed border-toyInk flex justify-between items-center text-xs">
-                    <div class="flex items-center space-x-2">
-                        <span class="text-2xl">☀️</span>
-                        <div>
-                            <span class="font-black text-sky-900">當地天氣預估：晴朗舒適</span>
-                            <p class="text-zinc-500 text-[10px] mt-0.5">體感溫度 29°C · 海況平穩適合小三通</p>
+                <!-- 智能天氣與船班海況動態看板 -->
+                <div class="bg-white p-3.5 rounded-[16px] border-2 border-bookInk flex justify-between items-center text-xs shadow-vintage-sm">
+                    <div class="flex items-start space-x-2.5">
+                        <span class="text-2xl mt-0.5">{{ currentWeather.icon }}</span>
+                        <div class="space-y-1">
+                            <span class="font-bold text-bookInk text-xs font-serif"><i class="fa-solid fa-feather-pointed text-bookGreen mr-1"></i>今日氣象與海象手記：</span>
+                            <p class="text-stone-600 text-[11px] font-medium leading-tight">{{ currentWeather.desc }}</p>
+                            <p class="text-bookBlue text-[10px] font-bold bg-stone-50 border border-bookBlue/20 px-2 py-0.5 rounded inline-block">
+                                <i class="fa-solid fa-ship mr-1"></i>{{ currentWeather.seaState }}
+                            </p>
                         </div>
                     </div>
-                    <div class="font-mono font-black text-sky-950 text-sm bg-white/60 px-2.5 py-1 rounded-lg border border-toyInk/10">27°C</div>
+                    <div class="font-mono font-bold text-bookInk text-xs bg-bookBg border border-bookInk/20 px-2 py-1 rounded-md text-center shrink-0 shadow-sm">
+                        體感<br><span class="text-bookRed font-bold text-sm">{{ currentWeather.temp }}</span>
+                    </div>
                 </div>
 
-                <!-- 行程分類篩選 -->
-                <div class="flex items-center space-x-2 bg-white/80 p-2.5 rounded-[16px] border-2 border-toyInk">
-                    <span class="text-[10px] font-black text-zinc-400 shrink-0">篩選類別：</span>
-                    <select v-model="filterCategory" class="w-full bg-transparent text-xs font-black text-toyInk outline-none cursor-pointer">
-                        <option value="全部">全部行程項目</option>
+                <!-- 分類篩選 -->
+                <div class="flex items-center space-x-2 bg-white p-2.5 rounded-[12px] border-2 border-bookInk">
+                    <span class="text-[11px] font-bold text-stone-400 shrink-0"><i class="fa-solid fa-filter mr-1"></i>篩選手記：</span>
+                    <select v-model="filterCategory" class="w-full bg-transparent text-xs font-bold text-bookInk outline-none cursor-pointer">
+                        <option value="全部">顯示全部旅程項目</option>
                         <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
                     </select>
                 </div>
@@ -139,52 +168,56 @@
                     <div v-for="(item, idx) in filteredSchedule" :key="item.id" class="relative">
                         
                         <!-- 預估交通耗時引導 -->
-                        <div v-if="idx > 0" class="flex justify-center items-center py-2 text-[10px] font-black text-zinc-400 space-x-1.5">
-                            <span>{{ item.transitIcon || '🚗' }}</span>
-                            <span>下個景點大約需要 {{ item.transitTime || '15' }} 分鐘</span>
+                        <div v-if="idx > 0" class="flex justify-center items-center py-2 text-[11px] font-bold text-stone-500 space-x-1.5">
+                            <span>{{ item.transitIcon || '⏱️' }}</span>
+                            <span class="bg-stone-200/40 px-2.5 py-0.5 rounded-full border border-stone-200 text-[10px]">預估移動大約需時 {{ item.transitTime || '15' }} 分鐘</span>
                         </div>
 
-                        <!-- 每日第一個行程的交通起點說明 -->
-                        <div v-if="idx === 0 && activeDateIdx > 0" class="mb-3 flex justify-center items-center py-1.5 bg-zinc-100 border-2 border-dashed border-toyInk/20 rounded-xl text-[10px] font-black text-zinc-500">
-                            <span>🏨 出發起點：宜度潮宿 ➔ 沿途開啟探索</span>
+                        <!-- 每日出發起點說明 -->
+                        <div v-if="idx === 0 && activeDateIdx > 0" class="mb-3 flex justify-center items-center py-2 bg-white border-2 border-dashed border-bookGreen/30 rounded-xl text-[11px] font-bold text-bookGreen shadow-sm">
+                            <span>🏨 全日落腳：中山路步行街 ‧ 宜度・潮宿家庭房</span>
                         </div>
 
-                        <!-- 拍立得風手帳卡片 -->
-                        <div class="bg-white rounded-[24px] shadow-toy overflow-hidden border-2 border-toyInk flex flex-col relative">
-                            <!-- 實景照片插圖 -->
-                            <div v-if="item.image" class="w-full h-40 relative bg-zinc-100 overflow-hidden border-b-2 border-toyInk">
-                                <img :src="item.image" class="w-full h-full object-cover">
-                                <span class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm border border-toyInk text-[9px] font-black px-2.5 py-0.5 rounded-full shadow-sm">
-                                    📸 精彩看點
+                        <!-- 古典探險手札卡片 -->
+                        <div class="bg-white rounded-[16px] shadow-vintage overflow-hidden border-2 border-bookInk flex flex-col relative">
+                            
+                            <!-- 第一個景點照片區 -->
+                            <div v-if="idx === 0" class="w-full h-44 relative bg-stone-100 overflow-hidden border-b-2 border-bookInk">
+                                <img :src="photoUrls['day' + (activeDateIdx + 1)] || 'image_1ee31d.png'" 
+                                     class="w-full h-full object-cover" 
+                                     @error="handleDayImageError($event, activeDateIdx + 1)">
+                                <span class="absolute top-3 left-3 bg-bookGreen text-white border border-white/20 text-[10px] font-bold px-2.5 py-0.5 rounded-md shadow-md font-serif">
+                                    🗺️ FIELD PHOTO
                                 </span>
                             </div>
 
-                            <div class="p-4">
+                            <div class="p-4 space-y-2">
                                 <div class="flex justify-between items-center">
-                                    <span :class="getBadgeColor(item.category)" class="text-[9px] font-black px-2.5 py-0.5 rounded-md border border-toyInk">
+                                    <span :class="getBadgeColor(item.category)" class="text-[10px] font-bold px-2.5 py-0.5 rounded border border-bookInk shadow-sm">
                                         {{ item.category }}
                                     </span>
-                                    <div class="flex items-center space-x-1">
-                                        <button @click="moveItem(idx, -1)" class="p-1 text-[10px] text-zinc-300 hover:text-toyInk font-black">▲</button>
-                                        <button @click="moveItem(idx, 1)" class="p-1 text-[10px] text-zinc-300 hover:text-toyInk font-black">▼</button>
+                                    <span class="font-mono text-xs font-bold text-stone-500"><i class="fa-regular fa-clock mr-1"></i>{{ item.time }}</span>
+                                </div>
+                                
+                                <h3 class="text-sm md:text-base font-bold font-serif text-bookInk leading-tight border-b border-stone-100 pb-1">{{ item.title }}</h3>
+                                
+                                <div class="text-[11px] text-stone-600 space-y-1 font-medium leading-relaxed">
+                                    <!-- 手冊文字一模一樣呈現 -->
+                                    <div class="text-stone-800 bg-bookBg/50 p-3 rounded-lg border border-dashed border-stone-300 whitespace-pre-line text-[11px] leading-relaxed">
+                                        {{ item.notes }}
                                     </div>
                                 </div>
-                                
-                                <h3 class="text-base font-black mt-2 leading-tight text-toyInk">{{ item.title }}</h3>
-                                
-                                <div class="text-[11px] text-zinc-500 mt-2 space-y-1 font-bold">
-                                    <p v-if="item.time">⏰ 推薦時段：{{ item.time }}</p>
-                                    <p v-if="item.category === '景點' && item.ticket">🎟️ 門票估算：{{ item.ticket }}</p>
-                                    <p v-if="item.notes" class="text-zinc-400 italic bg-toyBg/40 p-2.5 rounded-lg border border-dashed border-toyInk/10 mt-1.5 font-normal leading-relaxed">
-                                        📌 備忘特色：{{ item.notes }}
-                                    </p>
-                                </div>
 
-                                <div class="mt-4 pt-2.5 border-t-2 border-dashed border-zinc-100 flex justify-between items-center">
-                                    <button @click="openGoogleMap(item.title)" class="text-[10px] bg-toyBg border-2 border-toyInk text-toyInk font-black px-3 py-1.5 rounded-xl btn-toy-active flex items-center space-x-1">
-                                        <i class="fa-solid fa-compass"></i><span>地圖導航</span>
+                                <div class="pt-2 flex justify-between items-center">
+                                    <button @click="openGoogleMap(item.title)" class="text-[10px] bg-bookBg border border-bookInk text-bookInk font-bold px-3 py-1.5 rounded-md btn-vintage-active flex items-center space-x-1 shadow-sm">
+                                        <i class="fa-solid fa-location-dot text-bookRed"></i><span>地圖定位</span>
                                     </button>
-                                    <button @click="openEditModal(item)" class="text-[10px] font-black text-zinc-400 hover:text-zinc-700 px-2 py-1">編輯行程</button>
+                                    <div class="flex items-center space-x-1 text-stone-400">
+                                        <button @click="moveItem(idx, -1)" class="p-1 text-[11px] hover:text-bookInk font-bold">▲</button>
+                                        <button @click="moveItem(idx, 1)" class="p-1 text-[11px] hover:text-bookInk font-bold">▼</button>
+                                        <span class="text-stone-200 mx-1">|</span>
+                                        <button @click="openEditModal(item)" class="text-[10px] font-bold text-stone-400 hover:text-bookGold">修訂</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -192,310 +225,383 @@
                     </div>
                 </div>
 
+                <!-- 訂房備忘簡化速覽 -->
+                <div v-if="activeDateIdx === 1 || activeDateIdx === 2" class="p-3 bg-white border-2 border-bookInk rounded-[14px] text-xs font-bold shadow-vintage-sm">
+                    <p class="text-bookGreen font-serif"><i class="fa-solid fa-mug-hot mr-1"></i> 今日提醒：宜度・潮宿早餐供應 (07:00-10:00)</p>
+                    <p class="text-[10px] text-stone-500 mt-1 pl-4 font-normal">免費早餐 2 份：陳儀芳、陳怡靜。建議今日使用最划算！</p>
+                </div>
+
                 <!-- 浮動新增按鈕 -->
-                <button @click="openAddModal" class="fixed bottom-20 right-[calc(50%-200px)] max-md:right-6 z-30 bg-toyRed text-white p-3.5 rounded-full shadow-toy hover:scale-105 active:scale-95 transition-all">
-                    <i class="fa-solid fa-plus text-lg"></i>
+                <button @click="openAddModal" class="fixed bottom-20 right-[calc(50%-200px)] max-md:right-6 z-30 bg-bookGreen text-white p-3.5 rounded-full shadow-vintage hover:bg-bookInk transition-colors">
+                    <i class="fa-solid fa-feather-pointed text-lg"></i>
                 </button>
             </div>
 
             <!-- ==================== TAB 2: 預訂憑證 (Bookings) ==================== -->
             <div v-if="currentTab === 'bookings'" class="space-y-4">
-                <div class="bg-white p-3 rounded-[16px] shadow-toy-sm text-xs font-bold flex justify-between items-center">
-                    <span>🔒 保護中，請輸入 PIN 密碼解鎖：</span>
-                    <input v-model="pinCode" type="password" placeholder="密碼" class="w-16 border-2 border-toyInk rounded-lg px-2 py-0.5 text-center font-bold text-sm outline-none focus:border-toyYellow">
+                <div class="bg-white p-3 rounded-[12px] shadow-vintage-sm text-xs font-bold flex justify-between items-center border-2 border-bookInk">
+                    <span>🔒 輸入憑證密碼解鎖：</span>
+                    <input v-model="pinCode" type="password" placeholder="密碼" class="w-20 border border-bookInk rounded px-2 py-0.5 text-center font-bold text-sm bg-stone-50 focus:bg-white outline-none">
                 </div>
 
                 <div v-if="pinCode === '007'" class="space-y-4">
-                    <!-- 去程登機證 -->
-                    <div class="bg-white rounded-[22px] shadow-toy overflow-hidden">
-                        <div class="bg-toyYellow p-3 border-b-2 border-toyInk flex justify-between items-center font-black text-[10px]">
-                            <span>✈️ BOARDING PASS (去程航班)</span>
+                    <!-- 去程航空 -->
+                    <div class="bg-white rounded-[14px] shadow-vintage overflow-hidden border-2 border-bookInk">
+                        <div class="bg-bookGold text-bookInk p-3 border-b-2 border-bookInk flex justify-between items-center font-bold text-[11px] tracking-wider font-serif">
+                            <span>✈️ OUTBOUND FLIGHT BOARDING PASS</span>
                             <span class="font-mono">6/18 (四)</span>
                         </div>
-                        <div class="p-4 grid grid-cols-2 gap-2 text-xs font-bold text-zinc-700 leading-relaxed">
-                            <div>去程航線：<span class="font-black text-toyRed">高雄小港 ➔ 金門</span></div>
-                            <div>班次班號：<span>立榮航空 B78920</span></div>
-                            <div>報到時間：<span class="text-toyBlue font-black">11:10 (最晚11:30)</span></div>
-                            <div>起飛時間：<span>13:30</span></div>
+                        <div class="p-4 grid grid-cols-1 gap-2 text-xs font-bold text-stone-800 leading-relaxed font-serif">
+                            <div>去程航線：高雄小港 ➔ 金門 (約1小時)</div>
+                            <div>班次班號：<span class="text-bookRed">立榮航空 B78920</span></div>
+                            <div>報到時間：<span class="text-bookGreen font-mono">11:10-12:00 (最晚 11:30 到)</span></div>
+                            <div>起飛時點：<span>13:30 正式起飛 (14:35抵達金門)</span></div>
                         </div>
                     </div>
 
-                    <!-- 回程登機證 -->
-                    <div class="bg-white rounded-[22px] shadow-toy overflow-hidden">
-                        <div class="bg-toyPurple text-white p-3 border-b-2 border-toyInk flex justify-between items-center font-black text-[10px]">
-                            <span>✈️ BOARDING PASS (回程航班)</span>
+                    <!-- 回程航空 -->
+                    <div class="bg-white rounded-[14px] shadow-vintage overflow-hidden border-2 border-bookInk">
+                        <div class="bg-bookRed text-white p-3 border-b-2 border-bookInk flex justify-between items-center font-bold text-[11px] tracking-wider font-serif">
+                            <span>✈️ RETURN FLIGHT CONFIRMATION</span>
                             <span class="font-mono">6/22 (一)</span>
                         </div>
-                        <div class="p-4 grid grid-cols-2 gap-2 text-xs font-bold text-zinc-700 leading-relaxed">
-                            <div>回程航線：<span class="font-black text-toyPurple">金門機場 ➔ 高雄小港</span></div>
-                            <div>班次班號：<span>立榮/華信預留航班</span></div>
-                            <div>機場還車：<span class="text-toyGreen font-black">15:20 抵達</span></div>
-                            <div>返港起飛：<span>17:15</span></div>
+                        <div class="p-4 grid grid-cols-1 gap-2 text-xs font-bold text-stone-800 leading-relaxed font-serif">
+                            <div>回程航線：金門機場 ➔ 高雄小港</div>
+                            <div>返台還車：<span class="text-bookGreen">15:20 抵達機場辦理還車與託運</span></div>
+                            <div>返港航班：<span>17:15 起飛返高</span></div>
                         </div>
                     </div>
 
                     <!-- 小三通船班憑證 -->
-                    <div class="bg-white rounded-[22px] shadow-toy overflow-hidden">
-                        <div class="bg-toyBlue text-white p-3 border-b-2 border-toyInk flex justify-between items-center font-black text-[10px]">
-                            <span>🚢 FERRY TICKET (小三通新五緣輪)</span>
+                    <div class="bg-white rounded-[14px] shadow-vintage overflow-hidden border-2 border-bookInk">
+                        <div class="bg-bookBlue text-white p-3 border-b-2 border-bookInk flex justify-between items-center font-bold text-[11px] tracking-wider font-serif">
+                            <span>🚢 CROSS-STRAIT FERRY TICKET</span>
                             <span class="font-mono">6/18 (四)</span>
                         </div>
-                        <div class="p-4 text-xs font-bold space-y-1.5 text-zinc-700">
-                            <p>小三通航線：<span class="font-black text-toyInk">金門水頭碼頭 ➔ 廈門五通碼頭</span></p>
-                            <p>出境開船時間：<span class="text-toyRed font-black">17:30</span> (16:00前必須抵達水頭完成安檢)</p>
-                            <div class="bg-toyBg/80 p-2.5 rounded-xl border border-toyInk/10 font-mono text-[11px] font-black text-toyInk flex justify-between items-center">
-                                <span>🎟️ 船班電子定位碼：</span>
-                                <span class="bg-white px-2 py-0.5 rounded border border-toyInk text-toyRed">NZAX7E</span>
+                        <div class="p-4 text-xs font-bold space-y-2 text-stone-800 font-serif">
+                            <p>船班名稱：<span class="font-black text-bookInk">新五緣輪</span></p>
+                            <p>海港航線：金門水頭碼頭 ➔ 廈門五通碼頭</p>
+                            <p>時間節點：<span class="text-bookRed">17:30 開船</span> (16:00前最晚抵達完成出境通關安檢)</p>
+                            <div class="bg-stone-100 p-2.5 rounded-lg border border-bookInk/20 font-mono text-xs font-bold text-bookInk flex justify-between items-center">
+                                <span>🎟️ 船班官方電子定位碼：</span>
+                                <span class="bg-bookInk text-bookGold px-2.5 py-1 rounded font-bold border border-bookGold">NZAX7E</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 飯店入住詳細 -->
-                    <div class="bg-white rounded-[22px] shadow-toy p-4 text-xs font-bold space-y-2.5">
-                        <div class="flex justify-between items-center border-b-2 border-dashed border-toyInk/20 pb-2">
-                            <h3 class="text-sm font-black text-toyGreen">🏨 飯店：宜度・潮宿家庭房</h3>
-                            <span class="bg-zinc-100 text-[10px] px-2 py-0.5 rounded-lg">中山路步行街核心</span>
+                    <div class="bg-white rounded-[14px] shadow-vintage p-4 text-xs font-bold space-y-2.5 border-2 border-bookInk font-serif">
+                        <div class="flex justify-between items-center border-b-2 border-dashed border-stone-200 pb-2">
+                            <h3 class="text-sm font-bold text-bookGreen">🏨 住所：宜度・潮宿家庭房</h3>
+                            <span class="bg-stone-100 text-[10px] px-2 py-0.5 rounded border border-bookInk">中山路步行街</span>
                         </div>
-                        <p class="text-zinc-700">🍳 早餐：附免費早餐 2 份 (登記人：陳儀芳、陳怡靜)</p>
-                        <p class="text-zinc-500 font-normal leading-relaxed bg-toyBg/40 p-2 rounded-xl">
-                            ⏱️ 早餐時段 07:00 - 10:00。<br>
-                            💡 建議在 Day 2 / Day 3 使用，體驗中山路步行街的美好早晨。
+                        <p class="text-stone-800">🍳 團隊免費早餐：提供 2 份 (登記人：陳儀芳、陳怡靜)</p>
+                        <p class="text-stone-500 font-normal bg-bookBg/50 p-2.5 rounded-lg leading-relaxed text-[11px]">
+                            ⏱️ 早餐供應時段 07:00 - 10:00。<br>
+                            💡 建議在 Day 2 / Day 3 使用最為划算！
                         </p>
                     </div>
-
-                    <!-- 租車及導航 -->
-                    <div class="bg-white rounded-[22px] shadow-toy p-4 text-xs font-bold space-y-2">
-                        <h3 class="text-sm font-black text-toyYellow border-b-2 border-dashed border-toyInk/20 pb-2">🚗 金門租車 (金豐租車機場服務台)</h3>
-                        <p class="text-zinc-700">⏱️ 機場服務台取車還車時段：08:30 - 18:30</p>
-                        <p class="text-[10px] text-zinc-400 font-normal">※ 提供甲租乙還（機場取、碼頭還或反之），也可備選冠城或 ZOCHA 手機預約。</p>
-                        <button @click="openGoogleMap('金門金豐租車機場服務台')" class="w-full text-center text-[10px] bg-zinc-100 py-2.5 rounded-xl border-2 border-toyInk btn-toy-active mt-2 flex items-center justify-center space-x-1">
-                            <i class="fa-solid fa-car-side"></i><span>導航到租車地點</span>
-                        </button>
-                    </div>
                 </div>
-                <div v-else class="text-center py-16 text-zinc-400 text-xs font-bold leading-relaxed">
-                    ⚠️ 此欄位儲存重要憑證、訂房早餐姓名及船班定位碼。<br>
-                    請在上方輸入正確的解鎖密碼即可解鎖 (提示：007)。
+                <div v-else class="text-center py-16 text-stone-400 text-xs font-bold leading-relaxed space-y-2">
+                    <p>⚠️ 此欄位儲存重要憑證、訂房早餐姓名及船班定位碼。</p>
+                    <p>請在上方輸入正確的解鎖密碼即可解鎖 (提示：007)。</p>
                 </div>
             </div>
 
             <!-- ==================== TAB 3: 旅遊記帳 (Expense) ==================== -->
             <div v-if="currentTab === 'expense'" class="space-y-4">
-                <!-- 記帳大看板 -->
-                <div class="bg-toyGreen text-white p-5 rounded-[24px] shadow-toy text-center relative overflow-hidden">
-                    <span class="text-[10px] font-black block tracking-wider uppercase opacity-90">目前旅遊累計花費 (台幣估算)</span>
-                    <h2 class="text-3xl font-black mt-1 font-mono">NT$ {{ totalExpenseTWD }} <span class="text-xs font-normal">元</span></h2>
-                    <div class="mt-3 text-[10px] bg-black/15 py-1.5 px-3 rounded-full inline-block font-mono">
-                        外幣記帳累積：¥ {{ totalExpenseRMB }} (匯率自動以 4.5 換算)
+                <!-- 記帳看板 -->
+                <div class="bg-bookGreen text-bookBg p-5 rounded-[20px] shadow-vintage text-center border-2 border-bookInk">
+                    <span class="text-[10px] font-bold block tracking-widest uppercase opacity-80">總體經費累計支出 (新台幣估算)</span>
+                    <h2 class="text-3xl font-bold mt-1 font-serif">NT$ {{ totalExpenseTWD }} <span class="text-sm font-normal">元</span></h2>
+                    <div class="mt-2 text-[10px] bg-black/20 py-1 px-3 rounded-full inline-block font-mono">
+                        外幣記帳：¥ {{ totalExpenseRMB }} (匯率基準 4.5 換算)
                     </div>
                 </div>
 
-                <!-- 手動隨手記表單 -->
-                <div class="bg-white p-4 rounded-[22px] shadow-toy text-xs font-bold space-y-3">
+                <!-- 記帳表單 -->
+                <div class="bg-white p-4 rounded-[16px] shadow-vintage text-xs font-bold space-y-3 border-2 border-bookInk">
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
-                            <label class="block text-[10px] text-zinc-400 mb-1">外幣金額 (RMB)</label>
-                            <input v-model.number="newExpense.amount" type="number" pattern="[0-9]*" placeholder="¥ 記帳金額" class="w-full border-2 border-toyInk rounded-xl p-2.5 font-mono text-sm outline-none">
+                            <label class="block text-[10px] text-stone-500 mb-1">外幣金額 (RMB)</label>
+                            <input v-model.number="newExpense.amount" type="number" placeholder="¥ 金額" class="w-full border-2 border-bookInk rounded-md p-2 font-mono text-xs outline-none bg-stone-50 focus:bg-white">
                         </div>
                         <div>
-                            <label class="block text-[10px] text-zinc-400 mb-1">品項名稱</label>
-                            <input v-model="newExpense.title" type="text" placeholder="例如：海大富海鮮" class="w-full border-2 border-toyInk rounded-xl p-2.5 text-sm outline-none">
+                            <label class="block text-[10px] text-stone-500 mb-1">消費項目</label>
+                            <input v-model="newExpense.title" type="text" placeholder="例：海大富自助海鮮" class="w-full border-2 border-bookInk rounded-md p-2 text-xs outline-none bg-stone-50 focus:bg-white">
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
-                            <label class="block text-[10px] text-zinc-400 mb-1">類別</label>
-                            <select v-model="newExpense.category" class="w-full border-2 border-toyInk bg-transparent rounded-xl p-2.5 cursor-pointer">
-                                <option value="美食">🍱 美食</option>
-                                <option value="交通">🚗 交通</option>
-                                <option value="購物">🛍️ 購物</option>
-                                <option value="門票">🎟️ 門票</option>
-                                <option value="住宿">🏨 住宿</option>
-                                <option value="其他">🎈 其他</option>
+                            <label class="block text-[10px] text-stone-500 mb-1">款項類別</label>
+                            <select v-model="newExpense.category" class="w-full border-2 border-bookInk bg-transparent rounded-md p-2 cursor-pointer text-xs">
+                                <option value="美食">🍱 美食饗宴</option>
+                                <option value="交通">🚗 移防交通</option>
+                                <option value="購物">🛍️ 特產伴手</option>
+                                <option value="門票">🎟️ 景點門票</option>
+                                <option value="住宿">🏨 精裝住所</option>
+                                <option value="其他">🎈 其他雜支</option>
                             </select>
                         </div>
                         <div class="flex items-end">
-                            <button @click="addExpense" class="w-full h-[42px] bg-toyYellow border-2 border-toyInk rounded-xl font-black btn-toy-active">儲存記帳</button>
+                            <button @click="addExpense" class="w-full h-[38px] bg-bookGold border-2 border-bookInk text-bookInk font-bold rounded-md btn-vintage-active text-xs">入帳登記</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 記帳消費明細 -->
-                <div class="bg-white rounded-[22px] shadow-toy overflow-hidden divide-y-2 divide-toyBg">
-                    <div v-for="exp in expenses" :key="exp.id" class="p-3.5 flex justify-between items-center text-xs font-bold">
+                <!-- 記帳清單 -->
+                <div class="bg-white rounded-[16px] shadow-vintage overflow-hidden divide-y-2 divide-stone-100 border-2 border-bookInk">
+                    <div v-for="exp in expenses" :key="exp.id" class="p-3 flex justify-between items-center text-xs font-bold">
                         <div class="flex items-center space-x-3">
-                            <span class="text-lg bg-toyBg w-9 h-9 rounded-xl flex items-center justify-center border-2 border-toyInk">{{ getExpenseIcon(exp.category) }}</span>
+                            <span class="text-base bg-stone-100 w-8 h-8 rounded border border-bookInk flex items-center justify-center shadow-sm">{{ getExpenseIcon(exp.category) }}</span>
                             <div>
-                                <h4 class="text-toyInk font-black">{{ exp.title }}</h4>
-                                <span class="text-[9px] text-zinc-400 font-normal">類別：{{ exp.category }}</span>
+                                <h4 class="text-bookInk font-bold">{{ exp.title }}</h4>
+                                <span class="text-[9px] text-stone-400 font-normal">分類：{{ exp.category }}</span>
                             </div>
                         </div>
                         <div class="text-right flex items-center space-x-3">
                             <div>
-                                <p class="font-black font-mono">¥ {{ exp.amount }}</p>
-                                <p class="text-[9px] text-zinc-400 font-mono">≈ NT$ {{ Math.round(exp.amount * 4.5) }}</p>
+                                <p class="font-bold font-mono text-bookInk">¥ {{ exp.amount }}</p>
+                                <p class="text-[10px] text-stone-400 font-mono">≈ NT$ {{ Math.round(exp.amount * 4.5) }}</p>
                             </div>
-                            <button @click="deleteExpense(exp.id)" class="text-zinc-300 hover:text-toyRed pl-1 font-bold text-sm">✕</button>
+                            <button @click="deleteExpense(exp.id)" class="text-stone-300 hover:text-bookRed pl-1 font-bold text-sm">✕</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ==================== TAB 4: 旅行相本日誌 (Journal) ==================== -->
+            <!-- ==================== TAB 4: 旅行日誌相簿 (Journal) ==================== -->
             <div v-if="currentTab === 'journal'" class="space-y-4">
-                <div class="bg-white p-4 rounded-[22px] shadow-toy text-xs font-bold space-y-3">
-                    <textarea v-model="newPost.text" rows="2" placeholder="今天在金門、鼓浪嶼或八市吃了什麼美食、發生了什麼趣事嗎？..." class="w-full border-2 border-toyInk rounded-xl p-2.5 outline-none leading-relaxed"></textarea>
+                <div class="bg-white p-4 rounded-[16px] shadow-vintage text-xs font-bold space-y-3 border-2 border-bookInk">
+                    <textarea v-model="newPost.text" rows="2" placeholder="在此寫下今天的航海見聞、南靖土樓或青草地鮮奶的美味回憶..." class="w-full border-2 border-bookInk bg-stone-50 p-2 rounded-md outline-none leading-relaxed text-xs"></textarea>
                     <div class="flex justify-between items-center">
-                        <input @change="handleImage" type="file" accept="image/*" class="text-[10px] text-zinc-400 cursor-pointer">
-                        <button @click="addPost" class="bg-toyRed text-white border-2 border-toyInk px-4 py-2 rounded-xl font-black btn-toy-active">發佈新足跡</button>
+                        <input @change="handleImage" type="file" accept="image/*" class="text-[10px] text-stone-400 cursor-pointer">
+                        <button @click="addPost" class="bg-bookRed text-white border-2 border-bookInk px-4 py-2 rounded-md font-bold btn-vintage-active text-xs">發佈手記頁</button>
                     </div>
                 </div>
 
-                <!-- IG 拍立得照片牆面 -->
-                <div v-for="post in posts" :key="post.id" class="bg-white rounded-[24px] shadow-toy p-4 space-y-3 rotate-1 hover:rotate-0 transition-transform duration-200">
-                    <div v-if="post.img" class="w-full h-52 bg-zinc-50 border-2 border-toyInk rounded-[16px] overflow-hidden shadow-inner">
+                <!-- 復古明信片照片牆 -->
+                <div v-for="post in posts" :key="post.id" class="bg-white rounded-[16px] shadow-vintage p-4 space-y-3 border-2 border-bookInk">
+                    <div v-if="post.img" class="w-full h-48 bg-stone-50 border border-bookInk rounded-lg overflow-hidden shadow-inner">
                         <img :src="post.img" class="w-full h-full object-cover">
                     </div>
-                    <div class="text-xs font-bold">
-                        <p class="leading-relaxed text-toyInk font-bold">{{ post.text }}</p>
-                        <div class="mt-3 pt-2_border-t border-dashed border-toyInk/15 flex justify-between text-[10px] text-zinc-400 font-normal">
-                            <span>✍️ 發佈人：大冒險全體成員</span>
-                            <span>⏱️ 發表日期：{{ post.date }}</span>
-                        </div>
+                    <div class="text-xs font-bold font-serif leading-relaxed text-bookInk whitespace-pre-line">
+                        {{ post.text }}
+                    </div>
+                    <div class="pt-2 border-t border-dashed border-stone-200 flex justify-between text-[10px] text-stone-400">
+                        <span>✍️ 簽署：大冒險考察隊全體</span>
+                        <span>⏱️ 時間：{{ post.date }}</span>
                     </div>
                 </div>
             </div>
 
             <!-- ==================== TAB 5: 準備清單 & 購物 (Planning) ==================== -->
             <div v-if="currentTab === 'planning'" class="space-y-4">
-                <!-- 隨身準備清單 -->
-                <div class="bg-white p-4 rounded-[22px] shadow-toy">
-                    <h3 class="font-black text-sm border-b-2 border-toyInk pb-2 text-toyRed flex items-center justify-between">
-                        <span>📋 隨身行李與證件檢查</span>
-                        <span class="text-[10px] bg-toyRed/10 border border-toyRed text-toyRed px-2 py-0.5 rounded-full font-bold">出發前必對</span>
+                <!-- 證件檢查 -->
+                <div class="bg-white p-4 rounded-[16px] shadow-vintage border-2 border-bookInk">
+                    <h3 class="font-bold font-serif text-sm border-b-2 border-bookInk pb-2 text-bookRed flex items-center justify-between">
+                        <span>📋 行前物品與隨身證件檢核</span>
+                        <span class="text-[10px] bg-bookRed/10 border border-bookRed text-bookRed px-2 py-0.5 rounded font-bold">必備指南</span>
                     </h3>
-                    <div class="mt-3.5 space-y-3 text-xs font-bold">
+                    <div class="mt-3 space-y-3 text-xs font-bold font-serif">
                         <label v-for="todo in todos" :key="todo.id" class="flex items-center space-x-2.5 cursor-pointer select-none">
-                            <input type="checkbox" v-model="todo.done" class="w-4 h-4 rounded border-2 border-toyInk text-toyGreen focus:ring-0">
-                            <span :class="{'line-through text-zinc-400 font-normal': todo.done}">{{ todo.text }}</span>
+                            <input type="checkbox" v-model="todo.done" class="w-4 h-4 border-2 border-bookInk rounded text-bookGreen focus:ring-0">
+                            <span :class="{'line-through text-stone-400 font-normal italic': todo.done}">{{ todo.text }}</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- 伴手禮必買備忘錄 -->
-                <div class="bg-white p-4 rounded-[22px] shadow-toy">
-                    <h3 class="font-black text-sm border-b-2 border-toyInk pb-2 text-toyYellow flex items-center justify-between">
-                        <span>🛍️ 伴手禮與紀念品採買計畫</span>
-                        <span class="text-[10px] bg-toyYellow/20 border border-toyYellow text-toyInk px-2 py-0.5 rounded-full font-bold">好吃必買</span>
+                <!-- 伴手禮指南一模一樣精確分類 -->
+                <div class="bg-white p-4 rounded-[16px] shadow-vintage border-2 border-bookInk">
+                    <h3 class="font-bold font-serif text-sm border-b-2 border-bookInk pb-2 text-bookGold flex items-center justify-between">
+                        <span>🛍️ 官方核定伴手禮採買名錄</span>
+                        <span class="text-[10px] bg-bookGold/10 border border-bookGold text-bookInk px-2 py-0.5 rounded font-bold">精確對齊</span>
                     </h3>
-                    <div class="mt-3.5 space-y-2.5 text-xs font-bold leading-relaxed text-zinc-600">
-                        <p>🔹 <span class="text-toyRed">江頭市場</span>：干貝、蝦米、海苔、魷魚乾</p>
-                        <p>🔹 <span class="text-toyBlue">南普陀寺</span>：南普陀素餅 (超級推薦)</p>
-                        <p>🔹 <span class="text-toyGreen">中山路</span>：萬得福牛扎餅、阿吉仔餡餅</p>
-                        <p>🔹 <span class="text-toyPurple">金門老街</span>：金門貢糖、牛肉乾、手工麵線</p>
+                    <div class="mt-3.5 space-y-3 text-xs font-bold leading-relaxed text-stone-700 font-serif">
+                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
+                            <p class="text-bookInk font-bold"><i class="fa-solid fa-store text-bookRed mr-1"></i>江頭市場採買：</p>
+                            <p class="text-stone-500 pl-4 font-normal">干貝、蝦米、海苔、魷魚乾</p>
+                        </div>
+                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
+                            <p class="text-bookInk font-bold"><i class="fa-solid fa-leaf text-bookGreen mr-1"></i>南普陀寺採買：</p>
+                            <p class="text-stone-500 pl-4 font-normal">南普陀素餅</p>
+                        </div>
+                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
+                            <p class="text-bookInk font-bold"><i class="fa-solid fa-gift text-bookBlue mr-1"></i>鼓浪嶼採買：</p>
+                            <p class="text-stone-500 pl-4 font-normal">花磚杯墊、冰箱貼、帆布袋</p>
+                        </div>
+                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
+                            <p class="text-bookInk font-bold"><i class="fa-solid fa-cart-shopping text-bookGold mr-1"></i>SM城市廣場採買：</p>
+                            <p class="text-stone-500 pl-4 font-normal">茶葉、綠皮火車伴手禮</p>
+                        </div>
+                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
+                            <p class="text-bookInk font-bold"><i class="fa-solid fa-bag-shopping text-purple-800 mr-1"></i>中山路步行街採買：</p>
+                            <p class="text-stone-500 pl-4 font-normal">萬得福牛扎餅、阿吉仔餡餅、欲蓮茶樓禮盒、綠皮火車伴手禮</p>
+                        </div>
+                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
+                            <p class="text-bookInk font-bold"><i class="fa-solid fa-pen-nib text-stone-600 mr-1"></i>沙坡尾採買：</p>
+                            <p class="text-stone-500 pl-4 font-normal">文創商品、明信片、插畫周邊</p>
+                        </div>
+                        <div class="p-2.5 bg-stone-50 rounded border border-dashed border-stone-200">
+                            <p class="text-bookInk font-bold"><i class="fa-solid fa-box text-orange-700 mr-1"></i>金門在地採買：</p>
+                            <p class="text-stone-500 pl-4 font-normal">貢糖、牛肉乾、麵線</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ==================== TAB 6: 成員名簿 (Members) ==================== -->
-            <div v-if="currentTab === 'members'" class="grid grid-cols-2 gap-3.5">
-                <div v-for="m in members" :key="m" class="bg-white p-4 rounded-[22px] shadow-toy text-center space-y-3">
-                    <div class="w-14 h-14 bg-toyBg rounded-full border-2 border-toyInk mx-auto flex items-center justify-center text-xl shadow-toy-sm font-black">🎒</div>
-                    <div>
-                        <h4 class="text-sm font-black text-toyInk">{{ m }}</h4>
-                        <span class="text-[9px] bg-toyGreen/15 border border-toyGreen text-toyGreen px-2 py-0.5 rounded-full inline-block font-bold mt-1.5">冒險大玩家</span>
+            <!-- ==================== TAB 6: 旅伴成員 (Members - 升級日系拍立得) ==================== -->
+            <div v-if="currentTab === 'members'" class="space-y-4">
+                
+                <div class="bg-white p-3 rounded-[12px] border border-stone-200 shadow-sm text-center">
+                    <p class="text-xs text-stone-500 font-medium">✨ 點擊每張成員卡片上的 <span class="text-bookGreen font-bold">「編輯 ✏️」</span> 按鈕，自訂旅伴的角色與照片網址！</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div v-for="m in members" :key="m.id" 
+                         class="bg-white p-3 rounded-[16px] shadow-vintage flex flex-col justify-between border-2 border-bookInk relative overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                        
+                        <!-- 頂部日系可愛膠帶 -->
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-16 h-4 washi-tape rotate-2 z-10"></div>
+                        
+                        <!-- 拍立得大頭照區域 -->
+                        <div class="mt-2 w-full aspect-square bg-stone-50 rounded-[8px] border-2 border-bookInk overflow-hidden shadow-inner relative flex items-center justify-center">
+                            <img v-if="m.photo" :src="m.photo" :alt="m.name" class="w-full h-full object-cover" @error="handleMemberImageError($event, m)">
+                            <div v-else class="w-full h-full bg-gradient-to-tr from-stone-100 to-stone-200 flex flex-col items-center justify-center space-y-1">
+                                <span class="text-3xl">{{ m.defaultIcon }}</span>
+                                <span class="text-[9px] text-stone-400">尚未設定相片</span>
+                            </div>
+                        </div>
+
+                        <!-- 隊員詳細資訊 -->
+                        <div class="mt-3 text-center space-y-1.5 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-sm font-bold text-bookInk font-serif border-b border-stone-100 pb-1">{{ m.name }}</h4>
+                                <p class="text-[10px] font-bold text-bookGreen tracking-wide mt-1">{{ m.role }}</p>
+                            </div>
+                            
+                            <!-- 心情與期待點 -->
+                            <div class="bg-bookBg/50 p-1.5 rounded-md border border-dashed border-stone-200 text-left space-y-1 text-[10px] leading-relaxed">
+                                <p class="text-stone-600 font-medium"><span class="text-bookGold font-bold">💬：</span>{{ m.mood || '準備出發！✈️' }}</p>
+                                <p class="text-stone-400 text-[9px]"><span class="text-bookBlue">⭐ 期待：</span>{{ m.fav || '小三通漫步' }}</p>
+                            </div>
+
+                            <!-- 編輯旅伴按鈕 -->
+                            <button @click="openMemberEditModal(m)" 
+                                    class="w-full py-1 text-[9px] font-bold text-bookGreen hover:text-white hover:bg-bookGreen rounded border border-bookGreen/30 transition-all flex items-center justify-center space-x-1 btn-vintage-active">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <span>編輯成員資訊 ✏️</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ==================== 手機底置 App 導覽列 ==================== -->
-            <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t-2 border-toyInk rounded-t-[24px] shadow-[0_-4px_12px_rgba(0,0,0,0.03)] px-3 py-2.5 grid grid-cols-6 text-center z-40 safe-bottom">
-                <button @click="currentTab = 'schedule'" :class="currentTab === 'schedule' ? 'text-toyYellow scale-105' : 'text-zinc-400'" class="flex flex-col items-center justify-center py-1 transition-all">
-                    <i class="fa-solid fa-calendar-days text-base"></i><span class="text-[8px] font-black mt-1">行程</span>
-                </button>
-                <button @click="currentTab = 'bookings'" :class="currentTab === 'bookings' ? 'text-toyBlue scale-105' : 'text-zinc-400'" class="flex flex-col items-center justify-center py-1 transition-all">
-                    <i class="fa-solid fa-ticket text-base"></i><span class="text-[8px] font-black mt-1">憑證</span>
-                </button>
-                <button @click="currentTab = 'expense'" :class="currentTab === 'expense' ? 'text-toyGreen scale-105' : 'text-zinc-400'" class="flex flex-col items-center justify-center py-1 transition-all">
-                    <i class="fa-solid fa-wallet text-base"></i><span class="text-[8px] font-black mt-1">記帳</span>
-                </button>
-                <button @click="currentTab = 'journal'" :class="currentTab === 'journal' ? 'text-toyRed scale-105' : 'text-zinc-400'" class="flex flex-col items-center justify-center py-1 transition-all">
-                    <i class="fa-solid fa-camera text-base"></i><span class="text-[8px] font-black mt-1">相簿</span>
-                </button>
-                <button @click="currentTab = 'planning'" :class="currentTab === 'planning' ? 'text-toyPurple scale-105' : 'text-zinc-400'" class="flex flex-col items-center justify-center py-1 transition-all">
-                    <i class="fa-solid fa-clipboard-list text-base"></i><span class="text-[8px] font-black mt-1">準備</span>
-                </button>
-                <button @click="currentTab = 'members'" :class="currentTab === 'members' ? 'text-orange-500 scale-105' : 'text-zinc-400'" class="flex flex-col items-center justify-center py-1 transition-all">
-                    <i class="fa-solid fa-users text-base"></i><span class="text-[8px] font-black mt-1">成員</span>
-                </button>
-            </div>
+            <!-- ==================== 底部古典導航列 ==================== -->
+            <nav class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-bookInk shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-40 safe-bottom">
+                <div class="max-w-md mx-auto grid grid-cols-5 h-16 text-[10px] font-bold">
+                    <button @click="currentTab = 'schedule'" :class="currentTab === 'schedule' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
+                        <i class="fa-solid fa-calendar-days text-base mb-0.5"></i><span>行程手記</span>
+                    </button>
+                    <button @click="currentTab = 'bookings'" :class="currentTab === 'bookings' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
+                        <i class="fa-solid fa-passport text-base mb-0.5"></i><span>極密憑證</span>
+                    </button>
+                    <button @click="currentTab = 'expense'" :class="currentTab === 'expense' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
+                        <i class="fa-solid fa-coins text-base mb-0.5"></i><span>旅程記帳</span>
+                    </button>
+                    <button @click="currentTab = 'planning'" :class="currentTab === 'planning' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
+                        <i class="fa-solid fa-clipboard-list text-base mb-0.5"></i><span>備忘採買</span>
+                    </button>
+                    <button @click="currentTab = 'members'" :class="currentTab === 'members' ? 'text-bookGreen' : 'text-stone-400'" class="flex flex-col items-center justify-center btn-vintage-active">
+                        <i class="fa-solid fa-users-gear text-base mb-0.5"></i><span>旅伴成員</span>
+                    </button>
+                </div>
+            </nav>
 
-            <!-- ==================== 彈出視窗: 新增/編輯行程 ==================== -->
-            <div v-if="showModal" class="fixed inset-0 bg-black/60 z-50 flex items-end justify-center backdrop-blur-sm">
-                <div class="bg-white w-full max-w-md rounded-t-[28px] p-5 space-y-4 max-h-[85vh] overflow-y-auto safe-bottom shadow-2xl border-t-4 border-toyYellow">
-                    <div class="flex justify-between items-center border-b-2 border-zinc-100 pb-3">
-                        <h3 class="text-sm font-black text-toyInk">{{ isEditing ? '✏️ 修改行程明細' : '➕ 新增自訂行程' }}</h3>
-                        <button @click="showModal = false" class="text-zinc-400 font-bold text-base">✕</button>
-                    </div>
-                    
-                    <div class="space-y-3.5 text-xs font-bold text-zinc-600">
+            <!-- ==================== 行程修訂彈窗 ==================== -->
+            <div v-if="showModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+                <div class="bg-white rounded-[20px] shadow-vintage border-2 border-bookInk p-5 w-full max-w-sm space-y-3 text-xs font-bold">
+                    <h3 class="text-sm font-serif text-bookInk border-b-2 border-bookInk pb-2">{{ isEditing ? '📝 修訂手札條目' : '➕ 簽發新旅程項目' }}</h3>
+                    <div class="space-y-2">
                         <div>
-                            <label class="block text-[10px] text-zinc-400 mb-1">行程分類</label>
-                            <select v-model="formItem.category" class="w-full bg-zinc-50 border-2 border-toyInk rounded-xl p-2.5 outline-none">
-                                <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+                            <label class="block text-[10px] text-stone-400 mb-0.5">推薦時段</label>
+                            <input v-model="formItem.time" type="text" class="w-full border border-bookInk p-2 rounded text-xs bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-stone-400 mb-0.5">項目主題/景點名稱</label>
+                            <input v-model="formItem.title" type="text" class="w-full border border-bookInk p-2 rounded text-xs bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-stone-400 mb-0.5">分類標籤</label>
+                            <select v-model="formItem.category" class="w-full border border-bookInk p-2 rounded bg-white text-xs">
+                                <option value="航班">航班</option>
+                                <option value="交通">交通</option>
+                                <option value="住宿">住宿</option>
+                                <option value="美食">美食</option>
+                                <option value="購物">購物</option>
+                                <option value="景點">景點</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[10px] text-zinc-400 mb-1">景點或項目名稱</label>
-                            <input v-model="formItem.title" type="text" placeholder="例如：翟山坑道" class="w-full bg-zinc-50 border-2 border-toyInk rounded-xl p-2.5 outline-none text-zinc-800">
+                            <label class="block text-[10px] text-stone-400 mb-0.5">行程備忘說明</label>
+                            <textarea v-model="formItem.notes" rows="3" class="w-full border border-bookInk p-2 rounded text-xs bg-white"></textarea>
+                        </div>
+                    </div>
+                    <div class="pt-2 flex justify-end space-x-2">
+                        <button @click="showModal = false" class="bg-stone-100 text-stone-500 px-4 py-2 rounded text-xs font-bold">取消</button>
+                        <button @click="confirmDelete" v-if="isEditing" class="bg-bookRed text-white px-3 py-2 rounded text-xs font-bold">刪除</button>
+                        <button @click="saveItem" class="bg-bookGreen text-white px-4 py-2 rounded border border-bookInk text-xs font-bold">核准</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 旅伴編輯彈窗 ==================== -->
+            <div v-if="showMemberModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+                <div class="bg-white rounded-[20px] shadow-vintage border-2 border-bookInk p-5 w-full max-w-sm space-y-4 text-xs font-bold">
+                    <div class="border-b-2 border-bookInk pb-2 flex justify-between items-center">
+                        <h3 class="text-sm font-serif text-bookInk">✏️ 編輯旅伴成員：{{ editingMember.name }}</h3>
+                        <button @click="showMemberModal = false" class="text-stone-400 hover:text-stone-600">✕</button>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-[10px] text-stone-400 mb-1">大頭貼相片網址 (可填貼上自訂連結，或留空使用手繪頭像)</label>
+                            <input v-model="editingMember.photo" type="text" placeholder="https://images.unsplash.com/..." class="w-full border-2 border-bookInk p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
                         </div>
                         <div>
-                            <label class="block text-[10px] text-zinc-400 mb-1">推薦時段 / 營業時間</label>
-                            <input v-model="formItem.time" type="text" placeholder="例如：08:30 - 17:00" class="w-full bg-zinc-50 border-2 border-toyInk rounded-xl p-2.5 outline-none text-zinc-800">
-                        </div>
-                        <div v-if="formItem.category === '景點'">
-                            <label class="block text-[10px] text-zinc-400 mb-1">門票估算</label>
-                            <input v-model="formItem.ticket" type="text" placeholder="例如：免費參觀 / RMB 35" class="w-full bg-zinc-50 border-2 border-toyInk rounded-xl p-2.5 outline-none text-zinc-800">
+                            <label class="block text-[10px] text-stone-400 mb-1">角色/隊內稱號</label>
+                            <input v-model="editingMember.role" type="text" placeholder="例如：財務大總管 💸" class="w-full border-2 border-bookInk p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
                         </div>
                         <div>
-                            <label class="block text-[10px] text-zinc-400 mb-1">行程細節備註說明</label>
-                            <textarea v-model="formItem.notes" rows="2" placeholder="備註或必吃必玩好康資訊..." class="w-full bg-zinc-50 border-2 border-toyInk rounded-xl p-2.5 outline-none text-zinc-800"></textarea>
+                            <label class="block text-[10px] text-stone-400 mb-1">今日小碎念/旅行心情</label>
+                            <input v-model="editingMember.mood" type="text" placeholder="例如：好期待喝到青草地鮮奶！" class="w-full border-2 border-bookInk p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
                         </div>
-                        <div class="grid grid-cols-2 gap-2.5">
-                            <div>
-                                <label class="block text-[10px] text-zinc-400 mb-1">交通工具</label>
-                                <select v-model="formItem.transitIcon" class="w-full bg-zinc-50 border-2 border-toyInk rounded-xl p-2.5 outline-none">
-                                    <option value="🚶">🚶 步行</option>
-                                    <option value="🚢">🚢 坐渡輪</option>
-                                    <option value="🚇">🚇 坐地鐵/高鐵</option>
-                                    <option value="🚗">🚗 計程車/滴滴</option>
-                                    <option value="🏍️">🏍️ 租機車/騎車</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] text-zinc-400 mb-1">交通時間(分)</label>
-                                <input v-model.number="formItem.transitTime" type="number" class="w-full bg-zinc-50 border-2 border-toyInk rounded-xl p-2.5 outline-none">
-                            </div>
+                        <div>
+                            <label class="block text-[10px] text-stone-400 mb-1">最期待的景點體驗</label>
+                            <input v-model="editingMember.fav" type="text" placeholder="例如：日光岩眺望海景" class="w-full border-2 border-bookInk p-2.5 rounded text-xs bg-stone-50 focus:bg-white outline-none">
                         </div>
                     </div>
 
-                    <div class="flex space-x-2.5 pt-2">
-                        <button v-if="isEditing" @click="confirmDelete" class="flex-1 bg-rose-50 text-toyRed border-2 border-toyInk rounded-xl font-black py-3 btn-toy-active">
-                            刪除行程
-                        </button>
-                        <button @click="saveItem" class="flex-[2] bg-toyYellow border-2 border-toyInk rounded-xl font-black py-3 btn-toy-active">
-                            儲存行程項目
-                        </button>
+                    <div class="pt-2 flex justify-end space-x-2">
+                        <button @click="showMemberModal = false" class="bg-stone-100 text-stone-500 px-4 py-2 rounded text-xs font-bold btn-vintage-active">取消</button>
+                        <button @click="saveMember" class="bg-bookGreen text-white px-5 py-2 rounded border border-bookInk text-xs font-bold btn-vintage-active">核准儲存 🌿</button>
                     </div>
+                </div>
+            </div>
+
+            <!-- ==================== 自訂警告視窗 (替代原生 alert) ==================== -->
+            <div v-if="customAlert.show" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-[99]">
+                <div class="bg-white rounded-[16px] shadow-vintage border-2 border-bookInk p-5 w-full max-w-xs text-center space-y-3">
+                    <p class="text-sm font-serif font-bold text-bookInk whitespace-pre-line">{{ customAlert.message }}</p>
+                    <button @click="customAlert.show = false" class="bg-bookInk text-bookGold px-5 py-1.5 rounded border border-bookGold/40 text-xs font-bold btn-vintage-active">確認</button>
                 </div>
             </div>
 
         </template>
-
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted, watch } = Vue;
+        const { createApp, ref, computed, watch, onMounted } = Vue;
 
         createApp({
             setup() {
@@ -504,103 +610,205 @@
                 const activeDateIdx = ref(0);
                 const filterCategory = ref('全部');
                 const pinCode = ref('');
-                
                 const showModal = ref(false);
                 const isEditing = ref(false);
+                const showPhotoConfig = ref(false);
 
-                const dates = [
-                    { day: '18', week: 'Thu' }, { day: '19', week: 'Fri' },
-                    { day: '20', week: 'Sat' }, { day: '21', week: 'Sun' }, { day: '22', week: 'Mon' }
+                // 旅伴成員編輯狀態
+                const showMemberModal = ref(false);
+                const editingMember = ref({ id: null, name: '', role: '', mood: '', photo: '', defaultIcon: '', fav: '' });
+
+                // 自訂警告框系統 (替代 alert)
+                const customAlert = ref({ show: false, message: '' });
+                const triggerAlert = (msg) => {
+                    customAlert.value.message = msg;
+                    customAlert.value.show = true;
+                };
+
+                // 一鍵相片自訂面板網址配置（記憶於 LocalStorage）
+                const photoUrls = ref({
+                    banner: '',
+                    day1: '',
+                    day2: '',
+                    day3: '',
+                    day4: '',
+                    day5: ''
+                });
+
+                // 5天動態天氣與專屬小三通/渡輪船班海況數據
+                const weatherData = [
+                    { day: '6/18', icon: '☀️', temp: '32°C', desc: '高雄出發晴朗，金門與廈門微風舒適', seaState: '🌊 新五緣輪海況：平穩順暢，適宜航行' },
+                    { day: '6/19', icon: '⛅', temp: '31°C', desc: '鼓浪嶼及南普陀多雲偶晴，午後防局部陣雨', seaState: '🌊 鼓浪嶼渡輪：氣流海象平穩，浪高小於0.5米' },
+                    { day: '6/20', icon: '🌦️', temp: '30°C', desc: '集美學村與雙子塔微雨後轉藍調晴空', seaState: '🌊 鷺江沿岸海況：微風，跨海列車視野極佳' },
+                    { day: '6/21', icon: '☀️', temp: '33°C', desc: '福建南靖山區放晴，陽光充沛體感稍熱', seaState: '⛰️ 內陸土樓山區：無強烈對流，山路平穩' },
+                    { day: '6/22', icon: '🌤️', temp: '31°C', desc: '金門半日遊晴朗，適合莒光樓騎車探索', seaState: '🌊 五通至水頭返程海況：二級輕浪，視線良好' }
                 ];
 
-                const categories = ['景點', '住宿', '美食', '購物', '航班', '交通', '其他'];
-                const members = ['姿綾', '琬棋', '媽媽', '小阿姨'];
+                const currentWeather = computed(() => weatherData[activeDateIdx.value]);
 
-                // 5 天份手冊真實行程資料庫（融合實景插圖）
-                const scheduleItems = ref([
-                    // Day 1: 6/18 (四)
-                    { id: '1', dateIdx: 0, time: '11:10', title: '小港機場辦理登機報到', category: '航班', notes: '最晚 11:30 抵達小港機場，開始辦理行李託運、安檢與候機。', ticket: '', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80', transitIcon: '🚇', transitTime: 45 },
-                    { id: '2', dateIdx: 0, time: '13:30', title: '立榮航空 B78920 起飛前往金門', category: '航班', notes: '搭乘首班班機，航程約 1 小時，預計 14:35 抵達金門尚義機場。', ticket: '', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80', transitIcon: '✈️', transitTime: 60 },
-                    { id: '3', dateIdx: 0, time: '16:00', title: '水頭碼頭辦理小三通出境', category: '交通', notes: '最晚 16:00 前必須到水頭碼頭完成安檢登船手續。', ticket: '', image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    { id: '4', dateIdx: 0, time: '17:30', title: '新五緣輪起航 (前往廈門)', category: '交通', notes: '船票定位碼：NZAX7E。航程約 30 分鐘，抵達五通可領大禮包。', ticket: '', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 35 },
-                    { id: '5', dateIdx: 0, time: '18:30', title: '入住宜度・潮宿放行李', category: '住宿', notes: '位於中山路步行街核心商圈，地理位置卓越極其舒適！', ticket: '', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 25 },
-                    { id: '6', dateIdx: 0, time: '19:00', title: '九九木眼鏡與天虹配鏡', category: '購物', notes: '天虹購物中心 B1 驗光配鏡，效率極快隔天即可取件。', ticket: '', image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
-                    { id: '7', dateIdx: 0, time: '20:30', title: '海大富自助海鮮晚餐', category: '美食', notes: '位於天虹購物中心 3 樓享用編排豐富澎湃的海鮮大餐！', ticket: '', image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 5 },
-                    
-                    // Day 2: 6/19 (五)
-                    { id: '8', dateIdx: 1, time: '09:00', title: '鼓浪嶼萬國建築漫遊', category: '景點', notes: '打卡最美轉角、日光岩、歐式老洋房，並在龍頭路小吃街午餐。', ticket: '渡輪票含', image: 'https://images.unsplash.com/photo-1498307818610-a3a84b061c11?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 25 },
-                    { id: '9', dateIdx: 1, time: '14:00', title: '南普陀寺祈福與素餅', category: '景點', notes: '預約參拜天王殿與大雄寶殿，帶上幾盒南普陀寺著名素餅！', ticket: '免費預約', image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 40 },
-                    { id: '10', dateIdx: 1, time: '17:30', title: '神隱少女海上小火車 (地鐵1號線)', category: '其他', notes: '跨海路段建議坐列車右側靠窗，欣賞絕美落日海景。', ticket: '地鐵票自理', image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=600&q=80', transitIcon: '🚇', transitTime: 10 },
-                    { id: '11', dateIdx: 1, time: '18:30', title: '第八市場 (八市) 豪吃海鮮', category: '美食', notes: '最道地的海鮮大排檔，品嚐白灼蝦、清蒸魚、沙茶麵。', ticket: '', image: 'https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    
-                    // Day 3: 6/20 (六)
-                    { id: '12', dateIdx: 2, time: '09:00', title: '江頭市場南北乾貨大採購', category: '購物', notes: '推薦必買：干貝、魷魚乾、蝦米、茶葉、花生酥。', ticket: '', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
-                    { id: '13', dateIdx: 2, time: '11:30', title: '集美學村與嘉庚建築', category: '景點', notes: '漫步龍舟池、歸來堂，並在石鼓路美食街享用午餐。', ticket: '', image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    { id: '14', dateIdx: 2, time: '17:30', title: '沙坡尾避風塢文創看夕陽', category: '景點', notes: '避風塢夜景、拍照打卡。亮燈之際與雙子塔遙相呼應，浪漫極了。', ticket: '', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    
-                    // Day 4: 6/21 (日)
-                    { id: '15', dateIdx: 3, time: '08:00', title: '福建南靖土樓經典一日遊', category: '景點', notes: '雲水謠古鎮、沼澤上的和貴樓、裕昌樓、四菜一湯田螺坑。', ticket: '一日遊含', image: 'https://images.unsplash.com/photo-1599839616713-90924976fc9e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚐', transitTime: 120 },
-                    
-                    // Day 5: 6/22 (一)
-                    { id: '16', dateIdx: 4, time: '09:35', title: '水頭聚落閩南得月樓群', category: '景點', notes: '通關回到金門，漫步得月樓、黃輝煌洋樓、閩南古厝風情。', ticket: '免費', image: 'https://images.unsplash.com/photo-1508333706533-1ab43ecb1606?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 35 },
-                    { id: '17', dateIdx: 4, time: '12:00', title: '金城老街與必拍莒光樓', category: '美食', notes: '品嚐廣東粥、炒泡麵、貢糖。隨後參觀金門最知名地標莒光樓。', ticket: '', image: 'https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 20 }
+                const dates = [
+                    { week: 'Thu', day: '6/18' },
+                    { week: 'Fri', day: '6/19' },
+                    { week: 'Sat', day: '6/20' },
+                    { week: 'Sun', day: '6/21' },
+                    { week: 'Mon', day: '6/22' }
+                ];
+
+                const categories = ['航班', '交通', '住宿', '美食', '購物', '景點'];
+                
+                // 升級版成員資料庫 (預留自訂彈性，持久化本地記憶)
+                const members = ref([
+                    { id: 1, name: '姿綾', role: '探險總策劃 🧭', mood: '最期待鼓浪嶼海岸線與老洋房！⛪', photo: '', defaultIcon: '🎒', fav: '鼓浪嶼漫步' },
+                    { id: 2, name: '琬棋', role: '財務小總管 💰', mood: '要把錢錢變成海大富跟八市的海鮮！🦀', photo: '', defaultIcon: '🕶️', fav: '八市海鮮大排檔' },
+                    { id: 3, name: '媽媽', role: '元氣女主角 🌸', mood: '田螺坑土樓群「四菜一湯」一定很壯觀！', photo: '', defaultIcon: '👑', fav: '福建南靖土樓' },
+                    { id: 4, name: '小阿姨', role: '首席美食家 🍱', mood: '聽說青草地鮮奶跟南普陀素餅超厲害！🥛', photo: '', defaultIcon: '⭐', fav: '青草地鮮奶' }
                 ]);
 
                 const todos = ref([
-                    { id: 1, text: '護照 / 台灣身分證 / 台胞證', done: false },
-                    { id: 2, text: '船票與機票定位資訊截圖', done: false },
-                    { id: 3, text: '行動電源與對應手機充電線', done: false },
-                    { id: 4, text: '少量人民幣現金 / 台灣信用卡', done: false },
-                    { id: 5, text: '遮陽防曬乳 / 雨傘折疊傘', done: false }
+                    { id: 1, text: '身分證、台胞證或護照 (南靖土樓需攜帶)', done: true },
+                    { id: 2, text: '提前四天預約南普陀寺入園參拜', done: true },
+                    { id: 3, text: '小三通新五緣輪登船：攜帶護照/台胞證', done: false },
+                    { id: 4, text: '確認立榮航空托運與手提行李重量', done: false },
+                    { id: 5, text: '防曬、水、口罩 (備用)', done: false }
+                ]);
+
+                // 原始手札文字一模一樣精確回填
+                const scheduleItems = ref([
+                    // Day 1
+                    { id: 101, dIdx: 0, category: '交通', time: '10:36', title: '岡山捷運出發 ➔ 小港機場站', notes: '10:36 岡山捷運出發→ 小港機場站 (約40-50 分鐘)\n11:10-11:30 抵達小港機場(最晚 11:30到)', transitTime: '45', transitIcon: '🚇' },
+                    { id: 102, dIdx: 0, category: '航班', time: '11:10-14:35', title: '立榮航空出境報到與起飛', notes: '11:10-12:00 報到+托運行李\n12:00-13:00 安檢+候機\n13:30 起飛 | 立榮航空 B78920:高雄小港金門(約1小時)\n14:35 抵達金門', transitTime: '15', transitIcon: '🚕' },
+                    { id: 103, dIdx: 0, category: '交通', time: '14:40-16:00', title: '計程車接駁 ➔ 水頭碼頭通關', notes: '14:40-15:10 計程車:金門機場 水頭碼頭(約15-20分鐘)\n16:00前最晚抵達水頭碼頭(需出境通關+安檢+等候登船)\n17:00前完成登船手續', transitTime: '20', transitIcon: '🚢' },
+                    { id: 104, dIdx: 0, category: '交通', time: '17:30', title: '小三通啟航：新五緣輪', notes: '17:30 開船 船名:新五緣輪 定位碼:NZAX7E\n記得攜帶:護照/台胞證\n抵達廈門(約18:00-18:40) 入境通關出碼頭', transitTime: '10', transitIcon: '🎁' },
+                    { id: 105, dIdx: 0, category: '景點', time: '18:00', title: '五通客運碼頭 「近便利」台胞專區', notes: '五通客運碼頭|辦理台胞相關服務(五通「近便利」台胞服務專區)\n。領取大禮包\n領取相關優惠券及旅遊資訊', transitTime: '20', transitIcon: '🚗' },
+                    { id: 106, dIdx: 0, category: '住宿', time: '18:30', title: '宜度・潮宿 Check-in', notes: '前往飯店 宜度・潮宿(中山路步行街) 車程約15-25 分鐘\nCheck-in-放行李稍作休息(10-20分鐘)', transitTime: '15', transitIcon: '👓' },
+                    { id: 107, dIdx: 0, category: '購物', time: '19:00-20:30', title: '精準專業配眼鏡行程', notes: '① 九九木眼鏡店:先挑款式/比價\n② 天虹購物中心 B1 眼鏡區(金湖路516號):驗光,可當天或隔天取件', transitTime: '5', transitIcon: '🍱' },
+                    { id: 108, dIdx: 0, category: '美食', time: '20:30-21:30', title: '晚餐：海大富自助海鮮', notes: '海大富自助海鮮天虹購物中心3樓\n21:30 搭車回飯店(天虹中山路,約15-25 分鐘)', transitTime: '15', transitIcon: '🌙' },
+                    { id: 109, dIdx: 0, category: '景點', time: '21:30', title: '沙坡尾藝術西區散步夜景', notes: '沙坡尾藝術西區散步看夜景\n。沙坡尾避風塢夜景、拍照打卡、咖啡街散步\n宵夜:沙坡尾小吃或中山路步行街', transitTime: '0', transitIcon: '💤' },
+
+                    // Day 2
+                    { id: 201, dIdx: 1, category: '景點', time: '08:30-13:00', title: '鼓浪嶼漫遊探索', notes: '08:30-09:00 前往郵輪中心廈鼓碼頭,搭船前往鼓浪嶼(建議至三丘田碼頭)\n推薦路線:最美轉角船屋-龍頭路商圈-日光岩周邊-菽莊花園外圍海景步道\n12:00-13:00 龍頭路小吃街午餐(葉氏麻糍、海蠣煎、沙茶麵、沈家腸粉)', transitTime: '30', transitIcon: '🚢' },
+                    { id: 202, dIdx: 1, category: '景點', time: '14:00-16:00', title: '南普陀寺祈福參拜', notes: '南普陀寺(提前四天預約)\n天王殿、大雄寶殿、放生池寺院園區可祈福參拜，品嚐花生湯', transitTime: '30', transitIcon: '🚇' },
+                    { id: 203, dIdx: 1, category: '交通', time: '16:30-18:00', title: '集美學村 ➔ 跨海海上小火車', notes: '集美學村|龍舟池、嘉庚建築群\n廈門地鐵1號線:集美學村站-高崎站(約 5-8 分鐘跨海路段)\n被譽為《神隱少女》現實版海上列車!建議坐右側靠窗欣賞夕陽海景', transitTime: '20', transitIcon: '🦀' },
+                    { id: 204, dIdx: 1, category: '美食', time: '18:30-21:00', title: '第八市場(八市)海鮮饗宴', notes: '白灼蝦、清蒸魚、海蠣煎、沙茶麵、土筍凍、螃蟹\n周邊散步感受老廈門夜生活', transitTime: '0', transitIcon: '💤' },
+
+                    // Day 3
+                    { id: 301, dIdx: 2, category: '購物', time: '09:00-11:00', title: '江頭市場南北乾貨採買', notes: '江頭市場|推薦採買:干貝、魷魚乾、蝦米、茶葉、花生酥、鳳梨酥', transitTime: '20', transitIcon: '🏛️' },
+                    { id: 302, dIdx: 2, category: '景點', time: '11:30-14:30', title: '集美學村巡禮 & 石鼓路美食', notes: '龍舟池、嘉庚建築群、歸來堂、陳嘉庚紀念館。午餐:石鼓路美食街', transitTime: '20', transitIcon: '🛍️' },
+                    { id: 303, dIdx: 2, category: '購物', time: '15:00-17:00', title: 'SM城市廣場購物', notes: '逛街購物、咖啡下午茶、補買伴手禮與逆光伴手禮', transitTime: '20', transitIcon: '🌇' },
+                    { id: 304, dIdx: 2, category: '景點', time: '17:30-21:30', title: '沙坡尾避風塢 & 雙子塔夜景', notes: '避風塢-藝術西區-文創市集海邊步道-觀看雙子塔亮燈\n18:30 藍調時刻與夜景拍照\n雙子塔外圍拍照、雲上廈門觀景台、俯瞰市區夜景', transitTime: '0', transitIcon: '💤' },
+
+                    // Day 4
+                    { id: 401, dIdx: 3, category: '景點', time: '08:00-19:00', title: '福建南靖土樓一日遊', notes: '8 人精緻頭等艙團|9 座豪華商務車,全程無購物、無強制消費\n08:00車程 ➔ 10:00 雲水謠景區(雲水謠古鎮、和貴樓、贈送登鐘興樓1-4樓)\n12:00 客家風味餐 ➔ 13:30 田螺坑土樓群「四菜一湯」觀景台、裕昌樓(東倒西歪樓)、塔下村・張氏家廟「德遠堂」', transitTime: '0', transitIcon: '💤' },
+
+                    // Day 5
+                    { id: 501, dIdx: 4, category: '交通', time: '09:00-10:20', title: '五通碼頭 ➔ 金門水頭碼頭', notes: '09:00 廈門五通碼頭出發 ➔ 09:35 抵達金門水頭碼頭(通關+領行李約30-60分鐘)', transitTime: '15', transitIcon: '🚗' },
+                    { id: 502, dIdx: 4, category: '交通', time: '10:20', title: '尚義機場寄行李 + 租用機車', notes: '搭計程車約15分鐘抵達尚義機場寄存行李與租車。\n機車推薦名冊：\n① 金豐租車(機場服務檯)內取車方便(08:30-18:30)\n② 金門冠城租車(機場店)評價穩定\n③ 新燕租車(Xinyanzuchejichang)可甲租乙還\n④ ZOCHA金門機場無人店：24小時手機預約', transitTime: '15', transitIcon: '🛵' },
+                    { id: 503, dIdx: 4, category: '景點', time: '10:50-11:50', title: '水頭聚落閩南古厝', notes: '必拍地標：得月樓、洋樓群、閩南古厝精美建築', transitTime: '10', transitIcon: '🍱' },
+                    { id: 504, dIdx: 4, category: '美食', time: '12:00-13:30', title: '金城老街午餐與在地特產採買', notes: '享用廣東粥、牛肉麵、炒泡麵。\n順便採買伴手禮：貢糖、牛肉乾、麵線', transitTime: '10', transitIcon: '🎖️' },
+                    { id: 505, dIdx: 4, category: '景點', time: '13:40-14:20', title: '莒光樓拍照登頂', notes: '金門代表性核心地標，預留充足拍照時間約 40 分鐘', transitTime: '10', transitIcon: '🥛' },
+                    { id: 506, dIdx: 4, category: '美食', time: '14:30-15:00', title: '青草地鮮奶純淨品嚐', notes: '在地推薦品項：鮮奶、鮮奶冰淇淋、鮮奶茶', transitTime: '20', transitIcon: '✈️' },
+                    { id: 507, dIdx: 4, category: '航班', time: '15:20-17:15', title: '機場還車託運 ➔ 返港飛高雄', notes: '15:20 回機場還車+領行李+辦理登機\n15:30-15:45 最晚抵達機場，17:15 金門飛高雄', transitTime: '0', transitIcon: '🏁' }
                 ]);
 
                 const expenses = ref([
-                    { id: 1, title: '海大富自助海鮮晚餐', category: '美食', amount: 360 },
-                    { id: 2, title: '宜度潮宿分攤費', category: '住宿', amount: 850 }
+                    { id: 1, amount: 260, title: '海大富自助海鮮', category: '美食' },
+                    { id: 2, amount: 120, title: '九九木眼鏡定金', category: '購物' },
+                    { id: 3, amount: 150, title: '南普陀素餅伴手禮', category: '購物' }
                 ]);
 
                 const newExpense = ref({ amount: null, title: '', category: '美食' });
 
                 const posts = ref([
-                    { id: 1, text: '準備出發去金門和廈門囉！行李清單都打勾了，媽媽和小阿姨都超期待！✈️', img: 'https://images.unsplash.com/photo-1605001011156-cbf0b0f67a51?auto=format&fit=crop&w=600&q=80', date: '6/18' }
+                    { id: 1, text: '手札記錄：\n今天順利完成了手冊行程的精確比對！包含 Day 1 的小港機場接駁，Day 1 九九木與天虹購物中心配眼鏡安排，以及 Day 5 各大租車店（金豐、冠城、新燕、ZOCHA）推薦行列表與青草地鮮奶（鮮奶、冰淇淋、鮮奶茶）的品嚐備忘。期待出發！✈️', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80', date: '2026-06-11' }
                 ]);
+
                 const newPost = ref({ text: '', img: '' });
 
-                const formItem = ref({ id: '', dateIdx: 0, time: '', title: '', category: '景點', notes: '', ticket: '', transitIcon: '🚗', transitTime: 15 });
+                const formItem = ref({ id: null, time: '', title: '', category: '景點', notes: '' });
 
-                onMounted(() => {
-                    try {
-                        if (window.localStorage) {
-                            if (localStorage.getItem('toy_expenses_v2')) expenses.value = JSON.parse(localStorage.getItem('toy_expenses_v2'));
-                            if (localStorage.getItem('toy_posts_v2')) posts.value = JSON.parse(localStorage.getItem('toy_posts_v2'));
-                            if (localStorage.getItem('toy_todos_v2')) todos.value = JSON.parse(localStorage.getItem('toy_todos_v2'));
-                            if (localStorage.getItem('toy_schedule_v2')) scheduleItems.value = JSON.parse(localStorage.getItem('toy_schedule_v2'));
-                        }
-                    } catch (e) {
-                        console.warn("LocalStorage 存取受限，已切換至無快取模式安全運作。", e);
+                // 計算開銷
+                const totalExpenseRMB = computed(() => expenses.value.reduce((sum, e) => sum + Number(e.amount || 0), 0));
+                const totalExpenseTWD = computed(() => Math.round(totalExpenseRMB.value * 4.5));
+
+                // 篩選行程
+                const filteredSchedule = computed(() => {
+                    let items = scheduleItems.value.filter(item => item.dIdx === activeDateIdx.value);
+                    if (filterCategory.value !== '全部') {
+                        items = items.filter(item => item.category === filterCategory.value);
                     }
+                    return items.sort((a, b) => a.id - b.id);
+                });
+
+                // 一鍵相片與成員記憶載入
+                onMounted(() => {
+                    const savedPhotos = localStorage.getItem('vint_photo_urls');
+                    if (savedPhotos) {
+                        photoUrls.value = JSON.parse(savedPhotos);
+                    }
+                    
+                    const savedMembers = localStorage.getItem('vint_members_data');
+                    if (savedMembers) {
+                        members.value = JSON.parse(savedMembers);
+                    }
+                    
                     isMounted.value = true;
                 });
 
-                watch(expenses, (nv) => { try { localStorage.setItem('toy_expenses_v2', JSON.stringify(nv)); } catch(e){} }, { deep: true });
-                watch(posts, (nv) => { try { localStorage.setItem('toy_posts_v2', JSON.stringify(nv)); } catch(e){} }, { deep: true });
-                watch(todos, (nv) => { try { localStorage.setItem('toy_todos_v2', JSON.stringify(nv)); } catch(e){} }, { deep: true });
-                watch(scheduleItems, (nv) => { try { localStorage.setItem('toy_schedule_v2', JSON.stringify(nv)); } catch(e){} }, { deep: true });
+                const savePhotos = () => {
+                    localStorage.setItem('vint_photo_urls', JSON.stringify(photoUrls.value));
+                    triggerAlert('🌿 輕森系手記管理系統：\n自訂相片網址已成功一鍵儲存並記憶於您的瀏覽器！');
+                    showPhotoConfig.value = false;
+                };
 
-                const filteredSchedule = computed(() => {
-                    let items = scheduleItems.value.filter(i => i.dateIdx === activeDateIdx.value);
-                    if (filterCategory.value !== '全部') {
-                        items = items.filter(i => i.category === filterCategory.value);
+                const resetPhotos = () => {
+                    photoUrls.value = { banner: '', day1: '', day2: '', day3: '', day4: '', day5: '' };
+                    localStorage.removeItem('vint_photo_urls');
+                    triggerAlert('已重設為森林風預設照片路徑。');
+                };
+
+                // 開啟旅伴編輯
+                const openMemberEditModal = (m) => {
+                    editingMember.value = { ...m };
+                    showMemberModal.value = true;
+                };
+
+                // 儲存旅伴資訊
+                const saveMember = () => {
+                    const idx = members.value.findIndex(item => item.id === editingMember.value.id);
+                    if (idx !== -1) {
+                        members.value[idx] = { ...editingMember.value };
+                        localStorage.setItem('vint_members_data', JSON.stringify(members.value));
+                        triggerAlert(`🎉 已儲存 ${editingMember.value.name} 的旅伴資料與自訂照片！`);
                     }
-                    return items.sort((a, b) => a.time.localeCompare(b.time));
-                });
+                    showMemberModal.value = false;
+                };
 
-                const totalExpenseRMB = computed(() => expenses.value.reduce((sum, i) => sum + (i.amount || 0), 0));
-                const totalExpenseTWD = computed(() => Math.round(totalExpenseRMB.value * 4.5));
+                // 旅伴防破圖處理
+                const handleMemberImageError = (e, member) => {
+                    // 若設定的圖片失效，回到森系漸層和 Emoji
+                    member.photo = '';
+                };
 
+                // 防破圖雙重備用機制
+                const handleBannerError = (e) => {
+                    e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80';
+                };
+
+                const handleDayImageError = (e, dayNum) => {
+                    const fallbacks = {
+                        1: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
+                        2: 'https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?auto=format&fit=crop&w=800&q=80',
+                        3: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80',
+                        4: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=800&q=80',
+                        5: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80'
+                    };
+                    e.target.src = fallbacks[dayNum] || fallbacks[4];
+                };
+
+                // 行程互動機制
                 const openAddModal = () => {
                     isEditing.value = false;
-                    formItem.value = { id: '', dateIdx: activeDateIdx.value, time: '12:00', title: '', category: '景點', notes: '', ticket: '', transitIcon: '🚗', transitTime: 15 };
+                    formItem.value = { id: Date.now(), time: '12:00', title: '', category: '景點', notes: '' };
                     showModal.value = true;
                 };
 
@@ -611,41 +819,36 @@
                 };
 
                 const saveItem = () => {
-                    if (!formItem.value.title.trim()) return alert('名稱欄位不能空白！');
+                    if (!formItem.value.title) return triggerAlert('請填寫主題名稱');
                     if (isEditing.value) {
-                        const index = scheduleItems.value.findIndex(i => i.id === formItem.value.id);
-                        if (index !== -1) scheduleItems.value[index] = { ...formItem.value };
+                        const idx = scheduleItems.value.findIndex(i => i.id === formItem.value.id);
+                        if (idx !== -1) scheduleItems.value[idx] = { ...formItem.value };
                     } else {
-                        formItem.value.id = 'custom_' + Date.now();
+                        formItem.value.dIdx = activeDateIdx.value;
                         scheduleItems.value.push({ ...formItem.value });
                     }
                     showModal.value = false;
                 };
 
                 const confirmDelete = () => {
-                    if (confirm('確定要永久刪除這個行程嗎？')) {
-                        scheduleItems.value = scheduleItems.value.filter(i => i.id !== formItem.value.id);
-                        showModal.value = false;
-                    }
+                    scheduleItems.value = scheduleItems.value.filter(i => i.id !== formItem.value.id);
+                    showModal.value = false;
                 };
 
-                const moveItem = (index, direction) => {
-                    const currentList = [...filteredSchedule.value];
-                    const targetIndex = index + direction;
-                    if (targetIndex < 0 || targetIndex >= currentList.length) return;
-
-                    const realIdx1 = scheduleItems.value.findIndex(i => i.id === currentList[index].id);
-                    const realIdx2 = scheduleItems.value.findIndex(i => i.id === currentList[targetIndex].id);
-
-                    const temp = scheduleItems.value[realIdx1];
-                    scheduleItems.value[realIdx1] = scheduleItems.value[realIdx2];
-                    scheduleItems.value[realIdx2] = temp;
+                const moveItem = (currentIdx, direction) => {
+                    const targetIdx = currentIdx + direction;
+                    if (targetIdx < 0 || targetIdx >= filteredSchedule.value.length) return;
+                    const tempId = filteredSchedule.value[currentIdx].id;
+                    filteredSchedule.value[currentIdx].id = filteredSchedule.value[targetIdx].id;
+                    filteredSchedule.value[targetIdx].id = tempId;
                 };
 
+                // 記帳與日誌
                 const addExpense = () => {
-                    if (!newExpense.value.amount || !newExpense.value.title) return alert('請填寫完整記帳金額與名稱。');
+                    if (!newExpense.value.amount || !newExpense.value.title) return triggerAlert('請完整填寫金額與品項');
                     expenses.value.unshift({ id: Date.now(), ...newExpense.value });
-                    newExpense.value = { amount: null, title: '', category: '美食' };
+                    newExpense.value.amount = null;
+                    newExpense.value.title = '';
                 };
 
                 const deleteExpense = (id) => {
@@ -656,15 +859,21 @@
                     const file = e.target.files[0];
                     if (file) {
                         const reader = new FileReader();
-                        reader.onload = (event) => { newPost.value.img = event.target.result; };
+                        reader.onload = (el) => { newPost.value.img = el.target.result; };
                         reader.readAsDataURL(file);
                     }
                 };
 
                 const addPost = () => {
-                    if (!newPost.value.text) return alert('寫點精彩內容再上傳吧！');
-                    posts.value.unshift({ id: Date.now(), text: newPost.value.text, img: newPost.value.img, date: '6/18' });
-                    newPost.value = { text: '', img: '' };
+                    if (!newPost.value.text) return triggerAlert('請填寫日誌隨筆內文');
+                    posts.value.unshift({
+                        id: Date.now(),
+                        text: newPost.value.text,
+                        img: newPost.value.img || 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80',
+                        date: new Date().toISOString().split('T')[0]
+                    });
+                    newPost.value.text = '';
+                    newPost.value.img = '';
                 };
 
                 const openGoogleMap = (query) => {
@@ -673,12 +882,11 @@
 
                 const getBadgeColor = (cat) => {
                     switch(cat) {
-                        case '航班': return 'bg-toyYellow text-toyInk';
-                        case '交通': return 'bg-toyBlue text-white';
-                        case '住宿': return 'bg-toyGreen text-white';
-                        case '美食': return 'bg-toyRed text-white';
-                        case '購物': return 'bg-toyPurple text-white';
-                        default: return 'bg-zinc-100 text-toyInk';
+                        case '航班': return 'bg-bookGold text-bookInk border-bookInk';
+                        case '交通': return 'bg-bookBlue text-white border-bookInk';
+                        case '住宿': return 'bg-bookGreen text-white border-bookInk';
+                        case '美食': return 'bg-bookRed text-white border-bookInk';
+                        default: return 'bg-stone-100 text-bookInk border-stone-300';
                     }
                 };
 
@@ -695,8 +903,11 @@
 
                 return {
                     isMounted, currentTab, activeDateIdx, filterCategory, pinCode, dates, categories, members, todos, expenses, newExpense, posts, newPost,
-                    filteredSchedule, totalExpenseRMB, totalExpenseTWD, showModal, isEditing, formItem,
-                    openAddModal, openEditModal, saveItem, confirmDelete, moveItem, addExpense, deleteExpense, handleImage, addPost, openGoogleMap, getBadgeColor, getExpenseIcon
+                    filteredSchedule, totalExpenseRMB, totalExpenseTWD, showModal, isEditing, formItem, showPhotoConfig, photoUrls, currentWeather, customAlert,
+                    showMemberModal, editingMember,
+                    openAddModal, openEditModal, saveItem, confirmDelete, moveItem, addExpense, deleteExpense, handleImage, addPost, openGoogleMap, getBadgeColor, getExpenseIcon,
+                    handleBannerError, handleDayImageError, savePhotos, resetPhotos, triggerAlert,
+                    openMemberEditModal, saveMember, handleMemberImageError
                 };
             }
         }).mount('#app');
