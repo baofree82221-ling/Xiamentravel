@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -160,11 +161,12 @@
                         </div>
                     </div>
 
-                    <!-- 廈門回憶製造所：一路同行，一路珍藏 -->
+                    <!-- 成員名單與狀態 -->
                     <div class="flex justify-between items-center bg-twilightSlate/60 p-2.5 rounded-[12px] border border-twilightSand/15 text-[10px] text-twilightPaper font-medium">
                         <div class="flex items-center space-x-2">
                             <span class="w-2 h-2 bg-twilightSand rounded-full animate-ping"></span>
-                            <span class="opacity-80">廈門回憶製造所：一路同行，一路珍藏</span>
+                            <span class="opacity-80">成員：</span>
+                            <span class="font-bold text-twilightSand">{{ travelers.join('、') }}</span>
                         </div>
                         <span class="text-[9px] bg-twilightSand/20 text-twilightSand border border-twilightSand/30 px-2.5 py-0.5 rounded-full font-bold">行程準備就緒 🚢</span>
                     </div>
@@ -967,7 +969,7 @@
                     { id: '3', dateIdx: 0, time: '13:30', title: '立榮航空 B78920 起飛往金門', category: '航班', notes: '空中航程約為一小時，預估於 14:35 分抵達金門尚義機場。', ticket: '', image: 'https://images.unsplash.com/photo-1473862170180-84427c485ade?auto=format&fit=crop&w=600&q=80', transitIcon: '✈️', transitTime: 60 },
                     { id: '4', dateIdx: 0, time: '14:40', title: '金門機場搭計程車前往水頭碼頭', category: '交通', notes: '車程約 15-20 分鐘，抵達後需完成小三通通關出境。', ticket: '', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
                     { id: '5', dateIdx: 0, time: '16:00', title: '最晚抵達水頭碼頭辦理登船', category: '交通', notes: '需出境通關+安檢+等候登船。17:00 前必須完成所有的登船手續。', ticket: '', image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 10 },
-                    { id: '6', dateIdx: 0, time: '17:30', title: '新五緣輪正式開船前往廈門', category: '交通', notes: '定位碼：NZAX7E，隨身攜帶護照與台胞證核對出境。', ticket: '', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbSM1fRVzB9oGeZdIbbqO-8Mw33JjEx4rkE8ArcgVC7Q&s=10', transitIcon: '🚢', transitTime: 35 },
+                    { id: '6', dateIdx: 0, time: '17:30', title: '新五緣輪正式開船前往廈門', category: '交通', notes: '定位碼：NZAX7E，隨身攜帶護照與台胞證核對出境。', ticket: '', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 35 },
                     { id: '7', dateIdx: 0, time: '18:00', title: '抵達廈門並辦理台胞專屬服務', category: '交通', notes: '五通客運碼頭「近便利」台胞專區，領取大禮包、相關優惠券及旅遊資訊。', ticket: '', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 25 },
                     { id: '8', dateIdx: 0, time: '18:30', title: '抵達飯店：宜度・潮宿 check-in', category: '住宿', notes: '位於中山路步行街，位置極佳。辦理入住並置放行李稍作休息。', ticket: '', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 15 },
                     { id: '9', dateIdx: 0, time: '19:00', title: '廈門市區專業驗光配眼鏡', category: '購物', notes: '① 九九木眼鏡店挑款式/比價 ➔ ② 天虹購物中心 B1 眼鏡區 (金湖路516號) 驗光，可快取件！', ticket: '', image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
@@ -976,16 +978,16 @@
                     
                     // Day 2: 6/19 (五) 鼓浪嶼+南普陀寺+海上小火車+八市海鮮
                     { id: '12', dateIdx: 1, time: '08:00', title: '飯店早餐後出發', category: '住宿', notes: '元氣早餐推薦，隨即前往郵輪中心廈鼓碼頭搭船。', ticket: '飯店提供', image: 'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 25 },
-                    { id: '13', dateIdx: 1, time: '09:00', title: '鼓浪嶼深度人文漫遊', category: '景點', notes: '搭至三丘田碼頭。推薦路線：最美轉角 ➔ 船屋 ➔ 龍頭路商圈 ➔ 日光岩周邊 ➔ 菽莊外圍。午餐於龍頭路小吃街 (葉氏麻糍、海蠣煎、沙茶麵、沈家腸粉)。', ticket: '渡輪船票自理', image: 'https://img.ezfly.com/ims/I000/076/068.jpg', transitIcon: '🚢', transitTime: 30 },
+                    { id: '13', dateIdx: 1, time: '09:00', title: '鼓浪嶼深度人文漫遊', category: '景點', notes: '搭至三丘田碼頭。推薦路線：最美轉角 ➔ 船屋 ➔ 龍頭路商圈 ➔ 日光岩周邊 ➔ 菽莊外圍。午餐於龍頭路小吃街 (葉氏麻糍、海蠣煎、沙茶麵、沈家腸粉)。', ticket: '渡輪船票自理', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 30 },
                     { id: '14', dateIdx: 1, time: '14:00', title: '南普陀寺祈福及品嚐花生湯', category: '景點', notes: '提前四天預約參拜。遊歷天王殿、大雄寶殿、放生池並虔誠祈福。', ticket: '免費 (須提前預約)', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    { id: '15', dateIdx: 1, time: '16:30', title: '集美學村漫步建築群', category: '景點', notes: '欣賞龍舟池、嘉庚建築群、集美學村經典老牌樓。', ticket: '免費', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVaqiN6sGL0-6uj9LhpEKo2vsYNIpeJktqB635Psmn0_XlbhCRByNySsE&s=10', transitIcon: '🚗', transitTime: 15 },
+                    { id: '15', dateIdx: 1, time: '16:30', title: '集美學村漫步建築群', category: '景點', notes: '欣賞龍舟池、嘉庚建築群、集美學村經典老牌樓。', ticket: '免費', image: 'https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
                     { id: '16', dateIdx: 1, time: '17:30', title: '神隱少女「海上小火車」列車之旅', category: '交通', notes: '地鐵1號線：集美學村站-高崎站。建議坐右側靠窗，一覽海上夕陽落日之美。', ticket: '地鐵票自理', image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=600&q=80', transitIcon: '🚇', transitTime: 8 },
                     { id: '17', dateIdx: 1, time: '18:30', title: '第八市場 (八市) 熱鬧海鮮晚餐', category: '美食', notes: '體驗最經典道地的大排檔滋味！推薦品嚐白灼蝦、清蒸魚、土筍凍與肥美螃蟹。', ticket: '', image: 'https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
                     { id: '18', dateIdx: 1, time: '20:00', title: '八市周邊散步及中山路買伴手禮', category: '購物', notes: '散步感受溫馨的老廈門夜生活。', ticket: '', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 10 },
                     
                     // Day 3: 6/20 (六) 江頭市場乾貨採買+集美學村+SM廣場+沙坡尾+雙子塔
                     { id: '19', dateIdx: 2, time: '09:00', title: '江頭市場南北貨採購', category: '購物', notes: '專屬採購時光：干貝、魷魚乾、蝦米、茶葉、特色花生酥與鳳梨酥。', ticket: '', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
-                    { id: '20', dateIdx: 2, time: '11:30', title: '再訪集美學村/陳嘉庚紀念館', category: '景點', notes: '拜訪歸來堂與陳嘉庚紀念館。午餐安排於石鼓路美食街自由享用。', ticket: '', https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVaqiN6sGL0-6uj9LhpEKo2vsYNIpeJktqB635Psmn0_XlbhCRByNySsE&s=10', transitIcon: '🚗', transitTime: 20 },
+                    { id: '20', dateIdx: 2, time: '11:30', title: '再訪集美學村/陳嘉庚紀念館', category: '景點', notes: '拜訪歸來堂與陳嘉庚紀念館。午餐安排於石鼓路美食街自由享用。', ticket: '', image: 'https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
                     { id: '21', dateIdx: 2, time: '15:00', title: 'SM城市廣場購物血拼下午茶', category: '購物', notes: '逛街、喝下午茶、補充想帶回家的優質名產手信。', ticket: '', image: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
                     { id: '22', dateIdx: 2, time: '17:30', title: '沙坡尾避風塢文創漫步', category: '景點', notes: '漫步路線：避風塢 ➔ 藝術西區 ➔ 文創市集 ➔ 海邊步道看雙子塔亮燈。晚餐可在此享用閩南房菜。', ticket: '', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
                     { id: '23', dateIdx: 2, time: '20:00', title: '雲上廈門「雙子塔」奢華夜景', category: '景點', notes: '雙子塔外圍拍照或直接購票登上「雲上廈門觀景台」俯瞰整片星光夜景！', ticket: '登樓門票自理', image: 'https://images.unsplash.com/photo-1496568818309-53d7c7753022?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 10 },
@@ -998,11 +1000,11 @@
                     { id: '28', dateIdx: 3, time: '16:30', title: '回程乘車返廈門市區', category: '交通', notes: '預估於 19:00 前抵達廈門市區，可自由漫步享用晚餐。', ticket: '', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80', transitIcon: '🚐', transitTime: 150 },
                     
                     // Day 5: 6/22 (一) 金門半日遊+返台
-                    { id: '29', dateIdx: 4, time: '09:00', title: '五通碼頭乘船返回金門', category: '交通', notes: '通關並提取行李。約 09:35 抵達金門水頭碼頭，預估需 30-60 分鐘。', ticket: '', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbSM1fRVzB9oGeZdIbbqO-8Mw33JjEx4rkE8ArcgVC7Q&s=10', transitIcon: '🚢', transitTime: 35 },
+                    { id: '29', dateIdx: 4, time: '09:00', title: '五通碼頭乘船返回金門', category: '交通', notes: '通關並提取行李。約 09:35 抵達金門水頭碼頭，預估需 30-60 分鐘。', ticket: '', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 35 },
                     { id: '30', dateIdx: 4, time: '10:10', title: '尚義機場寄放行李及租機車', category: '交通', notes: '機場寄行李。取車推薦：金豐租車 (08:30-18:30 機場內可取還車)；或冠城租車 / ZOCHA機場無人店。', ticket: '', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
                     { id: '31', dateIdx: 4, time: '10:50', title: '水頭聚落得月樓拍照打卡', category: '景點', notes: '必拍得月樓、洋樓群與典雅的閩南古厝。', ticket: '免費', image: 'https://images.unsplash.com/photo-1508333706533-1ab43ecb1606?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
                     { id: '32', dateIdx: 4, time: '12:00', title: '金城老街午餐與採購名產', category: '美食', notes: '金門必吃：廣東粥、牛肉麵、炒泡麵。順手採購金門三大法寶：貢糖、牛肉乾、手工麵線。', ticket: '', image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
-                    { id: '33', dateIdx: 4, time: '13:40', title: '莒光樓金門代表地標拍照留念', category: '景點', notes: '金門最威武代表建築，參訪拍攝時間約 40 分鐘。', ticket: '免費', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVaqiN6sGL0-6uj9LhpEKo2vsYNIpeJktqB635Psmn0_XlbhCRByNySsE&s=10', transitIcon: '🏍️', transitTime: 15 },
+                    { id: '33', dateIdx: 4, time: '13:40', title: '莒光樓金門代表地標拍照留念', category: '景點', notes: '金門最威武代表建築，參訪拍攝時間約 40 分鐘。', ticket: '免費', image: 'https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
                     { id: '34', dateIdx: 4, time: '14:30', title: '享用金門在地青草地鮮奶與冰品', category: '美食', notes: '必嚐在地純濃鮮乳、鮮奶冰淇淋與手作鮮奶茶。', ticket: '', image: 'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
                     { id: '35', dateIdx: 4, time: '15:20', title: '返抵機場還車託運、辦理登機', category: '交通', notes: '最晚 15:30-15:45 機場櫃檯報到完畢，準備搭機。', ticket: '', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
                     { id: '36', dateIdx: 4, time: '17:15', title: '飛機起飛返抵高雄小港機場', category: '航班', notes: '圓滿結束愉快精緻的金門、廈門五日深度漫遊之旅！', ticket: '', image: 'https://images.unsplash.com/photo-1473862170180-84427c485ade?auto=format&fit=crop&w=600&q=80', transitIcon: '✈️', transitTime: 60 }
@@ -1106,13 +1108,13 @@
                     const title = SafeStorage.getItem('tw_banner_title');
                     if (title) {
                         if (title.includes('雙城深度慢旅') || !title) {
-                            bannerTitle.value = '金門x廈門 雙城深度慢旅';
-                            SafeStorage.setItem('tw_banner_title', '金門x廈門 雙城深度慢旅');
+                            bannerTitle.value = '金門X廈門 雙城深度慢旅';
+                            SafeStorage.setItem('tw_banner_title', '金門X廈門 雙城深度慢旅');
                         } else {
                             bannerTitle.value = title;
                         }
                     } else {
-                        bannerTitle.value = '金門x廈門 雙城深度慢旅';
+                        bannerTitle.value = '金門X廈門 雙城深度慢旅';
                     }
                     
                     const sub = SafeStorage.getItem('tw_banner_sub');
