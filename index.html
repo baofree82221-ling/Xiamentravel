@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -24,11 +23,11 @@
                         twilightSlate: '#1E3E62',  // 沉穩海藍灰
                         twilightSand: '#D4AD68',   // 溫潤暖沙金
                         twilightPaper: '#FAF9F6',  // 優雅石膏白紙
-                        twilightMuted: '#64748B',  // 莫蘭迪石板灰
+                        twilightMuted: '#111111',  // 全域消滅灰色，改為清晰黑色
                         twilightCard: '#FFFFFF'    // 紙張純白
                     },
                     borderRadius: {
-                        'luxury': '20px'
+                        'luxury': '22px'
                     }
                 }
             }
@@ -36,12 +35,12 @@
     </script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Sans+TC:wght@500;700;900&display=swap');
         
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #0B192C; /* 預設深藍色襯底，避免手機 RWD 閃爍 */
-            color: #1E3E62;
+            background-color: #0B192C;
+            color: #111111;
             -webkit-tap-highlight-color: transparent;
         }
         
@@ -51,127 +50,111 @@
 
         /* 暮光奢華質感精緻陰影 */
         .shadow-luxury { 
-            box-shadow: 0 12px 30px -8px rgba(11, 25, 44, 0.08), 0 4px 12px -3px rgba(11, 25, 44, 0.03); 
-            border: 1px solid rgba(212, 173, 104, 0.15);
+            box-shadow: 0 16px 36px -8px rgba(11, 25, 44, 0.15), 0 4px 16px -3px rgba(212, 173, 104, 0.15); 
+            border: 1.5px solid rgba(212, 173, 104, 0.3);
         }
         
         .shadow-luxury-sm { 
-            box-shadow: 0 6px 15px -4px rgba(11, 25, 44, 0.05); 
-            border: 1px solid rgba(212, 173, 104, 0.1); 
+            box-shadow: 0 6px 20px -4px rgba(11, 25, 44, 0.1); 
+            border: 1px solid rgba(212, 173, 104, 0.2); 
         }
         
         /* 隱藏滾動條 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem); }
+        .safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom) + 0.6rem); }
         
         /* 深度轉場動畫 */
-        .fade-enter-active, .fade-leave-active { transition: opacity 0.25s ease, transform 0.25s ease; }
-        .fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(4px); }
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease, transform 0.3s ease; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(8px); }
 
         /* 地圖固定容器比例 */
         #itinerary-map {
-            height: 280px;
+            height: 290px;
             width: 100%;
             z-index: 10;
-            border-radius: 14px;
+            border-radius: 16px;
         }
-
-        /* 👑 專屬長輩特大字體模式 class (採用極高權重 html #app.senior-mode 確保完全碾壓 Tailwind 優先級) */
-        html #app.senior-mode .text-\[9px\] { font-size: 15px !important; line-height: 1.5 !important; }
-        html #app.senior-mode .text-\[10px\] { font-size: 16px !important; line-height: 1.5 !important; }
-        html #app.senior-mode .text-\[11px\] { font-size: 17px !important; line-height: 1.5 !important; }
-        html #app.senior-mode .text-\[13px\] { font-size: 18px !important; line-height: 1.5 !important; }
-        html #app.senior-mode .text-xs { font-size: 18px !important; line-height: 1.6 !important; }
-        html #app.senior-mode .text-sm { font-size: 20px !important; line-height: 1.6 !important; }
-        html #app.senior-mode .text-base { font-size: 22px !important; line-height: 1.6 !important; }
-        html #app.senior-mode .text-lg, html #app.senior-mode h3 { font-size: 24px !important; line-height: 1.4 !important; font-weight: 800 !important; }
-        html #app.senior-mode .text-xl, html #app.senior-mode h2 { font-size: 28px !important; line-height: 1.4 !important; font-weight: 900 !important; }
-        
-        /* 對所有一般文字標籤的通用放大處理 */
-        html #app.senior-mode p, 
-        html #app.senior-mode span, 
-        html #app.senior-mode li, 
-        html #app.senior-mode label, 
-        html #app.senior-mode button, 
-        html #app.senior-mode select, 
-        html #app.senior-mode input, 
-        html #app.senior-mode textarea {
-            font-size: 18px !important;
-            line-height: 1.6 !important;
-        }
-        
-        /* 保持按鈕中的 icon 與排版一致 */
-        html #app.senior-mode i.fa-solid, html #app.senior-mode i.fa-regular {
-            font-size: inherit !important;
-        }
-        
-        html #app.senior-mode .p-4 { padding: 1.25rem !important; }
     </style>
 </head>
-<body class="antialiased flex justify-center min-h-screen pb-24 bg-twilightBg">
+<body class="antialiased flex justify-center min-h-screen pb-24 bg-twilightBg select-none">
 
-    <div id="app" :class="{'senior-mode': isSeniorFont}" class="w-full max-w-md bg-twilightPaper min-h-screen relative flex flex-col shadow-2xl">
+    <div id="app" class="w-full max-w-md bg-twilightPaper min-h-screen relative flex flex-col shadow-2xl">
         
-        <!-- 系統初次載入保護機制 -->
-        <div v-if="!isMounted" class="bg-twilightBg p-12 text-center my-auto flex flex-col items-center justify-center space-y-6 min-h-screen w-full">
-            <div class="animate-spin text-twilightSand text-5xl"><i class="fa-solid fa-compass"></i></div>
-            <p class="text-xl font-bold font-title tracking-widest text-twilightPaper">GOLDEN VOYAGE</p>
-            <p class="text-[13px] text-twilightSand font-medium tracking-wide">成員：姿綾、琬棋、媽媽、小阿姨</p>
-            <p class="text-xs text-twilightSand/80 leading-relaxed font-light">
-                正為您部署全新「暮光海藍 x 溫潤沙金」<br>金廈深度航行手冊...
-            </p>
+        <!-- 🏆【第一頁專屬啟動封面：廈門回憶製造所】儀式感滿分 -->
+        <div v-if="!isBookOpened" class="bg-twilightBg p-8 text-center flex flex-col items-center justify-between min-h-screen w-full relative overflow-hidden border-4 border-twilightSand">
+            <!-- 裝飾花紋 -->
+            <div class="absolute -top-10 -left-10 w-32 h-32 rounded-full border-2 border-twilightSand/20 pointer-events-none"></div>
+            <div class="absolute -bottom-10 -right-10 w-32 h-32 rounded-full border-2 border-twilightSand/20 pointer-events-none"></div>
+            
+            <div class="my-auto space-y-8 w-full z-10">
+                <div class="w-24 h-24 bg-gradient-to-br from-twilightSand to-amber-200 rounded-full flex items-center justify-center mx-auto shadow-2xl border border-twilightSand">
+                    <i class="fa-solid fa-book-open text-twilightBg text-4xl"></i>
+                </div>
+                
+                <div class="space-y-4">
+                    <p class="text-xs tracking-widest text-twilightSand/90 uppercase font-title">GOLDEN MEMORIES</p>
+                    <!-- 👑【字體優化】廈門回憶製造所：字體加大2px (text-2xl 24px -> text-3xl 30px) -->
+                    <h1 class="text-3xl font-black tracking-wide text-twilightPaper leading-snug">
+                        廈門回憶製造所
+                    </h1>
+                    <p class="text-sm text-twilightSand tracking-widest font-medium">「 一路同行，一路珍藏 」</p>
+                </div>
+
+                <div class="bg-white/5 p-4 rounded-2xl border border-twilightSand/30 max-w-xs mx-auto">
+                    <p class="text-[10px] text-twilightSand/75 tracking-wider uppercase mb-2">專屬漫遊成員</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span v-for="m in travelers" :key="m" class="text-xs bg-twilightSand/20 text-twilightPaper px-3 py-1 rounded-full border border-twilightSand/30 font-bold">
+                            ✨ {{ m }}
+                        </span>
+                    </div>
+                </div>
+                
+                <p class="text-xs text-twilightPaper/70 leading-relaxed font-light">
+                    行程、天氣、地圖、公費、憑證夾已全數部署完畢
+                </p>
+            </div>
+
+            <button @click="openHandbook" class="w-full max-w-xs bg-gradient-to-r from-twilightSand to-amber-200 text-twilightBg font-black py-4 rounded-xl shadow-2xl transition hover:scale-105 active:scale-95 duration-200 flex items-center justify-center space-x-2 text-sm border-2 border-white/20 mb-8 z-10">
+                <i class="fa-solid fa-compass-navigational animate-spin"></i>
+                <span>開啟我的漫遊手帳 🚢</span>
+            </button>
         </div>
 
-        <!-- Vue 正式框架 -->
-        <template v-if="isMounted">
+        <!-- Vue 正式框架內容區 -->
+        <template v-if="isBookOpened">
             
+            <!-- 👑 頂部主視覺 (已取消長輩模式面板) -->
             <div class="p-4 bg-twilightBg text-white relative">
-                <div class="relative w-full h-[180px] rounded-[18px] overflow-hidden group border border-twilightSand/20 shadow-lg">
-                    <img :src="bannerImg" alt="金廈旅圖" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                <div class="relative w-full h-[180px] rounded-[18px] overflow-hidden group border border-twilightSand/25 shadow-lg">
+                    <img :src="bannerImg" alt="金廈旅圖" class="w-full h-full object-cover">
                     
-                    <!-- 沉浸式漸層文案 (原本在下方會遮擋住按鈕，現將按鈕 z-index 提高至 z-20) -->
+                    <!-- 沉浸式漸層文案 -->
                     <div class="absolute inset-0 bg-gradient-to-t from-twilightBg via-black/10 to-transparent p-4 flex flex-col justify-end pointer-events-none">
                         <p class="text-[9px] font-bold tracking-widest text-twilightSand uppercase">COASTAL DISCOVERY BOOK</p>
                         <h2 class="text-xl font-black mt-0.5 tracking-wide font-title text-white">{{ bannerTitle }}</h2>
-                        <p class="text-[10px] text-twilightPaper/80 mt-1 font-light tracking-wider">{{ bannerSub }}</p>
+                        <p class="text-[10px] text-twilightPaper/90 mt-1 font-light tracking-wider">{{ bannerSub }}</p>
                     </div>
 
-                    <!-- 浮動編輯照片按鈕 (加入 z-30 與 pointer-events-auto 提升層級以防止被 absolute 漸層層擋住而點不到) -->
-                    <button @click="triggerBannerEdit" class="absolute top-3 right-3 z-30 bg-black/60 hover:bg-black/90 backdrop-blur-md text-twilightSand text-[10px] px-3 py-1.5 rounded-full shadow-md transition-all font-bold flex items-center space-x-1.5 border border-twilightSand/30 pointer-events-auto">
+                    <!-- 浮動編輯照片按鈕 -->
+                    <button @click="triggerBannerEdit" class="absolute top-3 right-3 z-30 bg-black/60 hover:bg-black/90 backdrop-blur-md text-twilightSand text-[10px] px-3 py-1.5 rounded-full shadow-md transition font-bold flex items-center space-x-1.5 border border-twilightSand/30 pointer-events-auto">
                         <i class="fa-solid fa-camera"></i>
                         <span>編輯封面</span>
                     </button>
                 </div>
 
-                <!-- 🌟 專屬長輩字體放大控制面板與頂部公告 -->
+                <!-- 🌟 頂部跑馬燈公告 (👑 廈門回憶製造所字體加大2px：從text-[10px]提升至text-[12px]) -->
                 <div class="mt-3 flex flex-col space-y-2">
-                    <!-- 字體放大控制鈕 -->
-                    <div class="flex justify-between items-center bg-twilightSlate/40 p-2 rounded-[12px] border border-twilightSand/15">
-                        <span class="text-[11px] text-twilightPaper font-bold flex items-center space-x-1.5">
-                            <i class="fa-solid fa-magnifying-glass-plus text-twilightSand"></i>
-                            <span>長輩閱讀模式：</span>
-                        </span>
-                        <div class="flex space-x-1">
-                            <button @click="isSeniorFont = false" :class="!isSeniorFont ? 'bg-twilightSand text-twilightBg' : 'bg-twilightSlate text-twilightPaper/60'" class="px-3 py-1 rounded-lg text-[10px] font-black transition-all">
-                                標準字 ⚖️
-                            </button>
-                            <button @click="isSeniorFont = true" :class="isSeniorFont ? 'bg-red-500 text-white animate-pulse' : 'bg-twilightSlate text-twilightPaper/60'" class="px-3 py-1 rounded-lg text-[10px] font-black transition-all">
-                                放大字 🔎
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- 廈門回憶製造所：一路同行，一路珍藏 -->
-                    <div class="flex justify-between items-center bg-twilightSlate/60 p-2.5 rounded-[12px] border border-twilightSand/15 text-[10px] text-twilightPaper font-medium">
+                    <div class="flex justify-between items-center bg-twilightSlate/60 p-2.5 rounded-[12px] border border-twilightSand/15 text-[12px] text-twilightPaper font-medium">
                         <div class="flex items-center space-x-2">
-                            <span class="w-2 h-2 bg-twilightSand rounded-full animate-ping"></span>
-                            <span class="opacity-80">廈門回憶製造所：一路同行，一路珍藏 </span>
+                            <span class="w-2.5 h-2.5 bg-green-400 rounded-full animate-ping"></span>
+                            <span class="font-bold">廈門回憶製造所：一路同行，一路珍藏 </span>
                         </div>
-                        <span class="text-[9px] bg-twilightSand/20 text-twilightSand border border-twilightSand/30 px-2.5 py-0.5 rounded-full font-bold">行程準備就緒 🚢</span>
+                        <span class="text-[9px] bg-twilightSand text-twilightBg px-2.5 py-0.5 rounded-full font-bold">準備就緒 🚢</span>
                     </div>
                 </div>
             </div>
 
+            <!-- 主區塊 -->
             <div class="p-4 flex-1 pb-16">
 
                 <!-- ==================== TAB 1: 行程計畫 (PLAN) ==================== -->
@@ -180,31 +163,36 @@
                     <!-- 輕奢風橫向滑動日期切換 -->
                     <div class="flex space-x-2 overflow-x-auto pb-1.5 no-scrollbar">
                         <button v-for="(d, idx) in dates" :key="idx" @click="activeDateIdx = idx"
-                                :class="activeDateIdx === idx ? 'bg-twilightBg text-twilightSand shadow-md border-twilightSand' : 'bg-white text-twilightMuted border-transparent'"
+                                :class="activeDateIdx === idx ? 'bg-twilightBg text-twilightSand shadow-md border-twilightSand' : 'bg-white text-twilightBg border-transparent'"
                                 class="flex flex-col items-center justify-center min-w-[70px] h-[78px] rounded-[16px] shadow-luxury-sm transition-all shrink-0 border-2">
-                            <span class="text-[9px] font-bold tracking-widest uppercase" :class="activeDateIdx === idx ? 'text-twilightSand' : 'text-twilightMuted'">{{ d.week }}</span>
+                            <span class="text-[9px] font-bold tracking-widest uppercase" :class="activeDateIdx === idx ? 'text-twilightSand' : 'text-twilightBg'">{{ d.week }}</span>
                             <span class="text-base font-black mt-1 tracking-tight">{{ d.day }}</span>
                         </button>
                     </div>
 
-                    <!-- ⛅ 每日動態天氣與船班交通監控狀況 -->
+                    <!-- ⛅ 今日動態天氣與船班交通監控狀況 (👑【核心優化】全域字體加大 2px，強化極致高對比與清晰度) -->
                     <div class="bg-white p-3.5 rounded-[16px] border border-twilightSand/25 shadow-luxury-sm space-y-2.5">
                         <div class="flex justify-between items-center border-b border-stone-100 pb-1.5">
-                            <span class="text-xs font-bold text-twilightBg flex items-center space-x-1.5">
+                            <!-- 👑 標題加大2px: text-xs (12px) -> text-sm (14px) -->
+                            <span class="text-sm font-bold text-twilightBg flex items-center space-x-1.5">
                                 <i class="fa-solid fa-cloud-sun text-twilightSand animate-pulse"></i>
                                 <span>今日天氣與環境狀態</span>
                             </span>
-                            <span class="text-[11px] font-mono font-black text-twilightSand bg-twilightBg px-2 py-0.5 rounded">{{ activeDateWeather.temp }}</span>
+                            <!-- 👑 溫度指示加大2px: text-[11px] -> text-[13px] -->
+                            <span class="text-[13px] font-mono font-black text-twilightSand bg-twilightBg px-2.5 py-0.5 rounded">{{ activeDateWeather.temp }}</span>
                         </div>
-                        <p class="text-[11px] text-twilightMuted leading-relaxed">
+                        <!-- 👑 天氣描述加大2px: text-[11px] -> text-[13px] -->
+                        <p class="text-[13px] text-twilightMuted leading-relaxed font-bold">
                             🌤️ {{ activeDateWeather.desc }}
                         </p>
                         <div class="border-t border-dashed border-stone-200/60 pt-2 flex flex-col space-y-1">
-                            <span class="text-[10px] font-bold text-twilightSlate flex items-center space-x-1.5">
+                            <!-- 👑 交通監控標題加大2px: text-[10px] -> text-[12px] -->
+                            <span class="text-[12px] font-bold text-twilightSlate flex items-center space-x-1.5">
                                 <i class="fa-solid fa-ship text-sky-500"></i>
-                                <span>今日船班 / 大眾運輸狀態監控</span>
+                                <span>今日船班 / 大眾交通運輸監控</span>
                             </span>
-                            <p class="text-[11px] text-twilightMuted leading-relaxed font-light">
+                            <!-- 👑 交通監控詳情加大2px: text-[11px] -> text-[13px] -->
+                            <p class="text-[13px] text-twilightMuted leading-relaxed font-bold">
                                 {{ activeDateWeather.transitStatus }}
                             </p>
                         </div>
@@ -217,9 +205,9 @@
                                 <i class="fa-solid fa-hotel text-twilightSand"></i>
                                 <span class="font-bold">落腳旅店：宜度・潮宿家庭房 (中山路步行街)</span>
                             </span>
-                            <p class="text-twilightMuted leading-relaxed text-[11px] font-light">
+                            <p class="text-twilightMuted leading-relaxed text-[11px] font-bold">
                                 🍳 旅宿提供免費特惠家庭早餐 2 份（07:00-10:00）<br>
-                                💡 <span class="text-twilightSand font-medium">貼心提醒：</span>Day 2 與 Day 3 使用此早餐最劃算！
+                                💡 <span class="text-amber-700 font-bold">貼心提醒：</span>Day 2 與 Day 3 使用此早餐最划算！
                             </p>
                         </div>
                     </div>
@@ -237,18 +225,15 @@
                     <div class="space-y-4">
                         <div v-for="(item, idx) in filteredSchedule" :key="item.id" class="relative">
                             
-                            <!-- 交通轉場引導 -->
-                            <div v-if="idx > 0" class="flex justify-center items-center py-2 text-[10px] font-bold text-twilightMuted space-x-2">
-                                <span class="w-8 h-[1px] bg-twilightSand/20"></span>
-                                <span>{{ item.transitIcon || '🚗' }} 下一個目的地移動約 {{ item.transitTime || '15' }} 分鐘</span>
-                                <span class="w-8 h-[1px] bg-twilightSand/20"></span>
+                            <div v-if="idx > 0" class="flex justify-center items-center py-2.5 text-xs font-black text-twilightBg bg-twilightSand/10 rounded-xl my-1 border border-twilightSand/20">
+                                <span>{{ item.transitIcon || '🚗' }} 下一個目的地移動約 <span class="text-amber-700 underline font-black">{{ item.transitTime || '15' }}</span> 分鐘</span>
                             </div>
 
                             <!-- 精裝手帳卡片 -->
                             <div class="bg-white rounded-luxury shadow-luxury overflow-hidden flex flex-col relative group">
-                                <div v-if="item.image" class="w-full h-44 relative bg-stone-100 overflow-hidden">
-                                    <img :src="item.image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="景點照" onerror="this.src='https://placehold.co/600x400/0b192c/ffffff?text=Voyage'">
-                                    <span class="absolute top-3 left-3 bg-twilightBg/90 backdrop-blur-md text-twilightSand text-[9px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase border border-twilightSand/30">
+                                <div v-if="item.image && item.image.trim() !== ''" class="w-full h-48 relative bg-stone-100 overflow-hidden border-b border-stone-200">
+                                    <img :src="item.image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="景點照">
+                                    <span class="absolute top-3 left-3 bg-twilightBg/95 backdrop-blur-md text-twilightSand text-[10px] font-black tracking-widest px-3 py-1 rounded-full uppercase border border-twilightSand/30 shadow-md">
                                         {{ item.category }}
                                     </span>
                                 </div>
@@ -256,29 +241,29 @@
                                 <div class="p-4 space-y-3">
                                     <div class="flex justify-between items-center">
                                         <div class="flex items-center space-x-2">
-                                            <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-twilightBg text-twilightSand">
+                                            <span class="text-xs font-mono font-black px-3 py-1.5 rounded-md bg-twilightBg text-twilightSand">
                                                 {{ item.time }}
                                             </span>
-                                            <span v-if="isKeyTime(item.time, item.dateIdx)" class="text-[9px] text-red-500 font-bold bg-red-50 border border-red-200 px-1.5 py-0.5 rounded animate-pulse">重要出發時段！</span>
+                                            <span v-if="isKeyTime(item.time, item.dateIdx)" class="text-[9px] text-white font-black bg-red-600 border border-red-700 px-2 py-0.5 rounded shadow-sm animate-pulse">重要出發時段！</span>
                                         </div>
-                                        <div class="flex items-center space-x-1 text-xs text-twilightMuted">
-                                            <button @click="moveItem(idx, -1)" class="p-1 hover:text-twilightBg transition" title="往上移">▲</button>
-                                            <button @click="moveItem(idx, 1)" class="p-1 hover:text-twilightBg transition" title="往下移">▼</button>
+                                        <div class="flex items-center space-x-2 text-xs text-twilightMuted">
+                                            <button @click="moveItem(idx, -1)" class="p-1.5 bg-stone-100 rounded hover:bg-twilightSand hover:text-twilightBg transition" title="往上移">▲</button>
+                                            <button @click="moveItem(idx, 1)" class="p-1.5 bg-stone-100 rounded hover:bg-twilightSand hover:text-twilightBg transition" title="往下移">▼</button>
                                         </div>
                                     </div>
                                     
-                                    <h3 class="text-base font-bold text-twilightBg tracking-wide leading-tight">{{ item.title }}</h3>
+                                    <h3 class="text-base font-black text-twilightBg tracking-wide leading-tight">{{ item.title }}</h3>
                                     
-                                    <div class="text-[11px] text-twilightMuted space-y-1 bg-twilightPaper p-3 rounded-lg border border-twilightSand/10 leading-relaxed font-light">
-                                        <p v-if="item.ticket" class="font-medium text-twilightSlate">🎟️ 門票規章：{{ item.ticket }}</p>
-                                        <p>{{ item.notes }}</p>
+                                    <div class="text-sm text-twilightMuted space-y-2 bg-twilightPaper p-3.5 rounded-xl border-2 border-twilightSand/20 leading-relaxed font-black">
+                                        <p v-if="item.ticket" class="font-black text-amber-800 bg-amber-50 p-1.5 rounded border border-amber-200">🎟️ 門票規章：{{ item.ticket }}</p>
+                                        <p class="text-twilightBg font-black select-text">{{ item.notes }}</p>
                                     </div>
 
-                                    <div class="pt-3 border-t border-dashed border-stone-100 flex justify-between items-center">
-                                        <button @click="openGoogleMap(item.title)" class="text-[10px] bg-twilightBg text-twilightSand font-bold px-3.5 py-2 rounded-lg hover:bg-twilightSlate transition flex items-center space-x-1.5 border border-twilightSand/20">
-                                            <i class="fa-solid fa-location-dot"></i><span>開啟 Google Maps</span>
+                                    <div class="pt-3 border-t border-dashed border-stone-100 flex justify-between items-center gap-2">
+                                        <button @click="openGoogleMap(item.title)" class="text-xs bg-twilightBg text-twilightSand font-black px-4 py-2.5 rounded-xl hover:bg-twilightSlate transition flex items-center space-x-2 border border-twilightSand/30 shadow-sm">
+                                            <i class="fa-solid fa-location-dot text-base"></i><span>開啟地圖導航</span>
                                         </button>
-                                        <button @click="openEditModal(item)" class="text-[10px] text-twilightSand hover:text-twilightBg font-bold">編輯行程與照片</button>
+                                        <button @click="openEditModal(item)" class="text-xs text-amber-700 hover:underline font-black bg-amber-50 border border-amber-200 px-3 py-2.5 rounded-xl">編輯內容與配圖</button>
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +272,7 @@
                     </div>
 
                     <!-- 新增行程按鈕 -->
-                    <button @click="openAddModal" class="fixed bottom-24 right-6 z-30 bg-twilightBg text-twilightSand p-4 rounded-full shadow-luxury hover:scale-105 active:scale-95 transition-all border border-twilightSand/40">
+                    <button @click="openAddModal" class="fixed bottom-24 right-6 z-30 bg-twilightBg text-twilightSand p-4.5 rounded-full shadow-luxury hover:scale-105 active:scale-95 transition-all border border-twilightSand/40">
                         <i class="fa-solid fa-plus text-base"></i>
                     </button>
                 </div>
@@ -319,45 +304,78 @@
                         </div>
                     </div>
 
-                    <!-- 精裝雜誌排版風格導覽 -->
-                    <div class="bg-white p-5 rounded-luxury shadow-luxury space-y-5">
+                    <!-- 精裝雜誌排版風格導覽 (新增大量深度導覽景點與歷史內容) -->
+                    <div class="bg-white p-5 rounded-luxury shadow-luxury space-y-6">
                         <div class="text-center pb-4 border-b border-twilightSand/20">
                             <p class="text-[9px] font-bold tracking-widest text-twilightSand uppercase">CULTURAL GEOGRAPHY</p>
-                            <h2 class="text-base font-black font-title text-twilightBg mt-1">金廈地理誌與人文特考</h2>
+                            <h2 class="text-base font-black font-title text-twilightBg mt-1">金廈地理誌與人文深度特考</h2>
                             <div class="w-10 h-[2px] bg-twilightSand/60 mx-auto mt-2.5"></div>
                         </div>
 
                         <!-- 景點介紹 1 -->
                         <div class="space-y-2">
                             <div class="flex items-center space-x-2">
-                                <span class="text-[9px] bg-twilightSand/15 text-twilightSand border border-twilightSand/20 px-2 py-0.5 rounded font-bold">歷史建築</span>
-                                <h3 class="text-xs font-bold text-twilightBg">🗺️ 鼓浪嶼：鋼琴之島與萬國博覽會</h3>
+                                <span class="text-[9px] bg-twilightSand/15 text-twilightSand border border-twilightSand/20 px-2 py-0.5 rounded font-bold">萬國博覽</span>
+                                <h3 class="text-xs font-bold text-twilightBg">🗺️ 鼓浪嶼：鋼琴之島與萬國領事建築群</h3>
                             </div>
-                            <p class="text-[11px] text-twilightMuted leading-relaxed font-light">
-                                鼓浪嶼因漲潮時浪擊礁石，聲如擂鼓而得名。清末時期多國在此設立領事館，因而保留了豐富的西方古典建築。
-                                <span class="block mt-1 italic text-twilightSand">💡 漫遊冷知識：全島禁止機動車行駛，是最天然的步行博物館。</span>
+                            <p class="text-[11px] text-twilightMuted leading-relaxed font-bold bg-stone-50 p-3 rounded-xl border border-stone-200">
+                                鼓浪嶼因漲潮時海浪擊石、聲如擂鼓而得名。自1843年廈門開埠後，多國陸續在此設立領事館、商行、別墅與教堂。全島因而保留了維多利亞式、巴洛克式與折衷主義等西方古典建築。
+                                <span class="block mt-1.5 italic text-amber-700 font-bold">💡 漫遊冷知識：全島完全禁止任何機動車輛（除救護車與消防車外），是一座極為天然的露天步行建築博物館！</span>
                             </p>
                         </div>
 
                         <!-- 景點介紹 2 -->
                         <div class="space-y-2 border-t border-dashed border-stone-100 pt-4">
                             <div class="flex items-center space-x-2">
-                                <span class="text-[9px] bg-rose-50 text-red-500 border border-red-200 px-2 py-0.5 rounded font-bold">世界遺產</span>
-                                <h3 class="text-xs font-bold text-twilightBg">🧱 南靖土樓：建在沼澤上的奇蹟</h3>
+                                <span class="text-[9px] bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-bold">中西合璧</span>
+                                <h3 class="text-xs font-bold text-twilightBg">🏫 集美學村：陳嘉庚先生的「嘉庚風格」殿堂</h3>
                             </div>
-                            <p class="text-[11px] text-twilightMuted leading-relaxed font-light">
-                                和貴樓是南靖土樓中最高的一座，最驚人的是它建在鬆軟的沼澤地上，依靠 200 多根松木打樁、互相支撐，歷經數百年風雨屹立不倒。
+                            <p class="text-[11px] text-twilightMuted leading-relaxed font-bold bg-stone-50 p-3 rounded-xl border border-stone-200">
+                                由著名愛國華僑領袖陳嘉庚先生一手創辦。這裡的校園建築群極具特色，俗稱「穿西裝、戴斗笠」——即採用西式的鋼筋混凝土結構、大窗、高挑立面（西裝），卻配上傳統中式飛簷翹角、琉璃瓦頂（斗笠），充分體現了南洋華僑心繫家鄉的浪漫人文精神。
                             </p>
                         </div>
 
                         <!-- 景點介紹 3 -->
                         <div class="space-y-2 border-t border-dashed border-stone-100 pt-4">
                             <div class="flex items-center space-x-2">
-                                <span class="text-[9px] bg-twilightSlate/10 text-twilightSlate border border-twilightSlate/20 px-2 py-0.5 rounded font-bold">現代景緻</span>
-                                <h3 class="text-xs font-bold text-twilightBg">🚇 跨海列車：神隱少女的波光剪影</h3>
+                                <span class="text-[9px] bg-sky-50 text-sky-600 border border-sky-200 px-2 py-0.5 rounded font-bold">漁港記憶</span>
+                                <h3 class="text-xs font-bold text-twilightBg">🎨 沙坡尾避風塢：老廈門的起點與文創大本營</h3>
                             </div>
-                            <p class="text-[11px] text-twilightMuted leading-relaxed font-light">
-                                廈門地鐵 1 號線的「集美學村 - 高崎」段，當列車緩緩駛出地下隧道，車窗外瞬間展開一望無際的蔚藍大海。傍晚 17:30 左右搭乘，夕陽灑在波光粼粼的海面上，極具電影般的浪漫美感。
+                            <p class="text-[11px] text-twilightMuted leading-relaxed font-bold bg-stone-50 p-3 rounded-xl border border-stone-200">
+                                沙坡尾是廈門最古老的港口之一，也是昔日漁民停泊船隻、售賣海鮮的天然避風塢。如今這裡雖不再有大規模漁業運作，但保留了傳統的木質石造駁岸。近年在極富創意的設計師與青年職人改造下，成為了集合獨立咖啡館、藝文沙龍、夕陽落日打卡步道與原生態閩南市井氣息並存的精緻街區。
+                             </p>
+                        </div>
+
+                        <!-- 景點介紹 4 -->
+                        <div class="space-y-2 border-t border-dashed border-stone-100 pt-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-[9px] bg-rose-50 text-red-500 border border-red-200 px-2 py-0.5 rounded font-bold">世界遺產</span>
+                                <h3 class="text-xs font-bold text-twilightBg">🧱 南靖土樓：建在沼澤地上的和貴樓</h3>
+                            </div>
+                            <p class="text-[11px] text-twilightMuted leading-relaxed font-bold bg-stone-50 p-3 rounded-xl border border-stone-200">
+                                位於雲水謠的和貴樓，是南靖土樓中最高的一座（達21.5米）。令人震驚的是，這座重達數千噸的泥土與木構造城堡，竟然是建在鬆軟潮濕的「沼澤地」之上。當初建造者依靠 200 多根松木在下方打樁打底，形成一塊漂浮在泥潭上的巨大浮筏木墊。歷經200多年風雨、無數次大小地震，依然完好無損、屹立不倒！
+                            </p>
+                        </div>
+
+                        <!-- 景點介紹 5 -->
+                        <div class="space-y-2 border-t border-dashed border-stone-100 pt-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-[9px] bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded font-bold">閩南古厝</span>
+                                <h3 class="text-xs font-bold text-twilightBg">🏰 金門水頭聚落：得月樓與典雅洋樓防禦群</h3>
+                            </div>
+                            <p class="text-[11px] text-twilightMuted leading-relaxed font-bold bg-stone-50 p-3 rounded-xl border border-stone-200">
+                                水頭聚落是金門保留最完整、也最為富麗堂皇的傳統閩南聚落之一。其中「得月樓」建於民國二十年，是一座高11.26米的防禦用「銃樓」（槍樓）。當時因沿海常有盜匪洗劫，返鄉的華僑特別設計了地下逃生密道、偽裝用的假大門、防彈的鑄鐵厚牆與四面環伺的射擊孔。它完美融入了華麗精美的西式巴洛克洋樓花磚裝飾中，是金門極具歷史代表性的傳奇防匪工事。
+                            </p>
+                        </div>
+
+                        <!-- 景點介紹 6 -->
+                        <div class="space-y-2 border-t border-dashed border-stone-100 pt-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-[9px] bg-purple-50 text-purple-600 border border-purple-200 px-2 py-0.5 rounded font-bold">千年古剎</span>
+                                <h3 class="text-xs font-bold text-twilightBg">🥮 南普陀寺：五老峰下的唐代佛學淨土</h3>
+                            </div>
+                            <p class="text-[11px] text-twilightMuted leading-relaxed font-bold bg-stone-50 p-3 rounded-xl border border-stone-200">
+                                始建於唐代，因其供奉觀世音菩薩，且位於浙江普陀山之南，故名南普陀寺。寺廟依山傍海而建，後枕五老峰，前臨鷺江，極富天然靈氣。其主體建築群如天王殿、大雄寶殿、大悲殿等皆為傳統的重簷歇山頂結構，屋脊上裝飾著精湛絢麗的閩南「剪瓷雕」工藝。除了雄渾莊嚴的佛教殿堂外，其特色南普陀素餅（花生、香泥等口味）更是中外馳名的素食界傳奇之作。
                             </p>
                         </div>
                     </div>
@@ -373,15 +391,15 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4 border-t border-twilightSand/10 pt-3">
                             <div>
-                                <p class="text-[10px] text-twilightMuted uppercase font-semibold">初始公費預算</p>
+                                <p class="text-[10px] text-white/50 uppercase font-semibold">初始公費預算</p>
                                 <p class="text-sm font-bold font-mono text-white">¥ {{ initialPublicFund }}</p>
                             </div>
                             <div>
-                                <p class="text-[10px] text-twilightMuted uppercase font-semibold">剩餘公費餘額</p>
+                                <p class="text-[10px] text-white/50 uppercase font-semibold">剩餘公費餘額</p>
                                 <p class="text-xl font-bold font-mono text-twilightSand">¥ {{ remainingPublicFund }}</p>
                             </div>
                         </div>
-                        <p class="text-[9px] text-twilightMuted italic pt-1 border-t border-dashed border-twilightSand/10">
+                        <p class="text-[9px] text-white/40 italic pt-1 border-t border-dashed border-twilightSand/10">
                             ※ 公費餘額會由下方勾選了「公費直接支付」的開銷項目中自動即時扣抵計算。
                         </p>
                     </div>
@@ -417,11 +435,11 @@
                         <div class="grid grid-cols-2 gap-2.5">
                             <div>
                                 <label class="block text-[9px] text-twilightMuted mb-1 font-bold">金額 (RMB ¥)</label>
-                                <input v-model.number="newExpense.amount" type="number" placeholder="¥ 記帳金額" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 font-mono text-xs outline-none focus:border-twilightSand text-twilightBg">
+                                <input v-model.number="newExpense.amount" type="number" placeholder="¥ 記帳金額" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 font-mono text-xs outline-none focus:border-twilightSand text-twilightBg font-bold">
                             </div>
                             <div>
                                 <label class="block text-[9px] text-twilightMuted mb-1 font-bold">品項名稱說明</label>
-                                <input v-model="newExpense.title" type="text" placeholder="例如：海大富海鮮" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 text-xs outline-none focus:border-twilightSand text-twilightBg">
+                                <input v-model="newExpense.title" type="text" placeholder="例如：海大富海鮮" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 text-xs outline-none focus:border-twilightSand text-twilightBg font-bold">
                             </div>
                         </div>
 
@@ -431,7 +449,7 @@
                             <div class="grid grid-cols-2 gap-2 mt-1.5">
                                 <div>
                                     <label class="block text-[8px] text-twilightMuted mb-1 font-bold">付款人</label>
-                                    <select v-model="newExpense.payer" class="w-full bg-white border border-stone-200 rounded p-1 text-xs outline-none cursor-pointer">
+                                    <select v-model="newExpense.payer" class="w-full bg-white border border-stone-200 rounded p-1 text-xs outline-none cursor-pointer font-bold">
                                         <option v-for="m in travelers" :key="m" :value="m">{{ m }}</option>
                                         <option value="公費">公費支付</option>
                                     </select>
@@ -459,7 +477,7 @@
                         <div class="grid grid-cols-2 gap-2.5">
                             <div>
                                 <label class="block text-[9px] text-twilightMuted mb-1 font-bold">消費類別</label>
-                                <select v-model="newExpense.category" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 text-xs outline-none focus:border-twilightSand cursor-pointer text-twilightBg">
+                                <select v-model="newExpense.category" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 text-xs outline-none focus:border-twilightSand cursor-pointer text-twilightBg font-bold">
                                     <option value="美食">🍱 美食饗宴</option>
                                     <option value="交通">🚗 交通費用</option>
                                     <option value="購物">🛍️ 伴手禮品</option>
@@ -501,7 +519,7 @@
                                             公費支付
                                         </span>
                                     </h4>
-                                    <div class="text-[9px] text-twilightMuted font-light mt-0.5 space-y-0.5">
+                                    <div class="text-[9px] text-twilightMuted font-bold mt-0.5 space-y-0.5">
                                         <p>類別：{{ exp.category }}</p>
                                         <p v-if="!exp.isPublic">付款：{{ exp.payer }} ➔ 由 {{ exp.splitWith.join('、') }} 分攤 (人均 ¥ {{ Math.round(exp.amount / exp.splitWith.length) }})</p>
                                     </div>
@@ -533,13 +551,16 @@
                                     <span>{{ shop.location }}</span>
                                 </h4>
                                 
-                                <!-- 景點/伴手禮美觀插圖 (完全避開死連結，使用高解析 Unsplash 開源插圖) -->
-                                <div class="w-full h-32 rounded-lg overflow-hidden border border-stone-200">
-                                    <img :src="shop.image" class="w-full h-full object-cover" alt="伴手禮環境照">
+                                <!-- 👑【伴手禮優化】照片移除，全面改為乾淨漂亮的「圖案 Icon」設計 -->
+                                <div class="w-full py-4 bg-gradient-to-br from-twilightPaper to-stone-50 rounded-xl border border-stone-200/60 flex flex-col items-center justify-center space-y-1 shadow-sm">
+                                    <span class="text-5xl select-none" role="img" :aria-label="shop.location">
+                                        {{ shop.icon }}
+                                    </span>
+                                    <span class="text-[10px] text-twilightSand font-mono tracking-widest uppercase">Special Selection</span>
                                 </div>
 
                                 <div class="flex flex-wrap gap-2 pt-1">
-                                    <label v-for="(item, itemIdx) in shop.items" :key="itemIdx" class="flex items-center space-x-1.5 bg-twilightPaper hover:bg-stone-100 px-3 py-1.5 rounded-lg text-xs font-medium border border-stone-200/50 cursor-pointer select-none">
+                                    <label v-for="(item, itemIdx) in shop.items" :key="itemIdx" class="flex items-center space-x-1.5 bg-twilightPaper hover:bg-stone-100 px-3 py-1.5 rounded-lg text-xs font-bold border border-stone-200/50 cursor-pointer select-none">
                                         <input type="checkbox" v-model="item.checked" class="rounded border-gray-300 text-twilightSand focus:ring-0">
                                         <span :class="{'line-through text-twilightMuted/60': item.checked}">{{ item.name }}</span>
                                     </label>
@@ -559,13 +580,13 @@
                         
                         <!-- 上傳重要資料 -->
                         <div class="bg-twilightPaper p-3.5 rounded-xl border border-twilightSand/20 space-y-3">
-                            <p class="text-xs text-twilightMuted font-medium leading-relaxed">
+                            <p class="text-xs text-twilightMuted font-bold leading-relaxed">
                                 您可在此上傳並拍照留存機票、船票、台胞證或旅遊收據，照片將經過高度壓縮安全儲存在本地，防止旅途中紙本遺失。
                             </p>
                             <div class="grid grid-cols-1 gap-2.5">
                                 <div>
                                     <label class="block text-[9px] text-twilightMuted mb-1 font-bold">憑證說明標題</label>
-                                    <input v-model="newDoc.title" type="text" placeholder="例如：新五緣輪去程船票" class="w-full bg-white border border-stone-200 rounded-lg p-2 text-xs outline-none text-twilightBg">
+                                    <input v-model="newDoc.title" type="text" placeholder="例如：新五緣輪去程船票" class="w-full bg-white border border-stone-200 rounded-lg p-2 text-xs outline-none text-twilightBg font-bold">
                                 </div>
                                 <div class="flex space-x-2">
                                     <label class="flex-1 flex items-center justify-center bg-white border border-dashed border-stone-300 rounded-lg p-2 text-xs cursor-pointer hover:border-twilightSand text-twilightMuted transition font-bold">
@@ -601,7 +622,7 @@
                 <!-- ==================== TAB 6: 備忘與資訊 (MEMO) ==================== -->
                 <div v-if="currentTab === 'memo'" class="space-y-4">
                     
-                    <!-- 行前重要清單 Checklist -->
+                    <!-- 行行重要清單 Checklist -->
                     <div class="bg-white p-4 rounded-luxury shadow-luxury">
                         <h3 class="font-title font-bold text-sm border-b border-twilightSand/20 pb-2.5 text-twilightBg flex items-center justify-between">
                             <span>📋 CHECKLIST 行前重要檢驗</span>
@@ -611,7 +632,7 @@
                         <div class="mt-3 space-y-3 text-xs font-bold text-stone-800">
                             <label v-for="todo in todos" :key="todo.id" class="flex items-center space-x-3 cursor-pointer select-none">
                                 <input type="checkbox" v-model="todo.done" class="rounded border-stone-300 text-twilightSand focus:ring-0 w-4 h-4">
-                                <span :class="{'line-through text-twilightMuted/60 font-light': todo.done}" class="text-twilightBg font-medium">{{ todo.text }}</span>
+                                <span :class="{'line-through text-twilightMuted/60 font-light': todo.done}" class="text-twilightBg font-bold">{{ todo.text }}</span>
                             </label>
                         </div>
                     </div>
@@ -624,7 +645,7 @@
                         </h3>
                         
                         <div class="space-y-3">
-                            <textarea v-model="personalMemo" rows="4" placeholder="在此輸入筆記、必吃店家或食記連結。任何輸入的網址都會自動轉換為金色跳轉按鈕！" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-3 text-xs outline-none focus:border-twilightSand text-twilightBg leading-relaxed"></textarea>
+                            <textarea v-model="personalMemo" rows="4" placeholder="在此輸入筆記、必吃店家或食記連結。任何輸入的網址都會自動轉換為金色跳轉按鈕！" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-3 text-xs outline-none focus:border-twilightSand text-twilightBg leading-relaxed font-bold"></textarea>
                             
                             <!-- 連結解析區 -->
                             <div v-if="parsedLinks.length > 0" class="space-y-1.5">
@@ -646,7 +667,7 @@
                             <span class="text-[9px] bg-red-50 border border-red-200 text-red-500 px-2 py-0.5 rounded-full font-bold">出境警告</span>
                         </h3>
                         
-                        <ul class="text-[11px] text-twilightMuted space-y-2 leading-relaxed font-light list-disc pl-4">
+                        <ul class="text-[11px] text-twilightMuted space-y-2 leading-relaxed font-bold list-disc pl-4">
                             <li>🚫 <span class="font-bold text-red-500">肉製品嚴厲查禁</span>：禁止攜帶任何豬、牛、雞等肉類熟食、真空肉乾入台，否則罰鍰將高達台幣 20 萬元。</li>
                             <li>🔋 <span class="font-bold text-twilightBg">行動電源隨身攜帶</span>：立榮與小三通規定登機/乘船時，所有備用電池與行動電源一律不可託運。</li>
                             <li>🥬 <span class="font-bold text-green-600">新鮮蔬果禁止攜入</span>：任何新鮮水果、蔬菜、植物、種子等皆禁止入關查驗。</li>
@@ -657,24 +678,25 @@
             </div>
 
             <!-- ==================== 手機底置 RWD 六大功能導覽列 ==================== -->
+            <!-- 👑【導覽列優化】所有文字與 icon 大小再增加 2px (文字 text-[8px] -> text-[10px], 圖示 text-sm -> text-base) -->
             <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-stone-200/50 rounded-t-luxury shadow-[0_-8px_24px_rgba(11,25,44,0.06)] px-1 py-3 grid grid-cols-6 text-center z-40 safe-bottom">
-                <button @click="currentTab = 'plan'" :class="currentTab === 'plan' ? 'text-twilightBg font-bold' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
-                    <i class="fa-solid fa-calendar-minus text-sm"></i><span class="text-[8px] mt-1 tracking-wider scale-95">行程</span>
+                <button @click="currentTab = 'plan'" :class="currentTab === 'plan' ? 'text-twilightBg font-black' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
+                    <i class="fa-solid fa-calendar-minus text-base"></i><span class="text-[10px] mt-1 tracking-wider font-bold">行程</span>
                 </button>
-                <button @click="currentTab = 'guide'" :class="currentTab === 'guide' ? 'text-twilightBg font-bold' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
-                    <i class="fa-solid fa-compass text-sm"></i><span class="text-[8px] mt-1 tracking-wider scale-95">導覽</span>
+                <button @click="currentTab = 'guide'" :class="currentTab === 'guide' ? 'text-twilightBg font-black' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
+                    <i class="fa-solid fa-compass text-base"></i><span class="text-[10px] mt-1 tracking-wider font-bold">導覽</span>
                 </button>
-                <button @click="currentTab = 'wallet'" :class="currentTab === 'wallet' ? 'text-twilightBg font-bold' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
-                    <i class="fa-solid fa-wallet text-sm"></i><span class="text-[8px] mt-1 tracking-wider scale-95">記帳公費</span>
+                <button @click="currentTab = 'wallet'" :class="currentTab === 'wallet' ? 'text-twilightBg font-black' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
+                    <i class="fa-solid fa-wallet text-base"></i><span class="text-[10px] mt-1 tracking-wider font-bold">記帳公費</span>
                 </button>
-                <button @click="currentTab = 'souvenir'" :class="currentTab === 'souvenir' ? 'text-twilightBg font-bold' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
-                    <i class="fa-solid fa-gift text-sm"></i><span class="text-[8px] mt-1 tracking-wider scale-95">伴手禮</span>
+                <button @click="currentTab = 'souvenir'" :class="currentTab === 'souvenir' ? 'text-twilightBg font-black' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
+                    <i class="fa-solid fa-gift text-base"></i><span class="text-[10px] mt-1 tracking-wider font-bold">伴手禮</span>
                 </button>
-                <button @click="currentTab = 'vault'" :class="currentTab === 'vault' ? 'text-twilightBg font-bold' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
-                    <i class="fa-solid fa-folder-open text-sm"></i><span class="text-[8px] mt-1 tracking-wider scale-95">憑證夾</span>
+                <button @click="currentTab = 'vault'" :class="currentTab === 'vault' ? 'text-twilightBg font-black' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
+                    <i class="fa-solid fa-folder-open text-base"></i><span class="text-[10px] mt-1 tracking-wider font-bold">憑證夾</span>
                 </button>
-                <button @click="currentTab = 'memo'" :class="currentTab === 'memo' ? 'text-twilightBg font-bold' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
-                    <i class="fa-solid fa-clipboard-list text-sm"></i><span class="text-[8px] mt-1 tracking-wider scale-95">備忘清單</span>
+                <button @click="currentTab = 'memo'" :class="currentTab === 'memo' ? 'text-twilightBg font-black' : 'text-twilightMuted'" class="flex flex-col items-center justify-center py-0.5 transition">
+                    <i class="fa-solid fa-clipboard-list text-base"></i><span class="text-[10px] mt-1 tracking-wider font-bold">備忘清單</span>
                 </button>
             </div>
 
@@ -687,7 +709,7 @@
                         <button @click="showModal = false" class="text-twilightMuted hover:text-twilightBg font-bold text-sm">✕</button>
                     </div>
                     
-                    <div class="space-y-3.5 text-xs text-twilightMuted font-medium">
+                    <div class="space-y-3.5 text-xs text-twilightMuted font-bold">
                         <div>
                             <label class="block text-[10px] text-twilightMuted mb-1 font-bold">景點/行程類別</label>
                             <select v-model="formItem.category" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 outline-none text-twilightBg">
@@ -707,7 +729,7 @@
                             <input v-model="formItem.ticket" type="text" placeholder="例如：免費 (提前4天預約)" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 outline-none text-twilightBg">
                         </div>
                         <div>
-                            <label class="block text-[10px] text-twilightMuted mb-1 font-bold">景點實景相簿圖片網址 (可不填)</label>
+                            <label class="block text-[10px] text-twilightMuted mb-1 font-bold">景點實景相簿圖片網址 (不填即是無圖簡約排版)</label>
                             <input v-model="formItem.image" type="text" placeholder="請貼上 Unsplash 或公開圖片網址" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 outline-none text-twilightBg">
                         </div>
                         <div>
@@ -751,7 +773,7 @@
                         <h3 class="text-xs font-bold text-twilightBg uppercase tracking-wider font-title">🗺️ 更換封面與旅誌標題</h3>
                         <button @click="showBannerModal = false" class="text-twilightMuted font-bold">✕</button>
                     </div>
-                    <div class="space-y-3 text-xs text-twilightMuted font-medium">
+                    <div class="space-y-3 text-xs text-twilightMuted font-bold">
                         <div>
                             <label class="block text-[10px] text-twilightMuted mb-1 font-bold">手札主標題</label>
                             <input v-model="tempBannerTitle" type="text" placeholder="例如：金門 x 廈門" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 outline-none text-twilightBg font-bold">
@@ -779,7 +801,7 @@
                         <h3 class="text-xs font-bold text-twilightBg uppercase tracking-wider font-title">💰 設定公費預算總金額</h3>
                         <button @click="showPublicFundModal = false" class="text-twilightMuted font-bold">✕</button>
                     </div>
-                    <div class="space-y-3 text-xs text-twilightMuted font-medium">
+                    <div class="space-y-3 text-xs text-twilightMuted font-bold">
                         <div>
                             <label class="block text-[10px] text-twilightMuted mb-1 font-bold">公費儲備總額 (RMB ¥)</label>
                             <input v-model.number="tempPublicFund" type="number" placeholder="例如：2000" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 outline-none text-twilightBg font-bold font-mono">
@@ -845,14 +867,12 @@
         createApp({
             setup() {
                 const isMounted = ref(false);
+                const isBookOpened = ref(false); // 專屬儀式感：控制是否已翻開手札第一頁
                 const currentTab = ref('plan');
                 const activeDateIdx = ref(0);
                 const filterCategory = ref('全部');
                 const exchangeRate = ref(4.5);
                 const initialPublicFund = ref(2000); // 預設公費
-                
-                // 🌟 新增長輩放大字體狀態 (預設關閉)
-                const isSeniorFont = ref(false);
 
                 // 互動控制
                 const showModal = ref(false);
@@ -875,8 +895,8 @@
 
                 // 行程日期設定
                 const dates = [
-                    { day: '18', week: 'Thu' }, { day: '19', week: 'Fri' },
-                    { day: '20', week: 'Sat' }, { day: '21', week: 'Sun' }, { day: '22', week: 'Mon' }
+                    { day: '18', week: 'Day 1' }, { day: '19', week: 'Day 2' },
+                    { day: '20', week: 'Day 3' }, { day: '21', week: 'Day 4' }, { day: '22', week: 'Day 5' }
                 ];
 
                 const dailyConditions = [
@@ -902,7 +922,7 @@
                     },
                     {
                         temp: '27°C ~ 31°C',
-                        desc: '晴天，金門微風 2 級。溫度溫和舒適，極佳的機車騎行氣候，水頭聚落和古厝散步非常愜意。',
+                        desc: '晴天，金門微風 2 級。溫度溫和舒適，極佳的機車騎行氣候，水頭聚落 and 古厝散步非常愜意。',
                         transitStatus: '🚢 五通返金船班 (09:00) 預報：正常；✈️ 返台航班 (17:15) 正常。🏍️ 金門租車正常取還。'
                     }
                 ];
@@ -916,7 +936,7 @@
                 // 旅伴成員設定
                 const travelers = ref(['姿綾', '琬棋', '媽媽', '小阿姨']);
 
-                // 頂部 Banner 模組動態綁定 (修改為使用者要求的首頁橫幅字樣)
+                // 頂部 Banner 模組動態綁定
                 const bannerTitle = ref('金門X廈門 雙城深度慢旅');
                 const bannerSub = ref('歷史洋樓與絕美土樓 • 6/18 - 6/22');
                 const bannerImg = ref('https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/09/73/91/6c.jpg');
@@ -941,15 +961,15 @@
                     { id: 5, text: '防曬用品、遮陽折傘與必備隨身醫藥', done: false }
                 ]);
 
-                // 伴手禮名單 (新增高清 Unsplash 示意照片，告別空白破圖)
+                // 👑【伴手禮優化】移除了 image 網址，全部換成對應的 emoji icon
                 const souvenirs = ref([
-                    { location: '江頭市場南北貨', image: 'https://images.unsplash.com/photo-1534080564583-6be75777b70a?q=80&w=400', items: [{ name: '干貝', checked: false }, { name: '蝦米', checked: false }, { name: '海苔', checked: false }, { name: '魷魚乾', checked: false }] },
-                    { location: '南普陀寺特產', image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400', items: [{ name: '南普陀素餅 (強力推薦)', checked: false }] },
-                    { location: '鼓浪嶼藝術島', image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=400', items: [{ name: '花磚杯墊', checked: false }, { name: '冰箱貼', checked: false }, { name: '文創帆布袋', checked: false }] },
-                    { location: 'SM城市廣場商圈', image: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?q=80&w=400', items: [{ name: '特色茶葉', checked: false }, { name: '綠皮火車伴手禮', checked: false }] },
-                    { location: '中山路步行老街', image: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=400', items: [{ name: '萬得福牛扎餅', checked: false }, { name: '阿吉仔餡餅', checked: false }, { name: '欲蓮茶樓禮盒', checked: false }] },
-                    { location: '沙坡尾避風塢文創', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=400', items: [{ name: '獨立文創商品', checked: false }, { name: '明信片', checked: false }, { name: '插畫周邊', checked: false }] },
-                    { location: '金門在地老鋪', image: 'https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=400', items: [{ name: '手工貢糖', checked: false }, { name: '特製牛肉乾', checked: false }, { name: '金門手工麵線', checked: false }] }
+                    { location: '江頭市場南北貨', icon: '🦑', items: [{ name: '干貝', checked: false }, { name: '蝦米', checked: false }, { name: '海苔', checked: false }, { name: '魷魚乾', checked: false }] },
+                    { location: '南普陀寺特產', icon: '🥮', items: [{ name: '南普陀素餅 (強力推薦)', checked: false }] },
+                    { location: '鼓浪嶼藝術島', icon: '🧱', items: [{ name: '花磚杯墊', checked: false }, { name: '冰箱貼', checked: false }, { name: '文創帆布袋', checked: false }] },
+                    { location: 'SM城市廣場商圈', icon: '🛍️', items: [{ name: '特色茶葉', checked: false }, { name: '綠皮火車伴手禮', checked: false }] },
+                    { location: '中山路步行老街', icon: '🥞', items: [{ name: '萬得福牛扎餅', checked: false }, { name: '阿吉仔餡餅', checked: false }, { name: '欲蓮茶樓禮盒', checked: false }] },
+                    { location: '沙坡尾避風塢文創', icon: '🎨', items: [{ name: '獨立文創商品', checked: false }, { name: '明信片', checked: false }, { name: '插畫周邊', checked: false }] },
+                    { location: '金門在地老鋪', icon: '🥃', items: [{ name: '手工貢糖', checked: false }, { name: '特製牛肉乾', checked: false }, { name: '金門手工麵線', checked: false }] }
                 ]);
 
                 // 新增重要憑證夾資料 (如：船票拍照)
@@ -960,56 +980,56 @@
                 // 新憑證暫存
                 const newDoc = ref({ title: '', image: '' });
 
-                // 5 天份詳細行程資料
+                // 5 天份詳細行程資料 (照片已精簡)
                 const scheduleItems = ref([
                     // Day 1: 6/18 (四) 高雄→廈門
-                    { id: '1', dateIdx: 0, time: '10:36', title: '岡山捷運出發往小港機場', category: '交通', notes: '捷運乘車時間約 40-50 分鐘，保持充沛體力，期待出航！', ticket: '', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80', transitIcon: '🚇', transitTime: 40 },
-                    { id: '2', dateIdx: 0, time: '11:10', title: '抵達高雄小港機場 (最晚11:30前)', category: '航班', notes: '進行托運行李、完成報到，並進入安檢程序。', ticket: '', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 15 },
-                    { id: '3', dateIdx: 0, time: '13:30', title: '立榮航空 B78920 起飛往金門', category: '航班', notes: '空中航程約為一小時，預估於 14:35 分抵達金門尚義機場。', ticket: '', image: 'https://images.unsplash.com/photo-1473862170180-84427c485ade?auto=format&fit=crop&w=600&q=80', transitIcon: '✈️', transitTime: 60 },
-                    { id: '4', dateIdx: 0, time: '14:40', title: '金門機場搭計程車前往水頭碼頭', category: '交通', notes: '車程約 15-20 分鐘，抵達後需完成小三通通關出境。', ticket: '', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    { id: '5', dateIdx: 0, time: '16:00', title: '最晚抵達水頭碼頭辦理登船', category: '交通', notes: '需出境通關+安檢+等候登船。17:00 前必須完成所有的登船手續。', ticket: '', image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 10 },
-                    { id: '6', dateIdx: 0, time: '17:30', title: '新五緣輪正式開船前往廈門', category: '交通', notes: '定位碼：NZAX7E，隨身攜帶護照與台胞證核對出境。', ticket: '', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 35 },
-                    { id: '7', dateIdx: 0, time: '18:00', title: '抵達廈門並辦理台胞專屬服務', category: '交通', notes: '五通客運碼頭「近便利」台胞專區，領取大禮包、相關優惠券及旅遊資訊。', ticket: '', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 25 },
-                    { id: '8', dateIdx: 0, time: '18:30', title: '抵達飯店：宜度・潮宿 check-in', category: '住宿', notes: '位於中山路步行街，位置極佳。辦理入住並置放行李稍作休息。', ticket: '', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 15 },
-                    { id: '9', dateIdx: 0, time: '19:00', title: '廈門市區專業驗光配眼鏡', category: '購物', notes: '① 九九木眼鏡店挑款式/比價 ➔ ② 天虹購物中心 B1 眼鏡區 (金湖路516號) 驗光，可快取件！', ticket: '', image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
-                    { id: '10', dateIdx: 0, time: '20:30', title: '海大富自助海鮮澎湃晚餐', category: '美食', notes: '位於天虹購物中心 3 樓，大飽口福品味當地海鮮鮮甜！', ticket: '', image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 5 },
-                    { id: '11', dateIdx: 0, time: '21:30', title: '沙坡尾避風塢夜景浪漫散步', category: '景點', notes: '探訪藝術西區，吹著涼風看夜景、拍照打卡。宵夜可至沙坡尾小吃或中山路。', ticket: '', image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
+                    { id: '1', dateIdx: 0, time: '10:36', title: '岡山捷運出發往小港機場', category: '交通', notes: '捷運乘車時間約 40-50 分鐘，保持充沛體力，期待出航！', ticket: '', image: '', transitIcon: '🚇', transitTime: 40 },
+                    { id: '2', dateIdx: 0, time: '11:10', title: '抵達高雄小港機場 (最晚11:30前)', category: '航班', notes: '托運行李、完成報到，保持從容不迫。最晚 11:30 到。', ticket: '', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 15 },
+                    { id: '3', dateIdx: 0, time: '13:30', title: '立榮航空 B78920 起飛往金門', category: '航班', notes: '空中航程約為一小時，預估於 14:35 分抵達金門尚義機場。', ticket: '', image: '', transitIcon: '✈️', transitTime: 60 },
+                    { id: '4', dateIdx: 0, time: '14:40', title: '金門機場搭計程車前往水頭碼頭', category: '交通', notes: '車程約 15-20 分鐘，抵達後需完成小三通通關出境。', ticket: '', image: '', transitIcon: '🚗', transitTime: 20 },
+                    { id: '5', dateIdx: 0, time: '16:00', title: '最晚抵達水頭碼頭辦理登船', category: '交通', notes: '需出境通關+安檢+等候登船。17:00 前必須完成所有的登船手續。', ticket: '', image: '', transitIcon: '🚶', transitTime: 10 },
+                    { id: '6', dateIdx: 0, time: '17:30', title: '新五緣輪正式開船前往廈門', category: '交通', notes: '定位碼：NZAX7E，隨身攜帶護照與台胞證核對出境。', ticket: '', image: '', transitIcon: '🚢', transitTime: 35 },
+                    { id: '7', dateIdx: 0, time: '18:00', title: '抵達廈門並辦理台胞專屬服務', category: '交通', notes: '五通客運碼頭「近便利」台胞專區，領取大禮包、相關優惠券及旅遊資訊。', ticket: '', image: '', transitIcon: '🚗', transitTime: 25 },
+                    { id: '8', dateIdx: 0, time: '18:30', title: '抵達飯店：宜度・潮宿 check-in', category: '住宿', notes: '位於中山路步行街，位置極佳。辦理入住並置放行李稍作休息。', ticket: '', image: '', transitIcon: '🚶', transitTime: 15 },
+                    { id: '9', dateIdx: 0, time: '19:00', title: '廈門市區專業驗光配眼鏡', category: '購物', notes: '① 九九木眼鏡店挑款式/比價 ➔ ② 天虹購物中心 B1 眼鏡區 (金湖路516號) 驗光，可快取件！', ticket: '', image: '', transitIcon: '🚗', transitTime: 15 },
+                    { id: '10', dateIdx: 0, time: '20:30', title: '海大富自助海鮮澎湃晚餐', category: '美食', notes: '位於天虹購物中心 3 樓，大飽口福品味當地海鮮鮮甜！', ticket: '', image: '', transitIcon: '🚶', transitTime: 5 },
+                    { id: '11', dateIdx: 0, time: '21:30', title: '沙坡尾避風塢夜景浪漫散步', category: '景點', notes: '探訪藝術西區，吹著涼風看夜景、拍照打卡。宵夜可至沙坡尾小吃或中山路。', ticket: '', image: '', transitIcon: '🚗', transitTime: 20 },
                     
                     // Day 2: 6/19 (五) 鼓浪嶼+南普陀寺+海上小火車+八市海鮮
-                    { id: '12', dateIdx: 1, time: '08:00', title: '飯店早餐後出發', category: '住宿', notes: '元氣早餐推薦，隨即前往郵輪中心廈鼓碼頭搭船。', ticket: '飯店提供', image: 'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 25 },
-                    { id: '13', dateIdx: 1, time: '09:00', title: '鼓浪嶼深度人文漫遊', category: '景點', notes: '搭至三丘田碼頭。推薦路線：最美轉角 ➔ 船屋 ➔ 龍頭路商圈 ➔ 日光岩周邊 ➔ 菽莊外圍。午餐於龍頭路小吃街 (葉氏麻糍、海蠣煎、沙茶麵、沈家腸粉)。', ticket: '渡輪船票自理', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 30 },
-                    { id: '14', dateIdx: 1, time: '14:00', title: '南普陀寺祈福及品嚐花生湯', category: '景點', notes: '提前四天預約參拜。遊歷天王殿、大雄寶殿、放生池並虔誠祈福。', ticket: '免費 (須提前預約)', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    { id: '15', dateIdx: 1, time: '16:30', title: '集美學村漫步建築群', category: '景點', notes: '欣賞龍舟池、嘉庚建築群、集美學村經典老牌樓。', ticket: '免費', image: 'https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
-                    { id: '16', dateIdx: 1, time: '17:30', title: '神隱少女「海上小火車」列車之旅', category: '交通', notes: '地鐵1號線：集美學村站-高崎站。建議坐右側靠窗，一覽海上夕陽落日之美。', ticket: '地鐵票自理', image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=600&q=80', transitIcon: '🚇', transitTime: 8 },
-                    { id: '17', dateIdx: 1, time: '18:30', title: '第八市場 (八市) 熱鬧海鮮晚餐', category: '美食', notes: '體驗最經典道地的大排檔滋味！推薦品嚐白灼蝦、清蒸魚、土筍凍與肥美螃蟹。', ticket: '', image: 'https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    { id: '18', dateIdx: 1, time: '20:00', title: '八市周邊散步及中山路買伴手禮', category: '購物', notes: '散步感受溫馨的老廈門夜生活。', ticket: '', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 10 },
+                    { id: '12', dateIdx: 1, time: '08:00', title: '飯店早餐後出發', category: '住宿', notes: '元氣早餐推薦，隨即前往郵輪中心廈鼓碼頭搭船。', ticket: '飯店提供', image: '', transitIcon: '🚗', transitTime: 25 },
+                    { id: '13', dateIdx: 1, time: '09:00', title: '鼓浪嶼深度人文漫遊', category: '景點', notes: '搭至三丘田碼頭。最美轉角 ➔ 船屋 ➔ 龍頭路商圈 ➔ 日光岩周邊 ➔ 菽莊外圍。', ticket: '渡輪船票自理', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 30 },
+                    { id: '14', dateIdx: 1, time: '14:00', title: '南普陀寺祈福及品嚐花生湯', category: '景點', notes: '提前四天預約參拜。遊歷天王殿、大雄寶殿、放生池並虔誠祈福。', ticket: '免費 (須提前預約)', image: '', transitIcon: '🚗', transitTime: 20 },
+                    { id: '15', dateIdx: 1, time: '16:30', title: '集美學村漫步建築群', category: '景點', notes: '欣賞龍舟池、嘉庚建築群、集美學村經典老牌樓。', ticket: '免費', image: '', transitIcon: '🚗', transitTime: 15 },
+                    { id: '16', dateIdx: 1, time: '17:30', title: '神隱少女「海上小火車」列車之旅', category: '交通', notes: '地鐵1號線：集美學村站-高崎站。建議坐右側靠窗，一覽海上夕陽落日之美。', ticket: '地鐵票自理', image: '', transitIcon: '🚇', transitTime: 8 },
+                    { id: '17', dateIdx: 1, time: '18:30', title: '第八市場 (八市) 熱鬧海鮮晚餐', category: '美食', notes: '體驗最經典道地的大排檔滋味！推薦品嚐白灼蝦、清蒸魚、土筍凍與肥美螃蟹。', ticket: '', image: '', transitIcon: '🚗', transitTime: 20 },
+                    { id: '18', dateIdx: 1, time: '20:00', title: '八市周邊散步及中山路買伴手禮', category: '購物', notes: '散步感受溫馨的老廈門夜生活。', ticket: '', image: '', transitIcon: '🚶', transitTime: 10 },
                     
                     // Day 3: 6/20 (六) 江頭市場乾貨採買+集美學村+SM廣場+沙坡尾+雙子塔
-                    { id: '19', dateIdx: 2, time: '09:00', title: '江頭市場南北貨採購', category: '購物', notes: '專屬採購時光：干貝、魷魚乾、蝦米、茶葉、特色花生酥與鳳梨酥。', ticket: '', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
-                    { id: '20', dateIdx: 2, time: '11:30', title: '再訪集美學村/陳嘉庚紀念館', category: '景點', notes: '拜訪歸來堂與陳嘉庚紀念館。午餐安排於石鼓路美食街自由享用。', ticket: '', image: 'https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    { id: '21', dateIdx: 2, time: '15:00', title: 'SM城市廣場購物血拼下午茶', category: '購物', notes: '逛街、喝下午茶、補充想帶回家的優質名產手信。', ticket: '', image: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
+                    { id: '19', dateIdx: 2, time: '09:00', title: '江頭市場南北貨採購', category: '購物', notes: '專屬採購時光：干貝、魷魚乾、蝦米、茶葉、特色花生酥與鳳梨酥。', ticket: '', image: '', transitIcon: '🚗', transitTime: 15 },
+                    { id: '20', dateIdx: 2, time: '11:30', title: '再訪集美學村/陳嘉庚紀念館', category: '景點', notes: '拜訪歸來堂與陳嘉庚紀念館。午餐安排於石鼓路美食街自由享用。', ticket: '', image: '', transitIcon: '🚗', transitTime: 20 },
+                    { id: '21', dateIdx: 2, time: '15:00', title: 'SM城市廣場購物血拼下午茶', category: '購物', notes: '逛街、喝下午茶、補充想帶回家的優質名產手信。', ticket: '', image: '', transitIcon: '🚗', transitTime: 15 },
                     { id: '22', dateIdx: 2, time: '17:30', title: '沙坡尾避風塢文創漫步', category: '景點', notes: '漫步路線：避風塢 ➔ 藝術西區 ➔ 文創市集 ➔ 海邊步道看雙子塔亮燈。晚餐可在此享用閩南房菜。', ticket: '', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 20 },
-                    { id: '23', dateIdx: 2, time: '20:00', title: '雲上廈門「雙子塔」奢華夜景', category: '景點', notes: '雙子塔外圍拍照或直接購票登上「雲上廈門觀景台」俯瞰整片星光夜景！', ticket: '登樓門票自理', image: 'https://images.unsplash.com/photo-1496568818309-53d7c7753022?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 10 },
+                    { id: '23', dateIdx: 2, time: '20:00', title: '雲上廈門「雙子塔」奢華夜景', category: '景點', notes: '雙子塔外圍拍照或直接購票登上「雲上廈門觀景台」俯瞰整片星光夜景！', ticket: '登樓門票自理', image: '', transitIcon: '🚶', transitTime: 10 },
                     
                     // Day 4: 6/21 (日) 福建南靖土樓一日遊
                     { id: '24', dateIdx: 3, time: '08:00', title: '專車上門接送與出發', category: '交通', notes: '8人精緻豪華頭等艙商務車一日遊 (全程無強制購物)。途經海滄跨海大橋。重要提醒：隨身帶好證件。', ticket: '一日遊費用包含', image: 'https://images.unsplash.com/photo-1599839616713-90924976fc9e?auto=format&fit=crop&w=800&q=80', transitIcon: '🚐', transitTime: 120 },
-                    { id: '25', dateIdx: 3, time: '10:00', title: '雲水謠古鎮與和貴樓', category: '景點', notes: '走進經典電影《雲水謠》拍攝地，參觀建於沼澤上的奇蹟「和貴樓」與免費登「鐘興樓 (1-4樓)」。', ticket: '費用已含', image: 'https://images.unsplash.com/photo-1508333706533-1ab43ecb1606?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 10 },
-                    { id: '26', dateIdx: 3, time: '12:00', title: '享用豐盛客家風味午餐', category: '美食', notes: '精緻客家風味饗宴 (餐後贈送水果、自助飲料無限暢飲)。', ticket: '費用已含', image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 10 },
-                    { id: '27', dateIdx: 3, time: '13:30', title: '田螺坑「四菜一湯」與東倒西歪裕昌樓', category: '景點', notes: '觀賞知名田螺坑土樓群觀景台、探訪歪斜卻屹立的裕昌樓。', ticket: '接駁車已含', image: 'https://images.unsplash.com/photo-1599839616713-90924976fc9e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚐', transitTime: 20 },
-                    { id: '28', dateIdx: 3, time: '16:30', title: '回程乘車返廈門市區', category: '交通', notes: '預估於 19:00 前抵達廈門市區，可自由漫步享用晚餐。', ticket: '', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80', transitIcon: '🚐', transitTime: 150 },
+                    { id: '25', dateIdx: 3, time: '10:00', title: '雲水謠古鎮與和貴樓', category: '景點', notes: '走進經典電影《雲水謠》拍攝地，參觀建於沼澤上的奇蹟「和貴樓」與免費登「鐘興樓 (1-4樓)」。', ticket: '費用已含', image: '', transitIcon: '🚶', transitTime: 10 },
+                    { id: '26', dateIdx: 3, time: '12:00', title: '享用豐盛客家風味午餐', category: '美食', notes: '精緻客家風味饗宴 (餐後贈送水果、自助飲料無限暢飲)。', ticket: '費用已含', image: '', transitIcon: '🚶', transitTime: 10 },
+                    { id: '27', dateIdx: 3, time: '13:30', title: '田螺坑「四菜一湯」與東倒西歪裕昌樓', category: '景點', notes: '觀賞知名田螺坑土樓群觀景台、探訪歪斜卻屹立的裕昌樓。', ticket: '接駁車已含', image: '', transitIcon: '🚐', transitTime: 20 },
+                    { id: '28', dateIdx: 3, time: '16:30', title: '回程乘車返廈門市區', category: '交通', notes: '預估於 19:00 前抵達廈門市區，可自由漫步享用晚餐。', ticket: '', image: '', transitIcon: '🚐', transitTime: 150 },
                     
                     // Day 5: 6/22 (一) 金門半日遊+返台
-                    { id: '29', dateIdx: 4, time: '09:00', title: '五通碼頭乘船返回金門', category: '交通', notes: '通關並提取行李。約 09:35 抵達金門水頭碼頭，預估需 30-60 分鐘。', ticket: '', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚢', transitTime: 35 },
-                    { id: '30', dateIdx: 4, time: '10:10', title: '尚義機場寄放行李及租機車', category: '交通', notes: '機場寄行李。取車推薦：金豐租車 (08:30-18:30 機場內可取還車)；或冠城租車 / ZOCHA機場無人店。', ticket: '', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80', transitIcon: '🚗', transitTime: 15 },
+                    { id: '29', dateIdx: 4, time: '09:00', title: '五通碼頭乘船返回金門', category: '交通', notes: '通關並提取行李。約 09:35 抵達金門水頭碼頭，預估需 30-60 分鐘。', ticket: '', image: '', transitIcon: '🚢', transitTime: 35 },
+                    { id: '30', dateIdx: 4, time: '10:10', title: '尚義機場寄放行李及租機車', category: '交通', notes: '機場寄行李。取車推薦：金豐租車 (08:30-18:30 機場內可取還車)；或冠城租車 / ZOCHA機場無人店。', ticket: '', image: '', transitIcon: '🚗', transitTime: 15 },
                     { id: '31', dateIdx: 4, time: '10:50', title: '水頭聚落得月樓拍照打卡', category: '景點', notes: '必拍得月樓、洋樓群與典雅的閩南古厝。', ticket: '免費', image: 'https://images.unsplash.com/photo-1508333706533-1ab43ecb1606?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
-                    { id: '32', dateIdx: 4, time: '12:00', title: '金城老街午餐與採購名產', category: '美食', notes: '金門必吃：廣東粥、牛肉麵、炒泡麵。順手採購金門三大法寶：貢糖、牛肉乾、手工麵線。', ticket: '', image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
-                    { id: '33', dateIdx: 4, time: '13:40', title: '莒光樓金門代表地標拍照留念', category: '景點', notes: '金門最威武代表建築，參訪拍攝時間約 40 分鐘。', ticket: '免費', image: 'https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
-                    { id: '34', dateIdx: 4, time: '14:30', title: '享用金門在地青草地鮮奶與冰品', category: '美食', notes: '必嚐在地純濃鮮乳、鮮奶冰淇淋與手作鮮奶茶。', ticket: '', image: 'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
-                    { id: '35', dateIdx: 4, time: '15:20', title: '返抵機場還車託運、辦理登機', category: '交通', notes: '最晚 15:30-15:45 機場櫃檯報到完畢，準備搭機。', ticket: '', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
-                    { id: '36', dateIdx: 4, time: '17:15', title: '飛機起飛返抵高雄小港機場', category: '航班', notes: '圓滿結束愉快精緻的金門、廈門五日深度漫遊之旅！', ticket: '', image: 'https://images.unsplash.com/photo-1473862170180-84427c485ade?auto=format&fit=crop&w=600&q=80', transitIcon: '✈️', transitTime: 60 }
+                    { id: '32', dateIdx: 4, time: '12:00', title: '金城老街午餐與採購名產', category: '美食', notes: '金門必吃：廣東粥、牛肉麵、炒泡麵。順手採購金門三大法寶：貢糖、牛肉乾、手工麵線。', ticket: '', image: '', transitIcon: '🏍️', transitTime: 15 },
+                    { id: '33', dateIdx: 4, time: '13:40', title: '莒光樓金門代表地標拍照留念', category: '景點', notes: '金門最威武代表建築，參訪拍攝時間約 40 分鐘。', ticket: '免費', image: '', transitIcon: '🏍️', transitTime: 15 },
+                    { id: '34', dateIdx: 4, time: '14:30', title: '享用金門在地青草地鮮奶與冰品', category: '美食', notes: '必嚐在地純濃鮮乳、鮮奶冰淇淋與手作鮮奶茶。', ticket: '', image: '', transitIcon: '🏍️', transitTime: 15 },
+                    { id: '35', dateIdx: 4, time: '15:20', title: '返抵機場還車託運、辦理登機', category: '交通', notes: '最晚 15:30-15:45 機場櫃檯報到完畢，準備搭機。', ticket: '', image: '', transitIcon: '🏍️', transitTime: 15 },
+                    { id: '36', dateIdx: 4, time: '17:15', title: '飛機起飛返抵高雄小港機場', category: '航班', notes: '圓滿結束愉快精緻的金門、廈門五日深度漫遊之旅！', ticket: '', image: '', transitIcon: '✈️', transitTime: 60 }
                 ]);
 
-                // 記帳明細展示數據 (公費分帳預設排除陳儀芳、陳怡靜)
+                // 記帳明細展示數據
                 const expenses = ref([
                     { id: 1, title: '海大富自助海鮮晚餐', category: '美食', amount: 360, payer: '姿綾', splitWith: ['姿綾', '琬棋', '媽媽', '小阿姨'], isPublic: false, image: '' }
                 ]);
@@ -1035,7 +1055,7 @@
                     { name: '鼓浪嶼', lat: 24.445, lng: 118.065, desc: 'Day 2 浪漫鋼琴萬國博覽群島' },
                     { name: '南普陀寺', lat: 24.441, lng: 118.090, desc: '千古名剎祈福參拜，享花生湯' },
                     { name: '集美學村', lat: 24.571, lng: 118.100, desc: '嘉庚風範與百年龍舟池散步點' },
-                    { name: '南靖土樓雲水謠', lat: 24.537, lng: 117.050, desc: '世界文化遺產，客家民居奇蹟 (遠景航線)' }
+                    { name: '南靖土樓雲水謠', lat: 24.537, lng: 117.050, desc: '世界文化遺產，客家民居奇蹟' }
                 ];
 
                 let leafletMap = null;
@@ -1045,17 +1065,14 @@
                 const initLeafletMap = () => {
                     if (leafletMap) return;
                     
-                    // 以金廈中點為預設中心點
                     leafletMap = L.map('itinerary-map').setView([24.475, 118.22], 11);
                     
-                    // 導入精細版高雅灰地圖圖層
                     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
                         attribution: '&copy; OpenStreetMap &copy; CARTO'
                     }).addTo(leafletMap);
 
                     markersGroup = L.featureGroup().addTo(leafletMap);
 
-                    // 批量標記
                     mapPoints.forEach(pt => {
                         const marker = L.marker([pt.lat, pt.lng]).addTo(markersGroup);
                         marker.bindPopup(`<b class="text-twilightBg">${pt.name}</b><br><span class="text-xs text-twilightMuted">${pt.desc}</span>`);
@@ -1065,7 +1082,6 @@
                 const focusMapPoint = (pt) => {
                     if (!leafletMap) return;
                     leafletMap.setView([pt.lat, pt.lng], 13);
-                    // 尋找對應標記並彈出視窗
                     markersGroup.eachLayer(layer => {
                         const latlng = layer.getLatLng();
                         if (latlng.lat === pt.lat && latlng.lng === pt.lng) {
@@ -1089,8 +1105,14 @@
                     }
                 });
 
+                // 儀式感切換翻開手帳
+                const openHandbook = () => {
+                    isBookOpened.value = true;
+                    SafeStorage.setItem('tw_book_opened', 'true');
+                    showToast('歡迎翻閱專屬深度慢旅手帳 ✨');
+                };
+
                 onMounted(() => {
-                    // 自訂安全本地儲存讀取邏輯
                     const exp = SafeStorage.getItem('tw_expenses_v3');
                     if (exp) expenses.value = JSON.parse(exp);
                     
@@ -1103,30 +1125,14 @@
                     const vlt = SafeStorage.getItem('tw_vault_v3');
                     if (vlt) vaultDocs.value = JSON.parse(vlt);
                     
-                    // 標題自動升級 Migration 邏輯：如果遇到舊版預設標題或沒有值，自動替換為最溫馨的新標題
+                    const opened = SafeStorage.getItem('tw_book_opened');
+                    if (opened) isBookOpened.value = JSON.parse(opened);
+
                     const title = SafeStorage.getItem('tw_banner_title');
-                    if (title) {
-                        if (title.includes('雙城深度慢旅') || !title) {
-                            bannerTitle.value = '金門X廈門 雙城深度慢旅';
-                            SafeStorage.setItem('tw_banner_title', '金門X廈門 雙城深度慢旅');
-                        } else {
-                            bannerTitle.value = title;
-                        }
-                    } else {
-                        bannerTitle.value = '金門X廈門 雙城深度慢旅';
-                    }
+                    if (title) bannerTitle.value = title;
                     
                     const sub = SafeStorage.getItem('tw_banner_sub');
-                    if (sub) {
-                        if (sub.includes('歷史洋樓與絕美土樓') || !sub) {
-                            bannerSub.value = '歷史洋樓與絕美土樓 • 6/18 - 6/22';
-                            SafeStorage.setItem('tw_banner_sub', '歷史洋樓與絕美土樓 • 6/18 - 6/22');
-                        } else {
-                            bannerSub.value = sub;
-                        }
-                    } else {
-                        bannerSub.value = '歷史洋樓與絕美土樓 • 6/18 - 6/22';
-                    }
+                    if (sub) bannerSub.value = sub;
                     
                     const img = SafeStorage.getItem('tw_banner_img');
                     if (img) bannerImg.value = img;
@@ -1139,21 +1145,16 @@
                     
                     const sou = SafeStorage.getItem('tw_souvenirs');
                     if (sou) souvenirs.value = JSON.parse(sou);
-                    
-                    const sf = SafeStorage.getItem('tw_senior_font');
-                    if (sf) isSeniorFont.value = JSON.parse(sf);
 
                     isMounted.value = true;
                 });
 
-                // 資料異動自動同步 LocalStorage 封裝保護
                 watch(expenses, (nv) => { SafeStorage.setItem('tw_expenses_v3', JSON.stringify(nv)); }, { deep: true });
                 watch(todos, (nv) => { SafeStorage.setItem('tw_todos_v3', JSON.stringify(nv)); }, { deep: true });
                 watch(scheduleItems, (nv) => { SafeStorage.setItem('tw_schedule_v3', JSON.stringify(nv)); }, { deep: true });
                 watch(vaultDocs, (nv) => { SafeStorage.setItem('tw_vault_v3', JSON.stringify(nv)); }, { deep: true });
                 watch(personalMemo, (nv) => { SafeStorage.setItem('tw_personal_memo', nv); });
                 watch(souvenirs, (nv) => { SafeStorage.setItem('tw_souvenirs', JSON.stringify(nv)); }, { deep: true });
-                watch(isSeniorFont, (nv) => { SafeStorage.setItem('tw_senior_font', JSON.stringify(nv)); });
 
                 const filteredSchedule = computed(() => {
                     let items = scheduleItems.value.filter(i => i.dateIdx === activeDateIdx.value);
@@ -1163,7 +1164,6 @@
                     return items.sort((a, b) => a.time.localeCompare(b.time));
                 });
 
-                // 智慧網址過濾器
                 const parsedLinks = computed(() => {
                     const urlRegex = /(https?:\/\/[^\s]+)/g;
                     const links = [];
@@ -1174,7 +1174,6 @@
                     return links;
                 });
 
-                // 計算公費
                 const totalPublicSpend = computed(() => {
                     return expenses.value
                         .filter(e => e.isPublic)
@@ -1186,9 +1185,9 @@
                 });
 
                 const isKeyTime = (timeStr, dateIdx) => {
-                    if (dateIdx === 3 && timeStr === '08:00') return true; // Day 4 包車
-                    if (dateIdx === 0 && timeStr === '11:10') return true; // Day 1 高雄出發
-                    if (dateIdx === 4 && timeStr === '15:20') return true; // Day 5 返航還車
+                    if (dateIdx === 3 && timeStr === '08:00') return true;
+                    if (dateIdx === 0 && timeStr === '11:10') return true;
+                    if (dateIdx === 4 && timeStr === '15:20') return true;
                     return false;
                 };
 
@@ -1197,7 +1196,6 @@
                     setTimeout(() => { toastMessage.value = ''; }, 2000);
                 };
 
-                // Banner 編輯
                 const triggerBannerEdit = () => {
                     tempBannerTitle.value = bannerTitle.value;
                     tempBannerSub.value = bannerSub.value;
@@ -1216,7 +1214,6 @@
                     showToast('封面探索主題更新成功！');
                 };
 
-                // 公費設定
                 const openPublicFundModal = () => {
                     tempPublicFund.value = initialPublicFund.value;
                     showPublicFundModal.value = true;
@@ -1244,7 +1241,6 @@
                     showToast('算式已精準求和！');
                 };
 
-                // 高效發票照片壓縮
                 const onPhotoUploaded = (e) => {
                     const file = e.target.files[0];
                     if (!file) return;
@@ -1284,7 +1280,6 @@
                     reader.readAsDataURL(file);
                 };
 
-                // 憑證夾專用照片壓縮
                 const onDocPhotoUploaded = (e) => {
                     const file = e.target.files[0];
                     if (!file) return;
@@ -1294,7 +1289,7 @@
                         const img = new Image();
                         img.onload = () => {
                             const canvas = document.createElement('canvas');
-                            const MAX_WIDTH = 500; // 憑證保留高解析一點點
+                            const MAX_WIDTH = 500;
                             const MAX_HEIGHT = 500;
                             let width = img.width;
                             let height = img.height;
@@ -1344,12 +1339,10 @@
                     showToast('憑證檔案已安全移出。');
                 };
 
-                // 檢視放大
                 const viewFullPhoto = (base64Url) => {
                     photoViewerUrl.value = base64Url;
                 };
 
-                // 行程資料管理
                 const openAddModal = () => {
                     isEditing.value = false;
                     formItem.value = { id: '', dateIdx: activeDateIdx.value, time: '12:00', title: '', category: '景點', notes: '', ticket: '', image: '', transitIcon: '🚗', transitTime: 15 };
@@ -1406,7 +1399,6 @@
                     scheduleItems.value[realIdx2] = temp;
                 };
 
-                // 記帳與公費
                 const addExpense = () => {
                     if (!newExpense.value.amount || !newExpense.value.title.trim()) {
                         showToast('請填寫金額與開支品項！');
@@ -1423,7 +1415,6 @@
                         image: tempCompressedImg.value
                     });
 
-                    // 表單初始化
                     newExpense.value = {
                         amount: null,
                         title: '',
@@ -1457,12 +1448,11 @@
                 };
 
                 return {
-                    isMounted, currentTab, activeDateIdx, filterCategory, exchangeRate, initialPublicFund, remainingPublicFund,
+                    isMounted, isBookOpened, openHandbook, currentTab, activeDateIdx, filterCategory, exchangeRate, initialPublicFund, remainingPublicFund,
                     dates, categories, travelers, todos, souvenirs, expenses, newExpense, calcExpression, calcValue, tempCompressedImg, photoViewerUrl,
                     filteredSchedule, showModal, isEditing, formItem, personalMemo, parsedLinks, mapPoints, vaultDocs, newDoc, tempDocImg,
                     showBannerModal, bannerTitle, bannerSub, bannerImg, tempBannerTitle, tempBannerSub, tempBannerImg,
                     showPublicFundModal, tempPublicFund, toastMessage, showConfirmModal, activeDateWeather,
-                    isSeniorFont, // 🌟 長輩字體放大狀態
                     triggerBannerEdit, saveBannerSettings, openPublicFundModal, savePublicFund, calcResult, evalCalc, onPhotoUploaded, viewFullPhoto,
                     openAddModal, openEditModal, saveItem, confirmDeleteItem, executeDeleteItem, moveItem, addExpense, deleteExpense, openGoogleMap, getExpenseIcon, isKeyTime,
                     focusMapPoint, onDocPhotoUploaded, saveDoc, deleteDoc
