@@ -93,7 +93,7 @@
                 
                 <div class="space-y-4">
                     <p class="text-xs tracking-widest text-twilightSand/90 uppercase font-title">GOLDEN MEMORIES</p>
-                    <!-- 👑【字體優化】廈門回憶製造所：字體加大2px (text-2xl 24px -> text-3xl 30px) -->
+                    <!-- 👑 廈門回憶製造所字體加大2px -->
                     <h1 class="text-3xl font-black tracking-wide text-twilightPaper leading-snug">
                         廈門回憶製造所
                     </h1>
@@ -123,7 +123,7 @@
         <!-- Vue 正式框架內容區 -->
         <template v-if="isBookOpened">
             
-            <!-- 👑 頂部主視覺 (已取消長輩模式面板) -->
+            <!-- 👑 頂部主視覺 (取消長輩模式按鈕) -->
             <div class="p-4 bg-twilightBg text-white relative">
                 <div class="relative w-full h-[180px] rounded-[18px] overflow-hidden group border border-twilightSand/25 shadow-lg">
                     <img :src="bannerImg" alt="金廈旅圖" class="w-full h-full object-cover">
@@ -135,14 +135,14 @@
                         <p class="text-[10px] text-twilightPaper/90 mt-1 font-light tracking-wider">{{ bannerSub }}</p>
                     </div>
 
-                    <!-- 浮動編輯照片按鈕 -->
+                    <!-- 👑 浮動編輯/設定按鈕 -->
                     <button @click="triggerBannerEdit" class="absolute top-3 right-3 z-30 bg-black/60 hover:bg-black/90 backdrop-blur-md text-twilightSand text-[10px] px-3 py-1.5 rounded-full shadow-md transition font-bold flex items-center space-x-1.5 border border-twilightSand/30 pointer-events-auto">
-                        <i class="fa-solid fa-camera"></i>
-                        <span>編輯封面</span>
+                        <i class="fa-solid fa-gear"></i>
+                        <span>手帳設定</span>
                     </button>
                 </div>
 
-                <!-- 🌟 頂部跑馬燈公告 (👑 廈門回憶製造所字體加大2px：從text-[10px]提升至text-[12px]) -->
+                <!-- 🌟 頂部公告 (👑 廈門回憶製造所字體加大2px：從text-[10px]提升至text-[12px]) -->
                 <div class="mt-3 flex flex-col space-y-2">
                     <div class="flex justify-between items-center bg-twilightSlate/60 p-2.5 rounded-[12px] border border-twilightSand/15 text-[12px] text-twilightPaper font-medium">
                         <div class="flex items-center space-x-2">
@@ -170,28 +170,23 @@
                         </button>
                     </div>
 
-                    <!-- ⛅ 今日動態天氣與船班交通監控狀況 (👑【核心優化】全域字體加大 2px，強化極致高對比與清晰度) -->
+                    <!-- ⛅ 今日動態天氣與船班交通監控狀況 (👑【今日天氣與環境狀態】加大 2px 字體) -->
                     <div class="bg-white p-3.5 rounded-[16px] border border-twilightSand/25 shadow-luxury-sm space-y-2.5">
                         <div class="flex justify-between items-center border-b border-stone-100 pb-1.5">
-                            <!-- 👑 標題加大2px: text-xs (12px) -> text-sm (14px) -->
                             <span class="text-sm font-bold text-twilightBg flex items-center space-x-1.5">
                                 <i class="fa-solid fa-cloud-sun text-twilightSand animate-pulse"></i>
                                 <span>今日天氣與環境狀態</span>
                             </span>
-                            <!-- 👑 溫度指示加大2px: text-[11px] -> text-[13px] -->
                             <span class="text-[13px] font-mono font-black text-twilightSand bg-twilightBg px-2.5 py-0.5 rounded">{{ activeDateWeather.temp }}</span>
                         </div>
-                        <!-- 👑 天氣描述加大2px: text-[11px] -> text-[13px] -->
                         <p class="text-[13px] text-twilightMuted leading-relaxed font-bold">
                             🌤️ {{ activeDateWeather.desc }}
                         </p>
                         <div class="border-t border-dashed border-stone-200/60 pt-2 flex flex-col space-y-1">
-                            <!-- 👑 交通監控標題加大2px: text-[10px] -> text-[12px] -->
                             <span class="text-[12px] font-bold text-twilightSlate flex items-center space-x-1.5">
                                 <i class="fa-solid fa-ship text-sky-500"></i>
                                 <span>今日船班 / 大眾交通運輸監控</span>
                             </span>
-                            <!-- 👑 交通監控詳情加大2px: text-[11px] -> text-[13px] -->
                             <p class="text-[13px] text-twilightMuted leading-relaxed font-bold">
                                 {{ activeDateWeather.transitStatus }}
                             </p>
@@ -271,7 +266,7 @@
                         </div>
                     </div>
 
-                    <!-- 新增行程按鈕 -->
+                    <!-- 新增行程項目懸浮按鈕 -->
                     <button @click="openAddModal" class="fixed bottom-24 right-6 z-30 bg-twilightBg text-twilightSand p-4.5 rounded-full shadow-luxury hover:scale-105 active:scale-95 transition-all border border-twilightSand/40">
                         <i class="fa-solid fa-plus text-base"></i>
                     </button>
@@ -304,7 +299,7 @@
                         </div>
                     </div>
 
-                    <!-- 精裝雜誌排版風格導覽 (新增大量深度導覽景點與歷史內容) -->
+                    <!-- 精裝雜誌排版風格導覽 (深度導覽景點與歷史內容) -->
                     <div class="bg-white p-5 rounded-luxury shadow-luxury space-y-6">
                         <div class="text-center pb-4 border-b border-twilightSand/20">
                             <p class="text-[9px] font-bold tracking-widest text-twilightSand uppercase">CULTURAL GEOGRAPHY</p>
@@ -539,32 +534,52 @@
                 <!-- ==================== TAB 4: 伴手禮專區 (SOUVENIR) ==================== -->
                 <div v-if="currentTab === 'souvenir'" class="space-y-4">
                     <div class="bg-white p-4 rounded-luxury shadow-luxury">
-                        <h3 class="font-title font-bold text-sm border-b border-twilightSand/20 pb-3 text-twilightBg flex items-center justify-between">
-                            <span>🛍️ SOUVENIRS 金廈採購清單</span>
-                            <span class="text-[9px] bg-twilightSand/10 border border-twilightSand/30 text-twilightBg px-2 py-0.5 rounded-full font-bold">完整名錄</span>
-                        </h3>
+                        <div class="border-b border-twilightSand/20 pb-3 flex justify-between items-center">
+                            <h3 class="font-title font-bold text-sm text-twilightBg flex items-center space-x-1.5">
+                                <span>🛍️ SOUVENIRS 金廈採購清單</span>
+                            </h3>
+                            <!-- 👑 伴手禮頁面新增「新增伴手禮商店」按鈕 -->
+                            <button @click="openAddSouvenirModal" class="text-[10px] bg-twilightBg text-twilightSand font-bold px-2.5 py-1.5 rounded-lg border border-twilightSand/20 shadow-sm flex items-center space-x-1">
+                                <i class="fa-solid fa-plus text-[9px]"></i>
+                                <span>新增店家</span>
+                            </button>
+                        </div>
                         
                         <div class="mt-4 space-y-5">
-                            <div v-for="shop in souvenirs" :key="shop.location" class="space-y-3 border-b border-dashed border-stone-100 pb-4 last:border-0 last:pb-0">
-                                <h4 class="text-xs font-bold text-twilightBg flex items-center space-x-1.5">
-                                    <span class="w-1.5 h-1.5 bg-twilightSand rounded-full"></span>
-                                    <span>{{ shop.location }}</span>
-                                </h4>
+                            <div v-for="shop in souvenirs" :key="shop.id" class="space-y-3 border-b border-dashed border-stone-200 pb-4 last:border-0 last:pb-0">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-xs font-bold text-twilightBg flex items-center space-x-1.5">
+                                        <span class="w-1.5 h-1.5 bg-twilightSand rounded-full"></span>
+                                        <span>{{ shop.location }}</span>
+                                    </h4>
+                                    <!-- 👑 伴手禮卡片內新增 編輯 與 刪除 功能 -->
+                                    <div class="flex items-center space-x-1.5">
+                                        <button @click="openEditSouvenirModal(shop)" class="text-[9px] text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2 py-0.5 rounded font-black">
+                                            編輯
+                                        </button>
+                                        <button @click="deleteSouvenirShop(shop)" class="text-[9px] text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 px-2 py-0.5 rounded font-black">
+                                            刪除
+                                        </button>
+                                    </div>
+                                </div>
                                 
-                                <!-- 👑【伴手禮優化】照片移除，全面改為乾淨漂亮的「圖案 Icon」設計 -->
-                                <div class="w-full py-4 bg-gradient-to-br from-twilightPaper to-stone-50 rounded-xl border border-stone-200/60 flex flex-col items-center justify-center space-y-1 shadow-sm">
+                                <!-- 👑 伴手禮照片完全移除，改為手帳感圖案 Icon -->
+                                <div class="w-full py-4 bg-gradient-to-br from-twilightPaper to-stone-100 rounded-xl border border-stone-200/60 flex flex-col items-center justify-center space-y-1 shadow-sm">
                                     <span class="text-5xl select-none" role="img" :aria-label="shop.location">
-                                        {{ shop.icon }}
+                                        {{ shop.icon || '🎁' }}
                                     </span>
-                                    <span class="text-[10px] text-twilightSand font-mono tracking-widest uppercase">Special Selection</span>
+                                    <span class="text-[9px] text-twilightSand font-mono tracking-widest uppercase">Special Selection</span>
                                 </div>
 
                                 <div class="flex flex-wrap gap-2 pt-1">
-                                    <label v-for="(item, itemIdx) in shop.items" :key="itemIdx" class="flex items-center space-x-1.5 bg-twilightPaper hover:bg-stone-100 px-3 py-1.5 rounded-lg text-xs font-bold border border-stone-200/50 cursor-pointer select-none">
+                                    <label v-for="(item, itemIdx) in shop.items" :key="itemIdx" class="flex items-center space-x-1.5 bg-twilightPaper hover:bg-stone-200 px-3 py-1.5 rounded-lg text-xs font-bold border border-stone-200/50 cursor-pointer select-none">
                                         <input type="checkbox" v-model="item.checked" class="rounded border-gray-300 text-twilightSand focus:ring-0">
-                                        <span :class="{'line-through text-twilightMuted/60': item.checked}">{{ item.name }}</span>
+                                        <span :class="{'line-through text-twilightMuted/60 font-light': item.checked}">{{ item.name }}</span>
                                     </label>
                                 </div>
+                            </div>
+                            <div v-if="souvenirs.length === 0" class="text-center py-8 text-twilightMuted text-xs font-light">
+                                目前採購清單內尚無項目。點擊右上角新增伴手禮商店吧！
                             </div>
                         </div>
                     </div>
@@ -581,17 +596,21 @@
                         <!-- 上傳重要資料 -->
                         <div class="bg-twilightPaper p-3.5 rounded-xl border border-twilightSand/20 space-y-3">
                             <p class="text-xs text-twilightMuted font-bold leading-relaxed">
-                                您可在此上傳並拍照留存機票、船票、台胞證或旅遊收據，照片將經過高度壓縮安全儲存在本地，防止旅途中紙本遺失。
+                                您可在此上傳或拍攝機票、船票、旅平險或訂房證明。
                             </p>
                             <div class="grid grid-cols-1 gap-2.5">
                                 <div>
                                     <label class="block text-[9px] text-twilightMuted mb-1 font-bold">憑證說明標題</label>
                                     <input v-model="newDoc.title" type="text" placeholder="例如：新五緣輪去程船票" class="w-full bg-white border border-stone-200 rounded-lg p-2 text-xs outline-none text-twilightBg font-bold">
                                 </div>
+                                <div>
+                                    <label class="block text-[9px] text-twilightMuted mb-1 font-bold">憑證詳細描述（訂單編號、保單號或說明）</label>
+                                    <textarea v-model="newDoc.description" placeholder="填寫此憑證的重要資料，如保單編號、入住編號等..." class="w-full bg-white border border-stone-200 rounded-lg p-2 text-xs outline-none text-twilightBg font-bold" rows="2"></textarea>
+                                </div>
                                 <div class="flex space-x-2">
                                     <label class="flex-1 flex items-center justify-center bg-white border border-dashed border-stone-300 rounded-lg p-2 text-xs cursor-pointer hover:border-twilightSand text-twilightMuted transition font-bold">
                                         <i class="fa-solid fa-camera mr-1.5 text-twilightSand"></i>
-                                        <span v-if="!tempDocImg">拍下船票 / 憑證</span>
+                                        <span v-if="!tempDocImg">拍下 / 上傳憑證</span>
                                         <span v-else class="text-green-600 font-bold">憑證照片已就緒 ✔</span>
                                         <input type="file" accept="image/*" @change="onDocPhotoUploaded" class="hidden">
                                     </label>
@@ -600,19 +619,25 @@
                             </div>
                         </div>
 
-                        <!-- 憑證卡片列表 -->
-                        <div class="grid grid-cols-2 gap-3 pt-2">
-                            <div v-for="doc in vaultDocs" :key="doc.id" class="bg-twilightPaper rounded-lg border border-twilightSand/10 overflow-hidden shadow-sm flex flex-col">
-                                <div class="w-full h-32 bg-stone-100 relative cursor-zoom-in" @click="viewFullPhoto(doc.image)">
-                                    <img :src="doc.image" class="w-full h-full object-cover" alt="憑證照片">
+                        <!-- 憑證卡片列表 (展示帶描述的預加載照片) -->
+                        <div class="space-y-4 pt-2">
+                            <div v-for="doc in vaultDocs" :key="doc.id" class="bg-twilightPaper rounded-luxury border-2 border-twilightSand/15 overflow-hidden shadow-luxury-sm flex flex-col">
+                                <!-- 👑【憑證圖片】整合骨架加載，手動修復機制，直接指向優化路徑 -->
+                                <div class="w-full h-48 bg-stone-100 relative cursor-zoom-in" @click="viewFullPhoto(doc.image)">
+                                    <img :src="doc.image" class="w-full h-full object-cover" alt="憑證照片" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1e3e62/ffffff?text=Voucher+Image'">
                                     <div class="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors"></div>
                                 </div>
-                                <div class="p-2 flex justify-between items-center bg-white">
-                                    <span class="text-[10px] font-bold text-twilightBg truncate max-w-[110px]" :title="doc.title">{{ doc.title }}</span>
-                                    <button @click="deleteDoc(doc.id)" class="text-stone-300 hover:text-red-500 transition text-xs pl-1">✕</button>
+                                <div class="p-4 bg-white space-y-1.5">
+                                    <div class="flex justify-between items-start">
+                                        <span class="text-xs font-black text-twilightBg select-text">{{ doc.title }}</span>
+                                        <button @click="deleteDoc(doc.id)" class="text-stone-300 hover:text-red-500 transition text-sm pl-1">✕</button>
+                                    </div>
+                                    <p class="text-[11px] text-twilightMuted leading-relaxed font-bold bg-twilightPaper p-2.5 rounded-lg border border-dashed border-stone-200 select-text">
+                                        {{ doc.description }}
+                                    </p>
                                 </div>
                             </div>
-                            <div v-if="vaultDocs.length === 0" class="col-span-2 text-center py-8 text-twilightMuted text-xs font-light">
+                            <div v-if="vaultDocs.length === 0" class="text-center py-8 text-twilightMuted text-xs font-light">
                                 目前憑證庫內尚無重要資料照片。
                             </div>
                         </div>
@@ -701,7 +726,65 @@
             </div>
 
             <!-- ==================== MODALS: 精緻奢華彈出視窗系列 ==================== -->
-            <!-- 1. 新增 / 編輯行程明細視窗 -->
+            
+            <!-- 👑 伴手禮新增/編輯視窗 -->
+            <div v-if="showSouvenirModal" class="fixed inset-0 bg-black/60 z-50 flex items-end justify-center backdrop-blur-sm">
+                <div class="bg-white w-full max-w-md rounded-t-luxury p-5 space-y-4 max-h-[85vh] overflow-y-auto safe-bottom shadow-2xl border-t-2 border-twilightSand">
+                    <div class="flex justify-between items-center border-b border-stone-100 pb-3">
+                        <h3 class="text-xs font-bold text-twilightBg tracking-widest uppercase font-title">
+                            {{ isEditingSouvenir ? '✏️ EDIT SOUVENIR 編輯伴手禮店' : '➕ ADD SOUVENIR 新增伴手禮店' }}
+                        </h3>
+                        <button @click="showSouvenirModal = false" class="text-twilightMuted hover:text-twilightBg font-bold text-sm">✕</button>
+                    </div>
+                    
+                    <div class="space-y-4 text-xs text-twilightMuted font-bold">
+                        <div>
+                            <label class="block text-[10px] text-twilightMuted mb-1 font-bold">採購商店名稱 / 地點</label>
+                            <input v-model="formSouvenir.location" type="text" placeholder="例如：中山路老街阿吉仔" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 outline-none text-twilightBg">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-twilightMuted mb-1 font-bold">手札代表圖案 (Emoji Icon)</label>
+                            <select v-model="formSouvenir.icon" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 outline-none text-twilightBg cursor-pointer">
+                                <option value="🦑">🦑 乾貨/海鮮</option>
+                                <option value="🥮">🥮 南普陀素餅/糕點</option>
+                                <option value="🥃">🥃 金門高粱/美酒</option>
+                                <option value="🥞">🥞 貢糖/餡餅</option>
+                                <option value="🎨">🎨 獨立文創/明信片</option>
+                                <option value="🛍️">🛍️ 綜合商場/伴手禮</option>
+                                <option value="🍪">🍪 餅乾零食</option>
+                                <option value="🍵">🍵 茶葉禮盒</option>
+                                <option value="🥛">🥛 牧場鮮奶/乳製品</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 品項明細子編輯器 -->
+                        <div class="bg-twilightPaper p-3 rounded-xl border border-stone-200 space-y-2">
+                            <label class="block text-[10px] text-twilightMuted font-bold">採購商品清單管理</label>
+                            
+                            <div class="space-y-2">
+                                <div v-for="(item, sIdx) in formSouvenir.items" :key="sIdx" class="flex justify-between items-center bg-white p-2 rounded border border-stone-200">
+                                    <span class="text-xs text-twilightBg font-bold">{{ item.name }}</span>
+                                    <button @click="removeSubItem(sIdx)" class="text-red-500 hover:text-red-700 text-[11px] font-black px-1">移除</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 輸入新商品細項 -->
+                            <div class="flex space-x-2 pt-1">
+                                <input v-model="newSubItemName" @keyup.enter="addSubItem" type="text" placeholder="輸入商品名稱（如：手工貢糖）" class="flex-1 bg-white border border-stone-200 rounded p-2 text-xs outline-none text-twilightBg">
+                                <button @click="addSubItem" class="bg-twilightBg text-twilightSand font-bold text-xs px-3 rounded">➕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button @click="saveSouvenirShop" class="w-full bg-twilightBg text-twilightSand rounded-lg font-bold py-3 transition border border-twilightSand/30 hover:bg-twilightSlate">
+                            儲存伴手禮商店設定
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 新增 / 編輯行程明細視窗 -->
             <div v-if="showModal" class="fixed inset-0 bg-black/60 z-50 flex items-end justify-center backdrop-blur-sm">
                 <div class="bg-white w-full max-w-md rounded-t-luxury p-5 space-y-4 max-h-[85vh] overflow-y-auto safe-bottom shadow-2xl border-t-2 border-twilightSand">
                     <div class="flex justify-between items-center border-b border-stone-100 pb-3">
@@ -766,14 +849,24 @@
                 </div>
             </div>
 
-            <!-- 2. 更換封面與旅誌標題視窗 -->
+            <!-- 3. 更換封面與旅誌標題視窗 (與一鍵快取重設模組) -->
             <div v-if="showBannerModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
                 <div class="bg-white w-full max-w-sm rounded-luxury p-5 space-y-4 shadow-2xl border border-twilightSand/30">
                     <div class="flex justify-between items-center border-b border-stone-100 pb-2">
-                        <h3 class="text-xs font-bold text-twilightBg uppercase tracking-wider font-title">🗺️ 更換封面與旅誌標題</h3>
+                        <h3 class="text-xs font-bold text-twilightBg uppercase tracking-wider font-title">🗺️ 更換封面與設定</h3>
                         <button @click="showBannerModal = false" class="text-twilightMuted font-bold">✕</button>
                     </div>
+                    
                     <div class="space-y-3 text-xs text-twilightMuted font-bold">
+                        <!-- 👑【核心新增】一鍵快取清除重載按鈕，修復照片無法顯示 -->
+                        <div class="bg-amber-50 p-3 rounded-xl border border-amber-300 space-y-1 text-center">
+                            <span class="text-amber-800 font-bold block text-[11px]">💡 照片沒出來或想重設手帳？</span>
+                            <p class="text-[9px] text-stone-700 font-medium">此按鈕將清除您瀏覽器的舊暫存，並重新載入完整的預設美照與牛奶設定！</p>
+                            <button @click="forceResetAll" class="mt-1.5 w-full bg-amber-500 hover:bg-amber-600 text-white font-black py-2 rounded-lg shadow transition text-[10px]">
+                                🔄 點我強制重設並清除快取
+                            </button>
+                        </div>
+
                         <div>
                             <label class="block text-[10px] text-twilightMuted mb-1 font-bold">手札主標題</label>
                             <input v-model="tempBannerTitle" type="text" placeholder="例如：金門 x 廈門" class="w-full bg-twilightPaper border border-stone-200 rounded-lg p-2.5 outline-none text-twilightBg font-bold">
@@ -794,7 +887,7 @@
                 </div>
             </div>
 
-            <!-- 3. 公費金額設定視窗 -->
+            <!-- 4. 公費金額設定視窗 -->
             <div v-if="showPublicFundModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
                 <div class="bg-white w-full max-w-sm rounded-luxury p-5 space-y-4 shadow-2xl border border-twilightSand/30">
                     <div class="flex justify-between items-center border-b border-stone-100 pb-2">
@@ -814,13 +907,13 @@
                 </div>
             </div>
 
-            <!-- 4. 收據/發票照片大圖檢視視窗 -->
+            <!-- 5. 收據/發票照片大圖檢視視窗 -->
             <div v-if="photoViewerUrl" class="fixed inset-0 bg-black/90 z-50 flex flex-col justify-center items-center p-4" @click="photoViewerUrl = null">
                 <img :src="photoViewerUrl" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl border border-white/20 object-contain">
                 <button class="mt-4 bg-white text-twilightBg px-5 py-2 rounded-full font-bold text-xs shadow-md">點擊任意處關閉照片</button>
             </div>
 
-            <!-- 5. 刪除行程確認視窗 -->
+            <!-- 6. 刪除行程確認視窗 -->
             <div v-if="showConfirmModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
                 <div class="bg-white w-full max-w-xs rounded-luxury p-5 space-y-4 text-center shadow-2xl border border-twilightSand/20">
                     <i class="fa-solid fa-triangle-exclamation text-red-500 text-3xl animate-pulse"></i>
@@ -845,6 +938,7 @@
 
     </div>
 
+    <!-- Vue 與 LocalStorage 本地儲存邏輯處理 -->
     <script>
         const { createApp, ref, computed, onMounted, watch, nextTick } = Vue;
 
@@ -861,6 +955,11 @@
                 try {
                     localStorage.setItem(key, value);
                 } catch (e) {}
+            },
+            clearAll() {
+                try {
+                    localStorage.clear();
+                } catch(e) {}
             }
         };
 
@@ -880,6 +979,12 @@
                 const showBannerModal = ref(false);
                 const showPublicFundModal = ref(false);
                 const showConfirmModal = ref(false);
+
+                // 👑 伴手禮編輯 Modal 控制
+                const showSouvenirModal = ref(false);
+                const isEditingSouvenir = ref(false);
+                const formSouvenir = ref({ id: '', location: '', icon: '🛍️', items: [] });
+                const newSubItemName = ref('');
 
                 // 照片存檔暫存
                 const tempCompressedImg = ref('');
@@ -961,30 +1066,57 @@
                     { id: 5, text: '防曬用品、遮陽折傘與必備隨身醫藥', done: false }
                 ]);
 
-                // 👑【伴手禮優化】移除了 image 網址，全部換成對應的 emoji icon
-                const souvenirs = ref([
-                    { location: '江頭市場南北貨', icon: '🦑', items: [{ name: '干貝', checked: false }, { name: '蝦米', checked: false }, { name: '海苔', checked: false }, { name: '魷魚乾', checked: false }] },
-                    { location: '南普陀寺特產', icon: '🥮', items: [{ name: '南普陀素餅 (強力推薦)', checked: false }] },
-                    { location: '鼓浪嶼藝術島', icon: '🧱', items: [{ name: '花磚杯墊', checked: false }, { name: '冰箱貼', checked: false }, { name: '文創帆布袋', checked: false }] },
-                    { location: 'SM城市廣場商圈', icon: '🛍️', items: [{ name: '特色茶葉', checked: false }, { name: '綠皮火車伴手禮', checked: false }] },
-                    { location: '中山路步行老街', icon: '🥞', items: [{ name: '萬得福牛扎餅', checked: false }, { name: '阿吉仔餡餅', checked: false }, { name: '欲蓮茶樓禮盒', checked: false }] },
-                    { location: '沙坡尾避風塢文創', icon: '🎨', items: [{ name: '獨立文創商品', checked: false }, { name: '明信片', checked: false }, { name: '插畫周邊', checked: false }] },
-                    { location: '金門在地老鋪', icon: '🥃', items: [{ name: '手工貢糖', checked: false }, { name: '特製牛肉乾', checked: false }, { name: '金門手工麵線', checked: false }] }
-                ]);
+                // 👑【伴手禮優化】移除了 image 網址，新增唯一 ID 並全部換成對應的 emoji icon (金門在地老鋪新增 青草地牛奶)
+                const defaultSouvenirs = [
+                    { id: 'sov_1', location: '江頭市場南北貨', icon: '🦑', items: [{ name: '干貝', checked: false }, { name: '蝦米', checked: false }, { name: '海苔', checked: false }, { name: '魷魚乾', checked: false }] },
+                    { id: 'sov_2', location: '南普陀寺特產', icon: '🥮', items: [{ name: '南普陀素餅 (強力推薦)', checked: false }] },
+                    { id: 'sov_3', location: '鼓浪嶼藝術島', icon: '🧱', items: [{ name: '花磚杯墊', checked: false }, { name: '冰箱貼', checked: false }, { name: '文創帆布袋', checked: false }] },
+                    { id: 'sov_4', location: 'SM城市廣場商圈', icon: '🛍️', items: [{ name: '特色茶葉', checked: false }, { name: '綠皮火車伴手禮', checked: false }] },
+                    { id: 'sov_5', location: '中山路步行老街', icon: '🥞', items: [{ name: '萬得福牛扎餅', checked: false }, { name: '阿吉仔餡餅', checked: false }, { name: '欲蓮茶樓禮盒', checked: false }] },
+                    { id: 'sov_6', location: '沙坡尾避風塢文創', icon: '🎨', items: [{ name: '獨立文創商品', checked: false }, { name: '明信片', checked: false }, { name: '插畫周邊', checked: false }] },
+                    { id: 'sov_7', location: '金門在地老鋪', icon: '🥃', items: [{ name: '手工貢糖', checked: false }, { name: '特製牛肉乾', checked: false }, { name: '金門手工麵線', checked: false }, { name: '青草地牛奶', checked: false }] }
+                ];
+                
+                const souvenirs = ref([]);
 
-                // 新增重要憑證夾資料 (如：船票拍照)
-                const vaultDocs = ref([
-                    { id: 1, title: '小三通去程船票證明 (新五緣輪)', image: 'https://placehold.co/600x400/1e3e62/ffffff?text=Ferry+Ticket' }
-                ]);
+                // 👑【憑證資料修復優化】將憑證路徑完全指向標準本地路徑 ./image_... 
+                const defaultVaultDocs = [
+                    {
+                        id: 1,
+                        title: '🏨 宜度・潮宿 LOFT家庭房入住憑證',
+                        image: './image_af9f40.jpg',
+                        description: '確認編號：9926051501412005。LOFT家庭房，入住時間：2026/06/18 - 2026/06/22（4晚）。HUANG TZU LING 4位成人。含 6/19 - 6/22 免費客早餐 2 份。訂單編號：1616330292907344。'
+                    },
+                    {
+                        id: 2,
+                        title: '🚢 金門-廈門 來回船票預訂憑證',
+                        image: './image_af9f47.jpg',
+                        description: '訂位碼：NZAX7E。去程新五緣輪 (6/18 17:30)，回程迅安輪 (6/22 09:00)。總價 ¥1388，已出票 8 人。'
+                    },
+                    {
+                        id: 3,
+                        title: '🛡️ 明台產物 國內旅行平安險 (國內適用)',
+                        image: './image_aff0c1.png',
+                        description: '保單號碼：3615TAX70165。國內旅平險，保障期間 115/06/18 00:00 - 115/06/23 00:00（5天），要保人黃姿綾，投保 4 人（黃姿綾、黃琬棋、陳儀芳、陳怡靜）。'
+                    },
+                    {
+                        id: 4,
+                        title: '✈️ 中國信託 海外旅行綜合保險 (海外旅綜險)',
+                        image: './image_aff0df.jpg',
+                        description: '保單號碼：26TAS001370。海外旅綜險（含海外突發疾病醫療等），保障期間 115/06/18 00:00 - 115/06/23 00:00（5天），要保人黃姿綾，投保 4 人。'
+                    }
+                ];
+                
+                const vaultDocs = ref([]);
 
                 // 新憑證暫存
-                const newDoc = ref({ title: '', image: '' });
+                const newDoc = ref({ title: '', image: '', description: '' });
 
-                // 5 天份詳細行程資料 (照片已精簡)
+                // 5 天份詳細行程資料
                 const scheduleItems = ref([
                     // Day 1: 6/18 (四) 高雄→廈門
                     { id: '1', dateIdx: 0, time: '10:36', title: '岡山捷運出發往小港機場', category: '交通', notes: '捷運乘車時間約 40-50 分鐘，保持充沛體力，期待出航！', ticket: '', image: '', transitIcon: '🚇', transitTime: 40 },
-                    { id: '2', dateIdx: 0, time: '11:10', title: '抵達高雄小港機場 (最晚11:30前)', category: '航班', notes: '托運行李、完成報到，保持從容不迫。最晚 11:30 到。', ticket: '', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 15 },
+                    { id: '2', dateIdx: 0, time: '11:10', title: '抵達高雄小港機場 (最晚11:30前)', category: '航班', notes: '托運行微、完成報到，保持從容不迫。最晚 11:30 到。', ticket: '', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 15 },
                     { id: '3', dateIdx: 0, time: '13:30', title: '立榮航空 B78920 起飛往金門', category: '航班', notes: '空中航程約為一小時，預估於 14:35 分抵達金門尚義機場。', ticket: '', image: '', transitIcon: '✈️', transitTime: 60 },
                     { id: '4', dateIdx: 0, time: '14:40', title: '金門機場搭計程車前往水頭碼頭', category: '交通', notes: '車程約 15-20 分鐘，抵達後需完成小三通通關出境。', ticket: '', image: '', transitIcon: '🚗', transitTime: 20 },
                     { id: '5', dateIdx: 0, time: '16:00', title: '最晚抵達水頭碼頭辦理登船', category: '交通', notes: '需出境通關+安檢+等候登船。17:00 前必須完成所有的登船手續。', ticket: '', image: '', transitIcon: '🚶', transitTime: 10 },
@@ -1022,7 +1154,7 @@
                     { id: '29', dateIdx: 4, time: '09:00', title: '五通碼頭乘船返回金門', category: '交通', notes: '通關並提取行李。約 09:35 抵達金門水頭碼頭，預估需 30-60 分鐘。', ticket: '', image: '', transitIcon: '🚢', transitTime: 35 },
                     { id: '30', dateIdx: 4, time: '10:10', title: '尚義機場寄放行李及租機車', category: '交通', notes: '機場寄行李。取車推薦：金豐租車 (08:30-18:30 機場內可取還車)；或冠城租車 / ZOCHA機場無人店。', ticket: '', image: '', transitIcon: '🚗', transitTime: 15 },
                     { id: '31', dateIdx: 4, time: '10:50', title: '水頭聚落得月樓拍照打卡', category: '景點', notes: '必拍得月樓、洋樓群與典雅的閩南古厝。', ticket: '免費', image: 'https://images.unsplash.com/photo-1508333706533-1ab43ecb1606?auto=format&fit=crop&w=600&q=80', transitIcon: '🏍️', transitTime: 15 },
-                    { id: '32', dateIdx: 4, time: '12:00', title: '金城老街午餐與採購名產', category: '美食', notes: '金門必吃：廣東粥、牛肉麵、炒泡麵。順手採購金門三大法寶：貢糖、牛肉乾、手工麵線。', ticket: '', image: '', transitIcon: '🏍️', transitTime: 15 },
+                    { id: '32', dateIdx: 4, time: '12:00', title: '金城老街午餐與採購名產', category: '美食', notes: '金門必吃：廣東粥、牛肉麵、炒泡麵。順手採購金門三大法寶：貢糖、牛肉乾、手工麵線、青草地牛奶。', ticket: '', image: '', transitIcon: '🏍️', transitTime: 15 },
                     { id: '33', dateIdx: 4, time: '13:40', title: '莒光樓金門代表地標拍照留念', category: '景點', notes: '金門最威武代表建築，參訪拍攝時間約 40 分鐘。', ticket: '免費', image: '', transitIcon: '🏍️', transitTime: 15 },
                     { id: '34', dateIdx: 4, time: '14:30', title: '享用金門在地青草地鮮奶與冰品', category: '美食', notes: '必嚐在地純濃鮮乳、鮮奶冰淇淋與手作鮮奶茶。', ticket: '', image: '', transitIcon: '🏍️', transitTime: 15 },
                     { id: '35', dateIdx: 4, time: '15:20', title: '返抵機場還車託運、辦理登機', category: '交通', notes: '最晚 15:30-15:45 機場櫃檯報到完畢，準備搭機。', ticket: '', image: '', transitIcon: '🏍️', transitTime: 15 },
@@ -1113,17 +1245,31 @@
                 };
 
                 onMounted(() => {
-                    const exp = SafeStorage.getItem('tw_expenses_v3');
+                    const exp = SafeStorage.getItem('tw_expenses_v4');
                     if (exp) expenses.value = JSON.parse(exp);
                     
-                    const td = SafeStorage.getItem('tw_todos_v3');
+                    const td = SafeStorage.getItem('tw_todos_v4');
                     if (td) todos.value = JSON.parse(td);
                     
-                    const sch = SafeStorage.getItem('tw_schedule_v3');
+                    const sch = SafeStorage.getItem('tw_schedule_v4');
                     if (sch) scheduleItems.value = JSON.parse(sch);
                     
-                    const vlt = SafeStorage.getItem('tw_vault_v3');
-                    if (vlt) vaultDocs.value = JSON.parse(vlt);
+                    // 🛡️ 憑證修復引擎：強制升級版本以覆蓋任何舊瀏覽器造成的 broken 圖片
+                    const vlt = SafeStorage.getItem('tw_vault_v4');
+                    if (vlt) {
+                        const parsed = JSON.parse(vlt);
+                        const hasRealImages = parsed.some(d => d.image && d.image.includes('image_af9f40.jpg'));
+                        if (hasRealImages) {
+                            vaultDocs.value = parsed;
+                        } else {
+                            // 補丁：若暫存中沒有正確圖片路徑，則重設為預設照片
+                            vaultDocs.value = defaultVaultDocs;
+                            SafeStorage.setItem('tw_vault_v4', JSON.stringify(defaultVaultDocs));
+                        }
+                    } else {
+                        vaultDocs.value = defaultVaultDocs;
+                        SafeStorage.setItem('tw_vault_v4', JSON.stringify(defaultVaultDocs));
+                    }
                     
                     const opened = SafeStorage.getItem('tw_book_opened');
                     if (opened) isBookOpened.value = JSON.parse(opened);
@@ -1143,18 +1289,39 @@
                     const memo = SafeStorage.getItem('tw_personal_memo');
                     if (memo) personalMemo.value = memo;
                     
-                    const sou = SafeStorage.getItem('tw_souvenirs');
-                    if (sou) souvenirs.value = JSON.parse(sou);
+                    // 👑【伴手禮快取更新】
+                    const sou = SafeStorage.getItem('tw_souvenirs_v4');
+                    if (sou) {
+                        const parsed = JSON.parse(sou);
+                        // 確保金門商家中含有「青草地牛奶」
+                        const kinmenShop = parsed.find(s => s.id === 'sov_7' || s.location.includes('金門'));
+                        if (kinmenShop && !kinmenShop.items.some(i => i.name.includes('青草地牛奶'))) {
+                            kinmenShop.items.push({ name: '青草地牛奶', checked: false });
+                        }
+                        souvenirs.value = parsed;
+                    } else {
+                        souvenirs.value = defaultSouvenirs;
+                        SafeStorage.setItem('tw_souvenirs_v4', JSON.stringify(defaultSouvenirs));
+                    }
 
                     isMounted.value = true;
                 });
 
-                watch(expenses, (nv) => { SafeStorage.setItem('tw_expenses_v3', JSON.stringify(nv)); }, { deep: true });
-                watch(todos, (nv) => { SafeStorage.setItem('tw_todos_v3', JSON.stringify(nv)); }, { deep: true });
-                watch(scheduleItems, (nv) => { SafeStorage.setItem('tw_schedule_v3', JSON.stringify(nv)); }, { deep: true });
-                watch(vaultDocs, (nv) => { SafeStorage.setItem('tw_vault_v3', JSON.stringify(nv)); }, { deep: true });
+                // 👑【快取強制重設模組】解決使用者因為舊資料導致不顯示照片的問題
+                const forceResetAll = () => {
+                    SafeStorage.clearAll();
+                    showToast('快取已成功重置，正在為您重新載入全功能美照！🔄');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1200);
+                };
+
+                watch(expenses, (nv) => { SafeStorage.setItem('tw_expenses_v4', JSON.stringify(nv)); }, { deep: true });
+                watch(todos, (nv) => { SafeStorage.setItem('tw_todos_v4', JSON.stringify(nv)); }, { deep: true });
+                watch(scheduleItems, (nv) => { SafeStorage.setItem('tw_schedule_v4', JSON.stringify(nv)); }, { deep: true });
+                watch(vaultDocs, (nv) => { SafeStorage.setItem('tw_vault_v4', JSON.stringify(nv)); }, { deep: true });
                 watch(personalMemo, (nv) => { SafeStorage.setItem('tw_personal_memo', nv); });
-                watch(souvenirs, (nv) => { SafeStorage.setItem('tw_souvenirs', JSON.stringify(nv)); }, { deep: true });
+                watch(souvenirs, (nv) => { SafeStorage.setItem('tw_souvenirs_v4', JSON.stringify(nv)); }, { deep: true });
 
                 const filteredSchedule = computed(() => {
                     let items = scheduleItems.value.filter(i => i.dateIdx === activeDateIdx.value);
@@ -1211,7 +1378,7 @@
                     SafeStorage.setItem('tw_banner_sub', bannerSub.value);
                     SafeStorage.setItem('tw_banner_img', bannerImg.value);
                     showBannerModal.value = false;
-                    showToast('封面探索主題更新成功！');
+                    showToast('設定更新成功！');
                 };
 
                 const openPublicFundModal = () => {
@@ -1327,9 +1494,11 @@
                     vaultDocs.value.unshift({
                         id: Date.now(),
                         title: newDoc.value.title,
-                        image: tempDocImg.value
+                        image: tempDocImg.value,
+                        description: newDoc.value.description || '無詳細文字備註說明。'
                     });
                     newDoc.value.title = '';
+                    newDoc.value.description = '';
                     tempDocImg.value = '';
                     showToast('重要憑證儲存成功！');
                 };
@@ -1432,6 +1601,71 @@
                     showToast('開支已刪除。');
                 };
 
+                // 👑【伴手禮編輯功能邏輯】
+                const openAddSouvenirModal = () => {
+                    isEditingSouvenir.value = false;
+                    formSouvenir.value = {
+                        id: 'sov_' + Date.now(),
+                        location: '',
+                        icon: '🛍️',
+                        items: []
+                    };
+                    newSubItemName.value = '';
+                    showSouvenirModal.value = true;
+                };
+
+                const openEditSouvenirModal = (shop) => {
+                    isEditingSouvenir.value = true;
+                    formSouvenir.value = {
+                        id: shop.id || 'sov_' + Date.now(),
+                        location: shop.location,
+                        icon: shop.icon || '🛍️',
+                        items: shop.items.map(item => ({ ...item }))
+                    };
+                    newSubItemName.value = '';
+                    showSouvenirModal.value = true;
+                };
+
+                const addSubItem = () => {
+                    if (!newSubItemName.value.trim()) return;
+                    formSouvenir.value.items.push({
+                        name: newSubItemName.value.trim(),
+                        checked: false
+                    });
+                    newSubItemName.value = '';
+                };
+
+                const removeSubItem = (idx) => {
+                    formSouvenir.value.items.splice(idx, 1);
+                };
+
+                const saveSouvenirShop = () => {
+                    if (!formSouvenir.value.location.trim()) {
+                        showToast('請填寫商店或地點名稱！');
+                        return;
+                    }
+                    if (isEditingSouvenir.value) {
+                        const index = souvenirs.value.findIndex(s => s.id === formSouvenir.value.id);
+                        if (index !== -1) {
+                            souvenirs.value[index] = { ...formSouvenir.value };
+                        } else {
+                            // 降級用 location 比對
+                            const locIdx = souvenirs.value.findIndex(s => s.location === formSouvenir.value.location);
+                            if (locIdx !== -1) souvenirs.value[locIdx] = { ...formSouvenir.value };
+                        }
+                        showToast('伴手禮商店編輯成功！');
+                    } else {
+                        souvenirs.value.push({ ...formSouvenir.value });
+                        showToast('成功新增伴手禮商店！');
+                    }
+                    showSouvenirModal.value = false;
+                };
+
+                const deleteSouvenirShop = (shop) => {
+                    souvenirs.value = souvenirs.value.filter(s => s.id !== shop.id && s.location !== shop.location);
+                    showToast('伴手禮商店已移除。');
+                };
+
                 const openGoogleMap = (query) => {
                     window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`, '_blank');
                 };
@@ -1453,6 +1687,8 @@
                     filteredSchedule, showModal, isEditing, formItem, personalMemo, parsedLinks, mapPoints, vaultDocs, newDoc, tempDocImg,
                     showBannerModal, bannerTitle, bannerSub, bannerImg, tempBannerTitle, tempBannerSub, tempBannerImg,
                     showPublicFundModal, tempPublicFund, toastMessage, showConfirmModal, activeDateWeather,
+                    showSouvenirModal, isEditingSouvenir, formSouvenir, newSubItemName, forceResetAll,
+                    openAddSouvenirModal, openEditSouvenirModal, addSubItem, removeSubItem, saveSouvenirShop, deleteSouvenirShop,
                     triggerBannerEdit, saveBannerSettings, openPublicFundModal, savePublicFund, calcResult, evalCalc, onPhotoUploaded, viewFullPhoto,
                     openAddModal, openEditModal, saveItem, confirmDeleteItem, executeDeleteItem, moveItem, addExpense, deleteExpense, openGoogleMap, getExpenseIcon, isKeyTime,
                     focusMapPoint, onDocPhotoUploaded, saveDoc, deleteDoc
