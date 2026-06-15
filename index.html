@@ -15,7 +15,7 @@
     <!-- Babel (用於在瀏覽器中直接解析執行 JSX) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.17/babel.min.js" crossorigin></script>
     
-    <!-- FontAwesome 6 圖標庫 -->
+    <!-- FontAwesome 6 圖擺庫 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -924,29 +924,89 @@
                                                     </div>
                                                 </div>
 
+                                                {/* ================= 小三通雙向船班憑證 (已優化為高擬真機票風 Boarding Pass) ================= */}
                                                 <div className="space-y-4 pt-4">
                                                     <p className="text-xs font-black text-[#8FA89B] tracking-wider uppercase">● 小三通船班憑證 Ferry Tickets</p>
-                                                    <div className="bg-[#FFFFFF] rounded-2xl border-2 border-[#C59B6D] p-4 shadow-md space-y-3.5 relative overflow-hidden">
-                                                        <div className="absolute top-0 right-0 bg-[#C59B6D] text-[#FDFCF7] text-[9px] font-black px-3 py-1 rounded-bl-xl tracking-widest">CONFIRMED</div>
-                                                        <div className="flex items-center space-x-2 border-b border-[#EDE7D9] pb-2">
-                                                            <i className="fa-solid fa-ship text-[#4A5D4E] text-lg"></i>
-                                                            <span className="text-sm font-black text-[#4A5D4E]">金廈客運小三通來回聯票</span>
+                                                    
+                                                    {/* 去程船票 Boarding Pass */}
+                                                    <div className="bg-gradient-to-br from-[#EAEEDE] to-[#D5DCC3] rounded-3xl border-2 border-[#8FA89B] p-5 shadow-md relative overflow-hidden">
+                                                        <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-r-2 border-[#8FA89B] z-10"></div>
+                                                        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-l-2 border-[#8FA89B] z-10"></div>
+                                                        
+                                                        <div className="flex justify-between items-center border-b border-dashed border-[#8FA89B]/40 pb-3">
+                                                            <div className="flex items-center space-x-2">
+                                                                <span className="w-7 h-7 bg-[#4A5D4E] text-[#C59B6D] rounded-full flex items-center justify-center text-xs font-black">
+                                                                    <i className="fa-solid fa-ship"></i>
+                                                                </span>
+                                                                <span className="text-xs font-black text-[#4A5D4E] tracking-widest">K-X FERRY (金廈小三通)</span>
+                                                            </div>
+                                                            <span className="text-xs font-mono font-black bg-[#4A5D4E]/10 text-[#4A5D4E] px-2 py-0.5 rounded">去程 ‧ NZAX7E</span>
                                                         </div>
-                                                        <div className="space-y-2.5 text-xs">
-                                                            <div className="bg-[#FDFCF7] p-2.5 rounded-lg border border-[#EDE7D9]">
-                                                                <div className="flex justify-between items-center text-[10px] font-bold text-[#8FA89B] mb-1">
-                                                                    <span>【去程】6/18 (四) 17:30開船</span><span className="font-mono text-[#C59B6D]">定位碼: NZAX7E</span>
-                                                                </div>
-                                                                <p className="font-black text-[#2B3E2D] text-xs">金門水頭碼頭 ➡️ 廈門五通碼頭</p>
-                                                                <p className="text-[11px] text-[#4A5D4E] font-semibold mt-0.5">航次：新五緣輪 (約30-40分鐘) ‧ 4位成人聯票已核付</p>
+
+                                                        <div className="grid grid-cols-3 gap-2 py-4 text-center items-center">
+                                                            <div className="text-left">
+                                                                <h4 className="text-2xl font-black text-[#2B3E2D]">KNH</h4>
+                                                                <p className="text-[10px] font-bold text-[#8FA89B]">金門水頭碼頭</p>
+                                                                <p className="text-xs font-black text-[#4A5D4E] mt-1">17:30</p>
                                                             </div>
-                                                            <div className="bg-[#FDFCF7] p-2.5 rounded-lg border border-[#EDE7D9]">
-                                                                <div className="flex justify-between items-center text-[10px] font-bold text-[#8FA89B] mb-1">
-                                                                    <span>【回程】6/22 (一) 09:00開船</span><span className="font-mono text-[#C59B6D]">定位碼: NZAX7E</span>
+                                                            <div className="flex flex-col items-center">
+                                                                <span className="text-[10px] text-[#C59B6D] font-mono font-bold">6/18 (四)</span>
+                                                                <div className="w-full border-t-2 border-dashed border-[#8FA89B] relative my-1">
+                                                                    <i className="fa-solid fa-ship text-xs text-[#4A5D4E] absolute -top-1.5 left-1/2 -translate-x-1/2 bg-[#EAEEDE] px-1"></i>
                                                                 </div>
-                                                                <p className="font-black text-[#2B3E2D] text-xs">廈門五通碼頭 ➡️ 金門水頭碼頭</p>
-                                                                <p className="text-[11px] text-[#4A5D4E] font-semibold mt-0.5">航次：迅安輪 (約35分鐘) ‧ 4位回程票已預售確認</p>
+                                                                <span className="text-[10px] text-[#4A5D4E] font-bold">新五緣輪</span>
                                                             </div>
+                                                            <div className="text-right">
+                                                                <h4 className="text-2xl font-black text-[#2B3E2D]">XMN</h4>
+                                                                <p className="text-[10px] font-bold text-[#8FA89B]">廈門五通碼頭</p>
+                                                                <p className="text-xs font-black text-[#4A5D4E] mt-1">18:05</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border-t border-[#8FA89B]/20 pt-3 flex justify-between text-[11px] font-black text-[#2B3E2D]">
+                                                            <span>旅客：4 位聯票 (姿綾等)</span>
+                                                            <span className="text-[#4A5D4E]">FERRY CONFIRMED</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* 回程船票 Boarding Pass */}
+                                                    <div className="bg-gradient-to-br from-[#EAEEDE] to-[#D5DCC3] rounded-3xl border-2 border-[#8FA89B] p-5 shadow-md relative overflow-hidden">
+                                                        <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-r-2 border-[#8FA89B] z-10"></div>
+                                                        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-l-2 border-[#8FA89B] z-10"></div>
+                                                        
+                                                        <div className="flex justify-between items-center border-b border-dashed border-[#8FA89B]/40 pb-3">
+                                                            <div className="flex items-center space-x-2">
+                                                                <span className="w-7 h-7 bg-[#4A5D4E] text-[#C59B6D] rounded-full flex items-center justify-center text-xs font-black">
+                                                                    <i className="fa-solid fa-ship"></i>
+                                                                </span>
+                                                                <span className="text-xs font-black text-[#4A5D4E] tracking-widest">K-X FERRY (金廈小三通)</span>
+                                                            </div>
+                                                            <span className="text-xs font-mono font-black bg-[#4A5D4E]/10 text-[#4A5D4E] px-2 py-0.5 rounded">回程 ‧ NZAX7E</span>
+                                                        </div>
+
+                                                        <div className="grid grid-cols-3 gap-2 py-4 text-center items-center">
+                                                            <div className="text-left">
+                                                                <h4 className="text-2xl font-black text-[#2B3E2D]">XMN</h4>
+                                                                <p className="text-[10px] font-bold text-[#8FA89B]">廈門五通碼頭</p>
+                                                                <p className="text-xs font-black text-[#4A5D4E] mt-1">09:00</p>
+                                                            </div>
+                                                            <div className="flex flex-col items-center">
+                                                                <span className="text-[10px] text-[#C59B6D] font-mono font-bold">6/22 (一)</span>
+                                                                <div className="w-full border-t-2 border-dashed border-[#8FA89B] relative my-1">
+                                                                    <i className="fa-solid fa-ship text-xs text-[#4A5D4E] absolute -top-1.5 left-1/2 -translate-x-1/2 bg-[#EAEEDE] px-1"></i>
+                                                                </div>
+                                                                <span className="text-[10px] text-[#4A5D4E] font-bold">迅安輪</span>
+                                                            </div>
+                                                            <div className="text-right">
+                                                                <h4 className="text-2xl font-black text-[#2B3E2D]">KNH</h4>
+                                                                <p className="text-[10px] font-bold text-[#8FA89B]">金門水頭碼頭</p>
+                                                                <p className="text-xs font-black text-[#4A5D4E] mt-1">09:35</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border-t border-[#8FA89B]/20 pt-3 flex justify-between text-[11px] font-black text-[#2B3E2D]">
+                                                            <span>旅客：4 位聯票 (姿綾等)</span>
+                                                            <span className="text-[#4A5D4E]">BOARDING OPEN</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1197,7 +1257,7 @@
 
                         {showBudgetModal && (
                             <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-                                <div className="bg-white w-full max-w-xs rounded-2xl p-5 space-y-4 shadow-2xl border border-[#C59B6D]">
+                                <div className="bg-white w-full max-w-xs rounded-2xl p-5 space-y-4 shadow-2xl border-2 border-[#C59B6D]">
                                     <h4 className="text-sm font-black text-[#2B3E2D] border-b border-[#EDE7D9] pb-2">設定公費小金庫儲備額</h4>
                                     <div className="space-y-3 text-xs font-bold text-[#2B3E2D]">
                                         <div>
