@@ -66,7 +66,7 @@
 
         const APP_TITLE = "廈門回憶製造所";
         const APP_SUBTITLE = "一路同行，一路珍藏 ‧ 2026/06/18 - 06/22";
-        const TULOU_BANNER = "https://media.istockphoto.com/id/154962424/zh/%E7%85%A7%E7%89%87/hakka-tulou-traditional-chinese-housing-in-fujian-province-of-china.jpg?s=612x612&w=0&k=20&c=GxdV2wsrkwY2m05fO-mxZUsdsJZFvy7JYzfL3y3-JME=";
+        const TULOU_BANNER = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM7R6TNdCv9sQye2RlnZfV9oHyFdIGZ2hEiBJusE9GtESfYPonuB2IrhSUOAAGvcwuDW1CyDP29AmJI4wsci5uRKWWlEcyUvoBKcYsc1g&s=10";
         const TRAVELERS = ['姿綾', '琬棋', '媽媽', '小阿姨'];
 
         const DEFAULT_SCHEDULE = [
@@ -82,23 +82,23 @@
             { id: '10', dateIdx: 0, time: '20:30', title: '海大富自助海鮮澎湃晚餐', category: '美食', notes: '位於天虹購物中心 3 樓，大飽口福品味當地海鮮鮮甜！', ticket: '', image: '', transitIcon: '🚶', transitTime: 5 },
             { id: '11', dateIdx: 0, time: '21:30', title: '沙坡尾避風塢夜景浪漫散步', category: '景點', notes: '吹著海風看雙子塔夜景，探訪原生態閩南市井氣息。', ticket: '', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🛌', transitTime: 20 },
             
-            // Day 2
-            { id: '12', dateIdx: 1, time: '08:00', title: '旅宿特惠家庭早餐', category: '住宿', notes: '旅宿提供免費特惠家庭早餐 2 份（07:00-10:00）最划算！', ticket: '飯店早餐券', image: '', transitIcon: '🚢', transitTime: 25 },
-            { id: '13', dateIdx: 1, time: '09:00', title: '鼓浪嶼深度萬國建築漫遊', category: '景點', notes: '搭到三丘田碼頭。2026年最新預約：出發前15天於微信「廈門輪渡+」實名預約 09:10 的船班。去程由「廈門郵輪中心廈鼓碼頭」出發至鼓浪嶼，來回套票約為 ¥35/人（普通）至 ¥50/人（豪華），登船時務必刷台胞證實體卡入閘。', ticket: '微信預約實名船票 ¥35/人', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 30 },
-            { id: '14', dateIdx: 1, time: '14:00', title: '南普陀寺祈福及品嚐花生湯', category: '景點', notes: '提前四天預約參拜。遊歷天王殿、大雄寶殿並虔誠祈福。', ticket: '預約成功憑證', image: '', transitIcon: '🚇', transitTime: 20 },
-            { id: '15', dateIdx: 1, time: '16:30', title: '集美學村漫步建築群', category: '景點', notes: '欣賞龍舟池與經典「穿西裝、戴斗笠」嘉庚風格建築。', ticket: '免費參觀', image: '', transitIcon: '🚇', transitTime: 15 },
-            { id: '16', dateIdx: 1, time: '17:30', title: '海上地鐵「千尋海上小火車」', category: '交通', notes: '地鐵1號線：集美學村站-高崎站。欣賞絕美海上日落。', ticket: '地鐵票自理', image: '', transitIcon: '🦀', transitTime: 8 },
-            { id: '17', dateIdx: 1, time: '18:30', title: '第八市場 (八市) 活海鮮大餐', category: '美食', notes: '老廈門地標大排檔！推薦品嚐白灼蝦、清蒸深海魚與手切土筍凍。', ticket: '', image: '', transitIcon: '🚶', transitTime: 20 },
+            // Day 2 (已經過精準優化與新行程整合)
+            { id: '12', dateIdx: 1, time: '08:00', title: '飯店出發與美味早餐', category: '住宿', notes: '在宜度潮宿享用特惠家庭早餐後準備出發！🚗 交通方式：從飯店搭乘滴滴或計程車前往郵輪中心廈鼓碼頭（車程約 20-30 分鐘，依當天路況而定）。', ticket: '飯店早餐券', image: '', transitIcon: '🚕', transitTime: 25 },
+            { id: '13', dateIdx: 1, time: '08:30', title: '前往鼓浪嶼（乘船出發）', category: '交通', notes: '🚢 交通方式：在 郵輪中心廈鼓碼頭搭乘渡輪，航行至鼓浪嶼的「三丘田碼頭」（船程約 20 分鐘）。實名預約出發前 15 天於微信「廈門輪渡+」完成。登船時務必刷台胞證實體卡入閘。', ticket: '微信預約實名船票 ¥35/人', image: '', transitIcon: '🚢', transitTime: 20 },
+            { id: '14', dateIdx: 1, time: '09:00', title: '鼓浪嶼漫遊（深度探索與老街小吃）', category: '景點', notes: '🗺️ 路線推薦：三丘田碼頭 ➡️ 最美轉角 ➡️ 船屋 ➡️ 龍頭路商圈 ➡️ 日光岩周邊 ➡️ 菽莊花園外圍海景步道。🍛 中餐推薦在龍頭路小吃街大飽口福（必吃：葉氏麻糍、海蠣煎、沙茶麵、沈家腸粉、花生湯）。', ticket: '鼓浪嶼景區免門票', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', transitIcon: '🚶', transitTime: 240 },
+            { id: '15', dateIdx: 1, time: '13:00', title: '返回廈門市區與前往南普陀寺', category: '交通', notes: '🚢 交通方式：由鼓浪嶼三丘田碼頭搭船返回「郵輪中心廈鼓碼頭」，隨即搭車前往南普陀寺（車程約 15 分鐘），準備趕赴重要預約進場時段。', ticket: '回程渡輪票(已含)', image: '', transitIcon: '🚕', transitTime: 15 },
+            { id: '19', dateIdx: 1, time: '18:30', title: '第八市場 (八市) 活海鮮澎湃晚餐', category: '美食', notes: '🚗 交通方式：由高崎站搭車前往老廈門地標第八市場（八市，車程約 20 深度鐘）。餐點推薦：在大排檔現選鮮活海鮮，品嚐白灼蝦、螃蟹、清蒸深海魚、海蠣煎、沙茶麵與在地土筍凍！', ticket: '海鮮大排檔現場選秤', image: '', transitIcon: '🚶', transitTime: 90 },
+            { id: '20', dateIdx: 1, time: '20:00', title: '八市周邊與中山路夜市散步', category: '景點', notes: '🚶 交通方式：飽餐後步行至著名的「中山路步行街」，熱烈散步、逛街、採買伴手禮，感受老廈門夜生活的獨特喧囂。最後搭車返回宜度潮宿休息。', ticket: '', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🛌', transitTime: 60 },
             
-            // Day 3
-            { id: '18', dateIdx: 2, time: '09:00', title: '江頭市場南北貨伴手禮採購', category: '購物', notes: '採購干貝、魷魚乾、金門貢糖及特色手信茶葉。', ticket: '', image: '', transitIcon: '🚕', transitTime: 15 },
-            { id: '19', dateIdx: 2, time: '11:30', title: '再訪集美學村與歸來堂', category: '景點', notes: '探訪陳嘉庚先生故居，中午在石鼓路美食街享用閩南美食。', ticket: '', image: '', transitIcon: '🚕', transitTime: 20 },
-            { id: '20', dateIdx: 2, time: '15:00', title: 'SM城市廣場休閒下午茶與採買', category: '購物', notes: '涼爽避暑，品嚐網紅甜品，補充想帶回台灣的高顏值名產。', ticket: '', image: '', transitIcon: '🚶', transitTime: 15 },
-            { id: '21', dateIdx: 2, time: '17:30', title: '沙坡尾藝術西區落日巡禮', category: '景點', notes: '夕陽餘暉灑在避風塢，岸邊咖啡館與精緻文創商店鱗次櫛比。', ticket: '', image: '', transitIcon: '🚶', transitTime: 20 },
-            { id: '22', dateIdx: 2, time: '20:00', title: '雲上廈門「世茂雙子塔」夜景', category: '景點', notes: '登頂觀景台，360度俯瞰海峽璀璨的夜間明珠與星光。', ticket: '觀景台門票', image: '', transitIcon: '🛌', transitTime: 10 },
+            // Day 3 (江頭市場乾貨採買＋集美學村＋SM廣場＋沙坡尾＋雙子塔)
+            { id: '21', dateIdx: 2, time: '09:00', title: '江頭市場 ‧ 乾貨南北貨採買', category: '購物', notes: '🧺 伴手禮最重要一站！清晨貨源最齊，推薦採買：特級干貝、魷魚乾、蝦米、茶葉、花生酥、鳳梨酥。🚗 交通方式：由飯店搭滴滴/計程車約 10-20 分鐘。', ticket: '', image: '', transitIcon: '🚕', transitTime: 15 },
+            { id: '21_a', dateIdx: 2, time: '11:30', title: '集美學村 ‧ 白天景點散步', category: '景點', notes: '🏘️ 白天拍照最美時刻！必訪景點：龍舟池、嘉庚建築群、歸來堂、陳嘉庚紀念館、集美學村牌樓。🍜 中餐推薦在著名的「石鼓路美食街」品嚐高CP值地方美食！🚗 交通方式：江頭市場搭滴滴約 25-30 分鐘。', ticket: '景區與場館免門票', image: 'https://images.unsplash.com/photo-1508333706533-1ab43ecb1606?auto=format&fit=crop&w=600&q=80', transitIcon: '🚕', transitTime: 30 },
+            { id: '21_b', dateIdx: 2, time: '15:00', title: 'SM城市廣場 ‧ 補貨與避暑時光', category: '購物', notes: '🛍️ 下午烈日高照，最適合來巨型購物中心吹冷氣休息、喝下午茶咖啡，並可在此處超市將零食、伴手禮一次補足！🚗 交通方式：由集美學村搭滴滴約 20 分鐘。', ticket: '', image: '', transitIcon: '🚕', transitTime: 20 },
+            { id: '21_c', dateIdx: 2, time: '17:30', title: '沙坡尾避風塢 ‧ 夕陽黃金海岸散步', category: '景點', notes: '🌅 文青最愛避風塢！散步路線：避風塢 ➡️ 藝術西區 ➡️ 文創市集 ➡️ 海邊步道。✨ 最佳拍照時間：17:30-18:30(夕陽黃金眼)、18:30-19:30(唯美藍調時刻)、19:30後(繁華夜景)。晚餐可選文青餐廳或海鮮閩南菜。🚗 交通方式：SM廣場搭滴滴約 20 分鐘。', ticket: '', image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&q=80', transitIcon: '🚕', transitTime: 20 },
+            { id: '22', dateIdx: 2, time: '20:00', title: '廈門雙子塔 ‧ 高空百萬夜景收尾', category: '景點', notes: '🌃 必看亮點：雙子塔外圍藝術自拍，或登頂「雲上廈門觀景台」，360度極致俯瞰鼓浪嶼及璀璨市區燈火。🚶 交通方式：由沙坡尾步行 10-15 分鐘即達。回飯店搭滴滴約 15-25 分鐘。', ticket: '雲上廈門門票自理', image: '', transitIcon: '🚶', transitTime: 12 },
             
             // Day 4
-            { id: '23', dateIdx: 3, time: '08:00', title: '專車直達：南靖土樓一日遊', category: '交通', notes: '奢華頭等艙商務車直達。雲水謠古鎮、和貴樓與田螺坑「四菜一湯」。', ticket: '一日遊全包證書', image: 'https://images.unsplash.com/photo-1599839616713-90924976fc9e?auto=format&fit=crop&w=800&q=80', transitIcon: '🚐', transitTime: 120 },
+            { id: '23', dateIdx: 3, time: '08:00', title: '專車直達：南靖土樓一日遊', category: '交通', notes: '奢華頭等艙商務車直達。雲水謠古鎮、和貴樓與田螺坑「四菜一湯」。', ticket: '一日遊全包證書', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM7R6TNdCv9sQye2RlnZfV9oHyFdIGZ2hEiBJusE9GtESfYPonuB2IrhSUOAAGvcwuDW1CyDP29AmJI4wsci5uRKWWlEcyUvoBKcYsc1g&s=10', transitIcon: '🚐', transitTime: 120 },
             { id: '24', dateIdx: 3, time: '12:00', title: '山野客家風味午餐饗宴', category: '美食', notes: '品味土樓在地土雞、香脆野生竹筍與甘甜山泉茶。', ticket: '費用已含', image: '', transitIcon: '🚶', transitTime: 60 },
             { id: '25', dateIdx: 3, time: '13:30', title: '東倒西歪裕昌樓與塔下村', category: '景點', notes: '驚嘆建在沼澤地、歪斜 15 度卻屹立 700 年不倒的古老智慧。', ticket: '景區接駁車券', image: '', transitIcon: '🚐', transitTime: 150 },
             
@@ -265,7 +265,7 @@
             const renderDailySVGRoute = useMemo(() => {
                 const dailyRoutes = [
                     { nodes: ['高雄機場', '金門機場', '水頭碼頭', '五通碼頭', '宜度潮宿'], coords: [[40, 150], [120, 110], [190, 150], [270, 110], [350, 150]] },
-                    { nodes: ['宜度潮宿', '鼓浪嶼碼頭', '日光岩', '南普陀寺', '集美學村', '八市海鮮'], coords: [[40, 80], [100, 160], [170, 80], [230, 160], [300, 80], [360, 150]] },
+                    { nodes: ['宜度/碼頭', '鼓浪嶼', '南普陀寺', '集美學村', '跨海地鐵', '八市海鮮'], coords: [[40, 80], [100, 160], [170, 80], [230, 160], [300, 80], [360, 150]] },
                     { nodes: ['宜度潮宿', '江頭市場', '集美學村', 'SM購物廣場', '沙坡尾', '雙子塔'], coords: [[40, 150], [100, 70], [170, 150], [240, 70], [310, 150], [360, 80]] },
                     { nodes: ['宜度潮宿', '海滄大橋', '雲水謠', '和貴樓', '田螺坑', '裕昌樓'], coords: [[30, 120], [90, 70], [160, 150], [230, 70], [300, 150], [370, 100]] },
                     { nodes: ['五通碼頭', '水頭碼頭', '金豐租車', '得月樓', '金城老街', '金門機場', '高雄機場'], coords: [[30, 140], [85, 80], [140, 140], [195, 80], [250, 140], [315, 80], [370, 140]] }
@@ -853,6 +853,7 @@
                                                 <div className="space-y-4 pt-2">
                                                     <p className="text-xs font-black text-[#8FA89B] tracking-wider uppercase">● 航班登機証 Boarding Passes</p>
                                                     
+                                                    {/* 6/18 去程華信登機證 */}
                                                     <div className="bg-gradient-to-br from-[#F5F2E9] to-[#EBE6D5] rounded-3xl border-2 border-[#C59B6D] p-5 shadow-md relative overflow-hidden">
                                                         <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-r-2 border-[#C59B6D] z-10"></div>
                                                         <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-l-2 border-[#C59B6D] z-10"></div>
@@ -863,20 +864,22 @@
                                                             </div>
                                                             <span className="text-xs font-mono font-black bg-[#C59B6D]/20 text-[#C59B6D] px-2 py-0.5 rounded">DK6JYW</span>
                                                         </div>
-                                                        <div className="grid grid-cols-3 gap-2 py-4 text-center items-center">
-                                                            <div className="text-left">
+                                                        <div className="flex justify-between items-center py-4 text-center">
+                                                            <div className="text-left flex-1">
                                                                 <h4 className="text-2xl font-black text-[#2B3E2D]">KHH</h4>
                                                                 <p className="text-[10px] font-bold text-[#8FA89B]">高雄小港機場</p>
                                                                 <p className="text-xs font-black text-[#4A5D4E] mt-1">13:30</p>
                                                             </div>
-                                                            <div className="flex flex-col items-center">
+                                                            <div className="flex flex-col items-center justify-center px-3 shrink-0">
                                                                 <span className="text-[10px] text-[#C59B6D] font-mono font-bold">6/18 (四)</span>
-                                                                <div className="w-full border-t-2 border-dashed border-[#C59B6D] relative my-1">
-                                                                    <i className="fa-solid fa-plane text-xs text-[#C59B6D] absolute -top-1.5 left-1/2 -translate-x-1/2 bg-[#F5F2E9] px-1"></i>
+                                                                <div className="flex items-center space-x-1 my-1">
+                                                                    <span className="text-[#C59B6D] text-[10px]">──</span>
+                                                                    <i className="fa-solid fa-plane text-xs text-[#C59B6D]"></i>
+                                                                    <span className="text-[#C59B6D] text-[10px]">──</span>
                                                                 </div>
-                                                                <span className="text-[10px] text-[#8FA89B] font-bold">AE341</span>
+                                                                <span className="text-[11px] bg-[#C59B6D]/15 text-[#4A5D4E] px-2.5 py-1 rounded-full font-black font-mono mt-1 whitespace-nowrap shrink-0">AE341</span>
                                                             </div>
-                                                            <div className="text-right">
+                                                            <div className="text-right flex-1">
                                                                 <h4 className="text-2xl font-black text-[#2B3E2D]">KNH</h4>
                                                                 <p className="text-[10px] font-bold text-[#8FA89B]">金門尚義機場</p>
                                                                 <p className="text-xs font-black text-[#4A5D4E] mt-1">14:35</p>
@@ -888,6 +891,7 @@
                                                         </div>
                                                     </div>
 
+                                                    {/* 6/22 回程立榮登機證 */}
                                                     <div className="bg-gradient-to-br from-[#F1EFE3] to-[#E3DEC3] rounded-3xl border-2 border-[#8FA89B] p-5 shadow-md relative overflow-hidden">
                                                         <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-r-2 border-[#8FA89B] z-10"></div>
                                                         <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-l-2 border-[#8FA89B] z-10"></div>
@@ -898,20 +902,22 @@
                                                             </div>
                                                             <span className="text-xs font-mono font-black bg-[#8FA89B]/20 text-[#4A5D4E] px-2 py-0.5 rounded">B7-G230</span>
                                                         </div>
-                                                        <div className="grid grid-cols-3 gap-2 py-4 text-center items-center">
-                                                            <div className="text-left">
+                                                        <div className="flex justify-between items-center py-4 text-center">
+                                                            <div className="text-left flex-1">
                                                                 <h4 className="text-2xl font-black text-[#2B3E2D]">KNH</h4>
                                                                 <p className="text-[10px] font-bold text-[#8FA89B]">金門尚義機場</p>
                                                                 <p className="text-xs font-black text-[#4A5D4E] mt-1">16:50</p>
                                                             </div>
-                                                            <div className="flex flex-col items-center">
+                                                            <div className="flex flex-col items-center justify-center px-3 shrink-0">
                                                                 <span className="text-[10px] text-[#C59B6D] font-mono font-bold">6/22 (一)</span>
-                                                                <div className="w-full border-t-2 border-dashed border-[#8FA89B] relative my-1">
-                                                                    <i className="fa-solid fa-plane text-xs text-[#8FA89B] absolute -top-1.5 left-1/2 -translate-x-1/2 bg-[#F1EFE3] px-1"></i>
+                                                                <div className="flex items-center space-x-1 my-1">
+                                                                    <span className="text-[#8FA89B] text-[10px]">──</span>
+                                                                    <i className="fa-solid fa-plane text-xs text-[#8FA89B]"></i>
+                                                                    <span className="text-[#8FA89B] text-[10px]">──</span>
                                                                 </div>
-                                                                <span className="text-[10px] text-[#8FA89B] font-bold">B7-8928</span>
+                                                                <span className="text-[11px] bg-[#8FA89B]/15 text-[#4A5D4E] px-2.5 py-1 rounded-full font-black font-mono mt-1 whitespace-nowrap shrink-0">B7-8928</span>
                                                             </div>
-                                                            <div className="text-right">
+                                                            <div className="text-right flex-1">
                                                                 <h4 className="text-2xl font-black text-[#2B3E2D]">KHH</h4>
                                                                 <p className="text-[10px] font-bold text-[#8FA89B]">高雄小港機場</p>
                                                                 <p className="text-xs font-black text-[#4A5D4E] mt-1">17:50</p>
@@ -924,7 +930,7 @@
                                                     </div>
                                                 </div>
 
-                                                {/* ================= 小三通雙向船班憑證 (已優化為高擬真機票風 Boarding Pass) ================= */}
+                                                {/* ================= 小三通雙向船班憑證 ================= */}
                                                 <div className="space-y-4 pt-4">
                                                     <p className="text-xs font-black text-[#8FA89B] tracking-wider uppercase">● 小三通船班憑證 Ferry Tickets</p>
                                                     
@@ -932,7 +938,6 @@
                                                     <div className="bg-gradient-to-br from-[#EAEEDE] to-[#D5DCC3] rounded-3xl border-2 border-[#8FA89B] p-5 shadow-md relative overflow-hidden">
                                                         <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-r-2 border-[#8FA89B] z-10"></div>
                                                         <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-l-2 border-[#8FA89B] z-10"></div>
-                                                        
                                                         <div className="flex justify-between items-center border-b border-dashed border-[#8FA89B]/40 pb-3">
                                                             <div className="flex items-center space-x-2">
                                                                 <span className="w-7 h-7 bg-[#4A5D4E] text-[#C59B6D] rounded-full flex items-center justify-center text-xs font-black">
@@ -942,27 +947,27 @@
                                                             </div>
                                                             <span className="text-xs font-mono font-black bg-[#4A5D4E]/10 text-[#4A5D4E] px-2 py-0.5 rounded">去程 ‧ NZAX7E</span>
                                                         </div>
-
-                                                        <div className="grid grid-cols-3 gap-2 py-4 text-center items-center">
-                                                            <div className="text-left">
+                                                        <div className="flex justify-between items-center py-4 text-center">
+                                                            <div className="text-left flex-1">
                                                                 <h4 className="text-2xl font-black text-[#2B3E2D]">KNH</h4>
                                                                 <p className="text-[10px] font-bold text-[#8FA89B]">金門水頭碼頭</p>
                                                                 <p className="text-xs font-black text-[#4A5D4E] mt-1">17:30</p>
                                                             </div>
-                                                            <div className="flex flex-col items-center">
+                                                            <div className="flex flex-col items-center justify-center px-3 shrink-0">
                                                                 <span className="text-[10px] text-[#C59B6D] font-mono font-bold">6/18 (四)</span>
-                                                                <div className="w-full border-t-2 border-dashed border-[#8FA89B] relative my-1">
-                                                                    <i className="fa-solid fa-ship text-xs text-[#4A5D4E] absolute -top-1.5 left-1/2 -translate-x-1/2 bg-[#EAEEDE] px-1"></i>
+                                                                <div className="flex items-center space-x-1 my-1">
+                                                                    <span className="text-[#8FA89B] text-[10px]">──</span>
+                                                                    <i className="fa-solid fa-ship text-xs text-[#4A5D4E]"></i>
+                                                                    <span className="text-[#8FA89B] text-[10px]">──</span>
                                                                 </div>
-                                                                <span className="text-[10px] text-[#4A5D4E] font-bold">新五緣輪</span>
+                                                                <span className="text-[11px] bg-[#4A5D4E]/10 text-[#4A5D4E] px-2.5 py-1 rounded-full font-black font-mono mt-1 whitespace-nowrap shrink-0">新五緣輪</span>
                                                             </div>
-                                                            <div className="text-right">
+                                                            <div className="text-right flex-1">
                                                                 <h4 className="text-2xl font-black text-[#2B3E2D]">XMN</h4>
                                                                 <p className="text-[10px] font-bold text-[#8FA89B]">廈門五通碼頭</p>
                                                                 <p className="text-xs font-black text-[#4A5D4E] mt-1">18:05</p>
                                                             </div>
                                                         </div>
-
                                                         <div className="border-t border-[#8FA89B]/20 pt-3 flex justify-between text-[11px] font-black text-[#2B3E2D]">
                                                             <span>旅客：4 位聯票 (姿綾等)</span>
                                                             <span className="text-[#4A5D4E]">FERRY CONFIRMED</span>
@@ -973,7 +978,6 @@
                                                     <div className="bg-gradient-to-br from-[#EAEEDE] to-[#D5DCC3] rounded-3xl border-2 border-[#8FA89B] p-5 shadow-md relative overflow-hidden">
                                                         <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-r-2 border-[#8FA89B] z-10"></div>
                                                         <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#FFFFFF] border-l-2 border-[#8FA89B] z-10"></div>
-                                                        
                                                         <div className="flex justify-between items-center border-b border-dashed border-[#8FA89B]/40 pb-3">
                                                             <div className="flex items-center space-x-2">
                                                                 <span className="w-7 h-7 bg-[#4A5D4E] text-[#C59B6D] rounded-full flex items-center justify-center text-xs font-black">
@@ -983,27 +987,27 @@
                                                             </div>
                                                             <span className="text-xs font-mono font-black bg-[#4A5D4E]/10 text-[#4A5D4E] px-2 py-0.5 rounded">回程 ‧ NZAX7E</span>
                                                         </div>
-
-                                                        <div className="grid grid-cols-3 gap-2 py-4 text-center items-center">
-                                                            <div className="text-left">
+                                                        <div className="flex justify-between items-center py-4 text-center">
+                                                            <div className="text-left flex-1">
                                                                 <h4 className="text-2xl font-black text-[#2B3E2D]">XMN</h4>
                                                                 <p className="text-[10px] font-bold text-[#8FA89B]">廈門五通碼頭</p>
                                                                 <p className="text-xs font-black text-[#4A5D4E] mt-1">09:00</p>
                                                             </div>
-                                                            <div className="flex flex-col items-center">
+                                                            <div className="flex flex-col items-center justify-center px-3 shrink-0">
                                                                 <span className="text-[10px] text-[#C59B6D] font-mono font-bold">6/22 (一)</span>
-                                                                <div className="w-full border-t-2 border-dashed border-[#8FA89B] relative my-1">
-                                                                    <i className="fa-solid fa-ship text-xs text-[#4A5D4E] absolute -top-1.5 left-1/2 -translate-x-1/2 bg-[#EAEEDE] px-1"></i>
+                                                                <div className="flex items-center space-x-1 my-1">
+                                                                    <span className="text-[#8FA89B] text-[10px]">──</span>
+                                                                    <i className="fa-solid fa-ship text-xs text-[#4A5D4E]"></i>
+                                                                    <span className="text-[#8FA89B] text-[10px]">──</span>
                                                                 </div>
-                                                                <span className="text-[10px] text-[#4A5D4E] font-bold">迅安輪</span>
+                                                                <span className="text-[11px] bg-[#4A5D4E]/10 text-[#4A5D4E] px-2.5 py-1 rounded-full font-black font-mono mt-1 whitespace-nowrap shrink-0">迅安輪</span>
                                                             </div>
-                                                            <div className="text-right">
+                                                            <div className="text-right flex-1">
                                                                 <h4 className="text-2xl font-black text-[#2B3E2D]">KNH</h4>
                                                                 <p className="text-[10px] font-bold text-[#8FA89B]">金門水頭碼頭</p>
                                                                 <p className="text-xs font-black text-[#4A5D4E] mt-1">09:35</p>
                                                             </div>
                                                         </div>
-
                                                         <div className="border-t border-[#8FA89B]/20 pt-3 flex justify-between text-[11px] font-black text-[#2B3E2D]">
                                                             <span>旅客：4 位聯票 (姿綾等)</span>
                                                             <span className="text-[#4A5D4E]">BOARDING OPEN</span>
